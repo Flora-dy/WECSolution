@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>WECARE Health & Wellness Solutions</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="pw-overlay" class="pw-overlay" hidden>
+      <div class="pw-card">
+        <div class="pw-title">WECARE Access</div>
+        <div class="pw-sub">Enter password to continue</div>
+        <div class="pw-row">
+          <input id="pw-input" class="pw-input" type="password" placeholder="Password" autocomplete="off" />
+          <button id="pw-btn" class="btn primary">Continue</button>
+        </div>
+        <div id="pw-err" class="pw-err" hidden>Incorrect password</div>
+        <div class="pw-foot">This is a lightweight client-side gate for preview only.</div>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <h1 id="hero-title" class="hero-title">WECARE 健康与营养解决方案</h1>
+          <div id="hero-lines" class="hero-lines">
+            <div class="hero-strong">服务全球品牌</div>
+            <div>以科学为基础，以洞察为导向，以专业能力贯穿全流程</div>
+            <div class="hero-spacer">从自有益生菌菌株到配方开发与商业化落地</div>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <div class="seg" role="tablist" aria-label="Language">
+            <button id="lang-cn" class="seg-btn" type="button" data-lang="CN">CN</button>
+            <button id="lang-en" class="seg-btn" type="button" data-lang="EN">EN</button>
+          </div>
+        </div>
+      </div>
+      <div class="hero-wm" aria-hidden="true"></div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <div class="filters">
+          <div class="field">
+            <div id="label-cat" class="label">功能方向</div>
+            <select id="cat" class="select"></select>
+          </div>
+          <div class="field">
+            <div id="label-sub" class="label">应用场景</div>
+            <select id="sub" class="select"></select>
+          </div>
+        </div>
+        <div id="pill" class="pill" aria-live="polite"></div>
+      </section>
+
+      <section class="card">
+        <div class="viewer-top">
+          <div class="viewer-left">
+            <div class="viewer-title" id="viewer-title">完整解决方案</div>
+            <div class="viewer-sub" id="viewer-sub">PDF two-page preview</div>
+          </div>
+          <div class="viewer-actions">
+            <div class="seg" role="tablist" aria-label="View">
+              <button class="seg-btn" type="button" data-view="left" title="Page 1">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5L9 12l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="seg-btn" type="button" data-view="both" title="Two pages">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h6v14H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm12 0h-6v14h6a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="seg-btn" type="button" data-view="right" title="Page 2">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6.5L15 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+            <a id="open-pdf" class="btn" href="#" target="_blank" rel="noreferrer">Open PDF</a>
+          </div>
+        </div>
+        <div id="viewer" class="viewer">
+          <div class="frame-wrap">
+            <iframe id="frame1" class="frame" title="PDF page 1"></iframe>
+          </div>
+          <div class="frame-wrap" id="frame2-wrap">
+            <iframe id="frame2" class="frame" title="PDF page 2"></iframe>
+          </div>
+        </div>
+        <div class="viewer-foot" id="viewer-foot">
+          Tip: On mobile, PDFs may open in the browser’s built-in viewer.
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
