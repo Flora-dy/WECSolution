@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,66 +17,109 @@
             <div>以科学为基础，以洞察为导向，以专业能力贯穿全流程</div>
             <div class="hero-spacer">从自有益生菌菌株到配方开发与商业化落地</div>
           </div>
+          <div class="hero-series">
+            <div class="seg" role="tablist" aria-label="Series">
+              <button class="seg-btn" type="button" data-series="WecLac">WecLac</button>
+              <button class="seg-btn" type="button" data-series="WecPro® Formula">WecPro® Formula</button>
+              <button class="seg-btn" type="button" data-series="WecPro® Solution">WecPro® Solution</button>
+            </div>
+          </div>
         </div>
         <div class="hero-actions">
           <div class="seg" role="tablist" aria-label="Language">
-            <button id="lang-cn" class="seg-btn" type="button" data-lang="CN">CN</button>
-            <button id="lang-en" class="seg-btn" type="button" data-lang="EN">EN</button>
+            <button class="seg-btn" type="button" data-lang="CN">CN</button>
+            <button class="seg-btn" type="button" data-lang="EN">EN</button>
           </div>
         </div>
+        <div class="hero-wm" aria-hidden="true"></div>
       </div>
-      <div class="hero-wm" aria-hidden="true"></div>
     </header>
 
     <main class="container">
-      <section class="card">
-        <div class="filters">
-          <div class="field">
-            <div id="label-cat" class="label">功能方向</div>
-            <select id="cat" class="select"></select>
-          </div>
-          <div class="field">
-            <div id="label-sub" class="label">应用场景</div>
-            <select id="sub" class="select"></select>
-          </div>
-        </div>
-        <div id="pill" class="pill" aria-live="polite"></div>
+      <section id="panel-weclac" class="panel">
+        <div class="grid-3" id="weclac-grid"></div>
+        <div id="weclac-areas" class="card" hidden></div>
       </section>
 
-      <section class="card">
-        <div class="viewer-top">
-          <div class="viewer-left">
-            <div class="viewer-title" id="viewer-title">完整解决方案</div>
-            <div class="viewer-sub" id="viewer-sub">PDF two-page preview</div>
-          </div>
-          <div class="viewer-actions">
-            <div class="seg" role="tablist" aria-label="View">
-              <button class="seg-btn" type="button" data-view="left" title="Page 1">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5L9 12l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <button class="seg-btn" type="button" data-view="both" title="Two pages">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h6v14H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm12 0h-6v14h6a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-              </button>
-              <button class="seg-btn" type="button" data-view="right" title="Page 2">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6.5L15 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
+      <section id="panel-formula" class="panel" hidden>
+        <div id="formula-list"></div>
+      </section>
+
+      <section id="panel-solution" class="panel" hidden>
+        <section class="card">
+          <div class="filters">
+            <div class="field">
+              <div id="label-cat" class="label">功能方向</div>
+              <select id="cat" class="select"></select>
             </div>
-            <a id="open-pdf" class="btn" href="#" target="_blank" rel="noreferrer">Open PDF</a>
+            <div class="field">
+              <div id="label-sub" class="label">应用场景</div>
+              <select id="sub" class="select"></select>
+            </div>
           </div>
-        </div>
-        <div id="viewer" class="viewer">
-          <div class="frame-wrap">
-            <iframe id="frame1" class="frame" title="PDF page 1"></iframe>
+          <div id="pill" class="pill" aria-live="polite"></div>
+        </section>
+
+        <section class="card">
+          <div class="section-title" id="solution-core-title">核心配方</div>
+          <div id="solution-core" class="core-line"></div>
+          <div id="solution-highlights" class="bullets"></div>
+        </section>
+
+        <section class="card" id="solution-clinical-card" hidden>
+          <div class="section-title" id="solution-clinical-title">临床研究</div>
+          <div id="solution-clinical" class="kv-table"></div>
+        </section>
+
+        <section class="card" id="solution-spec-card" hidden>
+          <div class="section-title" id="solution-spec-title">规格</div>
+          <div id="solution-spec" class="spec-grid"></div>
+        </section>
+
+        <section class="card">
+          <div class="viewer-top">
+            <div class="viewer-left">
+              <div class="section-title" id="viewer-title">完整解决方案</div>
+              <div class="viewer-sub" id="viewer-sub">PDF 双页预览</div>
+            </div>
+            <div class="viewer-actions">
+              <div class="seg" role="tablist" aria-label="View">
+                <button class="seg-btn" type="button" data-view="left" title="Page 1">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5L9 12l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button class="seg-btn" type="button" data-view="both" title="Two pages">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h6v14H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm12 0h-6v14h6a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                </button>
+                <button class="seg-btn" type="button" data-view="right" title="Page 2">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6.5L15 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
+              <a id="open-pdf" class="btn" href="#" target="_blank" rel="noreferrer">Open PDF</a>
+            </div>
           </div>
-          <div class="frame-wrap" id="frame2-wrap">
-            <iframe id="frame2" class="frame" title="PDF page 2"></iframe>
+          <div id="viewer" class="viewer">
+            <div class="pdf-card">
+              <div class="pdf-card-inner">
+                <img id="img1" class="pdf-page" alt="Page 1" />
+              </div>
+            </div>
+            <div class="pdf-card" id="img2-wrap">
+              <div class="pdf-card-inner">
+                <img id="img2" class="pdf-page" alt="Page 2" />
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="viewer-foot" id="viewer-foot">
-          Tip: On mobile, PDFs may open in the browser’s built-in viewer.
-        </div>
+        </section>
       </section>
     </main>
+
+    <div id="modal" class="modal" hidden>
+      <div class="modal-backdrop" data-close="1"></div>
+      <div class="modal-card">
+        <button class="modal-close" type="button" data-close="1" aria-label="Close">×</button>
+        <div id="modal-body"></div>
+      </div>
+    </div>
 
     <script type="module" src="./app.js"></script>
   </body>

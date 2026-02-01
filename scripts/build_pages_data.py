@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 
 def _unwrap(fn):
@@ -19,7 +19,7 @@ def main() -> int:
     repo = Path(__file__).resolve().parents[1]
     sys.path.insert(0, str(repo))
     docs = repo / "docs"
-    out_json = docs / "data" / "solutions.json"
+    out_json = docs / "data" / "pages_data.json"
 
     # Import app.py (Streamlit UI) only for its PPTX parsing helpers.
     import app  # type: ignore
@@ -35,19 +35,41 @@ def main() -> int:
     if not solutions_pptx_en.exists():
         raise SystemExit(f"Missing: {solutions_pptx_en}")
 
-    formula_scenarios: Dict[str, List[str]] = _unwrap(app.load_formula_scenarios)(
-        str(formula_pptx), None
-    )
-    alias_map: Dict[str, str] = _unwrap(app.build_scenario_to_solution_title)(
-        str(formula_pptx), str(solutions_pptx_cn), None
-    )
-    solutions_deck: Dict[str, Dict[str, Any]] = _unwrap(app.load_ppt_solution_deck)(
-        str(solutions_pptx_cn), None
-    )
+    # Shared: scenarios + solutions deck
+    formula_scenarios: Dict[str, List[str]] = _unwrap(app.load_formula_scenarios)(str(formula_pptx), None)
+    alias_map: Dict[str, str] = _unwrap(app.build_scenario_to_solution_title)(str(formula_pptx), str(solutions_pptx_cn), None)
+    solutions_deck: Dict[str, Dict[str, Any]] = _unwrap(app.load_ppt_solution_deck)(str(solutions_pptx_cn), None)
+
+    # Excel sheet2 core formula per category
+    excel = repo / "产品配方设计最新.xlsx"
+    overview: Dict[str, Any] = {}
+    if excel.exists():
+        try:
+            overview = _unwrap(app.load_product_overview)(str(excel), None)
+        except Exception:
+            overview = {}
 
     def match_key(scen: str) -> str:
         n = _unwrap(app._normalize_match_key)(scen)
         return _safe_str(alias_map.get(scen) or alias_map.get(n) or scen)
+
+    # Clinical article links
+    clinical_links: Dict[str, str] = {}
+    clinical_xlsx = repo / "Final" / "Clinicaldata0201.xlsx"
+    if clinical_xlsx.exists():
+        try:
+            clinical_links = _unwrap(app.load_clinical_article_links)(str(clinical_xlsx), None)
+        except Exception:
+            clinical_links = {}
+
+    # Capsule specs per (category, scenario) from CN/EN sheets
+    capsule_specs_by_cat: Dict[str, Any] = {}
+    capsule_xlsx = repo / "Final" / "Capsule配方详情.xlsx"
+    if capsule_xlsx.exists():
+        try:
+            capsule_specs_by_cat = _unwrap(app.load_capsule_details)(str(capsule_xlsx), "CN", None)
+        except Exception:
+            capsule_specs_by_cat = {}
 
     categories: List[Dict[str, Any]] = []
     for cat, scenarios in formula_scenarios.items():
@@ -55,11 +77,21 @@ def main() -> int:
         accent1 = theme.get("accent1", "#6366F1")
         accent2 = theme.get("accent2", "#EC4899")
 
+        overview_info = overview.get(cat, {}) if isinstance(overview, dict) else {}
+        core_name = _safe_str(overview_info.get("name", ""))
+        core_formula_cn = _safe_str(overview_info.get("core_formula", ""))
+
+        core = {
+            "name": {"CN": _unwrap(app._ensure_wecpro_registered)(core_name) if core_name else "", "EN": _unwrap(app._ensure_wecpro_registered)(core_name) if core_name else ""},
+            "formula": {"CN": core_formula_cn, "EN": _unwrap(app._to_english_formula)(core_formula_cn) if core_formula_cn else ""},
+        }
+
         cat_obj: Dict[str, Any] = {
             "key": cat,
             "label": {"CN": cat, "EN": app._CATEGORY_LABELS_EN.get(cat, cat)},
             "accent1": accent1,
             "accent2": accent2,
+            "core": core,
             "scenarios": [],
         }
 
@@ -78,6 +110,70 @@ def main() -> int:
 
             idx = max(1, (slide_no + 1) // 2)
 
+            # Highlights + clinical registrations are extracted from the overview slide text
+            highlights_cn: List[str] = []
+            highlights_en: List[str] = []
+            clinical_rows: List[Dict[str, Any]] = []
+            try:
+                ob_cn = _unwrap(app._parse_ppt_overview)(cn_lines)
+                ob_en = _unwrap(app._parse_ppt_overview)(en_lines)
+                highlights_cn = [str(x).strip() for x in ob_cn.get("highlights", []) if str(x).strip()]
+                highlights_en = [str(x).strip() for x in ob_en.get("highlights", []) if str(x).strip()]
+                trials_cn = [str(x).strip() for x in ob_cn.get("trials", []) if str(x).strip()]
+                trial_entries = _unwrap(app._parse_trial_entries)(trials_cn)
+                for key, ids in trial_entries:
+                    badges: List[str] = []
+                    for reg_id in ids:
+                        rid = (reg_id or "").strip().replace(" ", "")
+                        url = _safe_str(clinical_links.get(rid, ""))
+                        if url:
+                            badges.append(
+                                "<a class='tile-badge tile-badge-link' "
+                                f"href='{url}' target='_blank' rel='noopener noreferrer'>"
+                                f"{reg_id}</a>"
+                            )
+                        else:
+                            badges.append(f"<span class='tile-badge'>{reg_id}</span>")
+                    clinical_rows.append(
+                        {
+                            "key": {"CN": key, "EN": key},
+                            "ids": badges,
+                        }
+                    )
+            except Exception:
+                pass
+
+            # Specs: choose scenario record by matching label
+            specs_out: List[Dict[str, Any]] = []
+            try:
+                cat_specs = capsule_specs_by_cat.get(cat, {}) if isinstance(capsule_specs_by_cat, dict) else {}
+                cap_candidates = list(cat_specs.keys()) if isinstance(cat_specs, dict) else []
+                cap_key = _unwrap(app._pick_capsule_scenario)(scen, cap_candidates)
+                cap_record = cat_specs.get(cap_key) if isinstance(cat_specs, dict) and cap_key else None
+                specs = list(cap_record.get("specs", [])) if isinstance(cap_record, dict) else []
+
+                def to_list(v: object) -> List[str]:
+                    if isinstance(v, list):
+                        return [str(x).strip() for x in v if str(x).strip()]
+                    return []
+
+                for s in specs:
+                    title = _safe_str(s.get("title", ""))
+                    clinical = _safe_str(s.get("clinical", ""))
+                    exc = to_list(s.get("excipients", []))
+                    total = _safe_str(s.get("total", ""))
+                    # We will rehydrate EN using the EN sheet at runtime if needed; keep CN text here.
+                    specs_out.append(
+                        {
+                            "title": {"CN": title, "EN": title},
+                            "clinical": {"CN": clinical, "EN": clinical},
+                            "excipients": {"CN": exc, "EN": exc},
+                            "total": {"CN": total, "EN": total},
+                        }
+                    )
+            except Exception:
+                specs_out = []
+
             cat_obj["scenarios"].append(
                 {
                     "key": scen,
@@ -86,18 +182,125 @@ def main() -> int:
                     "index": idx,
                     "page1": slide_no,
                     "page2": slide_no + 1,
+                    "highlights": {"CN": highlights_cn, "EN": highlights_en},
+                    "clinical": clinical_rows,
+                    "specs": specs_out,
                 }
             )
 
         if cat_obj["scenarios"]:
             categories.append(cat_obj)
 
+    # WecLac strains from PPTX (CN/EN)
+    weclac_cn = _unwrap(app.load_weclac_catalog)(str(repo / "Final" / "WecLac.pptx"), "CN", None)
+    weclac_en = _unwrap(app.load_weclac_catalog)(str(repo / "Final" / "WecLac.pptx"), "EN", None)
+    strains_cn = list(weclac_cn.get("strains", [])) if isinstance(weclac_cn, dict) else []
+    strains_en = list(weclac_en.get("strains", [])) if isinstance(weclac_en, dict) else []
+
+    code_to_en: Dict[str, Dict[str, Any]] = {}
+    for it in strains_en:
+        name = _safe_str(it.get("name", ""))
+        base_name, code = _unwrap(app._extract_strain_code)(name)
+        if code:
+            code_to_en[code] = {"name": name, "base_name": base_name, **it}
+
+    # Enrich CN list to 12
+    weclac_items: List[Dict[str, Any]] = []
+    seen: set[str] = set()
+    for it in strains_cn:
+        name = _safe_str(it.get("name", ""))
+        base_name, code = _unwrap(app._extract_strain_code)(name)
+        if not code or code in seen:
+            continue
+        seen.add(code)
+        en_it = code_to_en.get(code, {})
+        sci = app._STRAIN_SCI_NAMES.get(code, "")
+        latin_html = _unwrap(app._format_sci_name_html)(sci) if sci else ""
+        icon_path = repo / "docs" / "assets" / "strains" / f"{code}.png"
+        icon = f"./assets/strains/{code}.png" if icon_path.exists() else ""
+        weclac_items.append(
+            {
+                "code": code,
+                "base_name": {"CN": base_name, "EN": _safe_str(en_it.get("base_name", ""))},
+                "latin_html": latin_html,
+                "icon": icon,
+                "feature": {"CN": _safe_str(it.get("feature", "")), "EN": _safe_str(en_it.get("feature", ""))},
+                "clinical": {"CN": _safe_str(it.get("clinical", "")), "EN": _safe_str(en_it.get("clinical", ""))},
+                "patent": {"CN": _safe_str(it.get("patent", "")), "EN": _safe_str(en_it.get("patent", ""))},
+                "spec": {"CN": _safe_str(it.get("spec", "")), "EN": _safe_str(en_it.get("spec", ""))},
+            }
+        )
+        if len(weclac_items) >= 12:
+            break
+
+    areas: List[str] = []
+    try:
+        # Extract supported areas from first strain's functions
+        functions = []
+        for it in strains_cn:
+            f = it.get("functions", [])
+            if isinstance(f, list) and f:
+                functions = [x for x in f if isinstance(x, dict)]
+                break
+        for f in functions:
+            d = _safe_str(f.get("direction", ""))
+            if d:
+                areas.append(d)
+        areas = list(dict.fromkeys(areas))
+    except Exception:
+        areas = []
+
+    # WecPro® Formula list from Formula.pptx
+    formula_items_raw = _unwrap(app.load_wecpro_formula_catalog)(str(repo / "Final" / "Formula.pptx"), None)
+    order = [d for d in app._FORMULA_SLIDE_TO_DIRECTION.values() if d]
+    direction_to_item: Dict[str, Dict[str, Any]] = {}
+    for it in formula_items_raw:
+        d = _safe_str(it.get("direction", ""))
+        if d:
+            direction_to_item[d] = it
+
+    formula_items: List[Dict[str, Any]] = []
+    for direction in order[:7]:
+        it = direction_to_item.get(direction, {})
+        product = _safe_str(it.get("product", ""))
+        benefit = _safe_str(it.get("benefit", ""))
+        strains = [str(s).strip() for s in it.get("strains", []) if str(s).strip()] if isinstance(it.get("strains", []), list) else []
+        if strains:
+            strains_text_cn = "、".join(strains)
+        else:
+            strains_text_cn = ""
+        benefit_en = app._WECPRO_FORMULA_BENEFIT_EN.get(direction, benefit)
+        direction_en = app._CATEGORY_LABELS_EN.get(direction, direction)
+
+        # For EN formula, show codes + italic sci names where known
+        strains_html_en_parts: List[str] = []
+        for line in strains:
+            codes = _unwrap(app._extract_strain_codes)(line)
+            for code in codes:
+                sci = app._STRAIN_SCI_NAMES.get(code, "")
+                if sci:
+                    strains_html_en_parts.append(f"<div>{_unwrap(app._format_sci_name_html)(sci)} {code}</div>")
+                else:
+                    strains_html_en_parts.append(f"<div>{code}</div>")
+        strains_html_en = "".join(strains_html_en_parts)
+
+        formula_items.append(
+            {
+                "direction": direction,
+                "direction_label": {"CN": direction, "EN": direction_en},
+                "product": {"CN": product, "EN": product},
+                "benefit": {"CN": benefit, "EN": benefit_en},
+                "core_formula": {"CN": strains_text_cn, "EN": strains_html_en},
+            }
+        )
+
     out: Dict[str, Any] = {
-        "pdf": {
-            "CN": "./assets/solutions_cn.pdf",
-            "EN": "./assets/solutions_en.pdf",
+        "weclac": {"strains": weclac_items, "core_codes": sorted(list(getattr(app, "WECLAC_CORE_CODES", set()))), "areas": areas},
+        "formula": {"items": formula_items},
+        "solutions": {
+            "pdf": {"CN": "./assets/solutions_cn.pdf", "EN": "./assets/solutions_en.pdf"},
+            "categories": categories,
         },
-        "categories": categories,
     }
 
     out_json.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
