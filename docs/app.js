@@ -3,9 +3,6 @@ const STORAGE_LANG = "wecare_pages_lang";
 const STORAGE_VIEW = "wecare_pages_view";
 const STORAGE_OK = "wecare_pages_authed";
 
-// Lightweight client-side password gate (not secure).
-const SHARED_PASSWORD = "WECARE888";
-
 const el = (id) => document.getElementById(id);
 
 function setSelectedSeg(container, value) {
@@ -66,37 +63,7 @@ async function loadData() {
   return await resp.json();
 }
 
-function maybeGate() {
-  const ok = sessionStorage.getItem(STORAGE_OK) === "1";
-  const overlay = el("pw-overlay");
-  if (ok) {
-    overlay.hidden = true;
-    return;
-  }
-  overlay.hidden = false;
-  const input = el("pw-input");
-  const btn = el("pw-btn");
-  const err = el("pw-err");
-
-  const submit = () => {
-    const v = safeText(input.value);
-    if (v === SHARED_PASSWORD) {
-      sessionStorage.setItem(STORAGE_OK, "1");
-      overlay.hidden = true;
-      return;
-    }
-    err.hidden = false;
-  };
-
-  btn.onclick = () => submit();
-  input.onkeydown = (e) => {
-    if (e.key === "Enter") submit();
-  };
-}
-
 function init() {
-  maybeGate();
-
   const lang = (localStorage.getItem(STORAGE_LANG) || DEFAULT_LANG).toUpperCase() === "EN" ? "EN" : "CN";
   const view = (localStorage.getItem(STORAGE_VIEW) || "both").toLowerCase();
 

@@ -7,7 +7,6 @@ import difflib
 import html
 import io
 import json
-import hmac
 import re
 import site
 import sys
@@ -274,7 +273,6 @@ PPT_WECPRO_FORMULA_PATH = resource_path("Final/Formula.pptx")
 WECLAC_IMAGES_DIR = resource_path("Final/images")
 WECLAC_CORE_CODES = {"BLa80", "LRa05", "BL21", "BC99", "Akk11"}
 CLINICAL_DATA_PATH = resource_path("Final/Clinicaldata0201.xlsx")
-DEFAULT_SHARED_PASSWORD = "WECARE888"
 WECLAC_SCI_NAMES: Dict[str, str] = {
     "BLa80": "Bifidobacterium animalis subsp. lactis",
     "LRa05": "Lacticaseibacillus rhamnosus",
@@ -3195,67 +3193,6 @@ def _render_packaged_quit_button() -> None:
                 os._exit(0)
 
 
-def _resolve_shared_password() -> str:
-    """Shared access password (simple client-facing gate).
-
-    Override via env var `WECARE_SHARED_PASSWORD` if needed.
-    """
-
-    env_pw = os.getenv("WECARE_SHARED_PASSWORD", "").strip()
-    return env_pw or DEFAULT_SHARED_PASSWORD
-
-
-def _require_shared_password(ui_lang: str) -> None:
-    required = _resolve_shared_password()
-    if not required:
-        return
-    if bool(st.session_state.get("wecare_authed", False)):
-        return
-
-    ui_lang = (ui_lang or "CN").strip().upper() or "CN"
-    t = (lambda cn, en: en) if ui_lang == "EN" else (lambda cn, en: cn)
-
-    with st.container(border=True):
-        st.markdown(f"### {t('访问验证', 'Access')}")
-        st.caption(
-            t(
-                "请输入访问密码后继续浏览。",
-                "Enter the access password to continue.",
-            )
-        )
-        with st.form("wecare_login"):
-            pw = st.text_input(
-                t("访问密码", "Password"),
-                type="password",
-                placeholder=t("请输入密码", "Enter password"),
-                label_visibility="collapsed",
-                key="wecare_pw_input",
-            )
-            submitted = st.form_submit_button(
-                t("进入", "Continue"),
-                type="primary",
-                use_container_width=True,
-            )
-
-        if submitted:
-            if hmac.compare_digest((pw or "").strip(), required):
-                st.session_state["wecare_authed"] = True
-                st.session_state.pop("wecare_pw_input", None)
-                st.rerun()
-            st.error(t("密码不正确，请重试。", "Incorrect password. Please try again."))
-
-        st.markdown(
-            (
-                "<div style='color:rgba(15,23,42,0.55);font-size:0.85rem'>"
-                f"{html.escape(t('如需访问密码，请联系 WECARE 团队。', 'For access, please contact the WECARE team.'))}"
-                "</div>"
-            ),
-            unsafe_allow_html=True,
-        )
-
-    st.stop()
-
-
 def main() -> None:
     st.set_page_config(page_title="WECARE 产品解决方案", layout="wide")
     _start_packaged_autoshutdown()
@@ -3280,11 +3217,6 @@ def main() -> None:
             series_from_url if series_from_url in _SERIES_OPTIONS else "WecLac"
         )
     series = str(st.session_state.get("wec_series", "WecLac"))
-
-    # Simple shared-password gate (client-facing)
-    if not bool(st.session_state.get("wecare_authed", False)):
-        _render_header(series=series, badge=series)
-        _require_shared_password(ui_lang)
 
     if series == "WecLac":
         _render_header(series=series, badge=series)
