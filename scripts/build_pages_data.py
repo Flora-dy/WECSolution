@@ -63,13 +63,18 @@ def main() -> int:
             clinical_links = {}
 
     # Capsule specs per (category, scenario) from CN/EN sheets
-    capsule_specs_by_cat: Dict[str, Any] = {}
+    capsule_specs_cn_by_cat: Dict[str, Any] = {}
+    capsule_specs_en_by_cat: Dict[str, Any] = {}
     capsule_xlsx = repo / "Final" / "Capsule配方详情.xlsx"
     if capsule_xlsx.exists():
         try:
-            capsule_specs_by_cat = _unwrap(app.load_capsule_details)(str(capsule_xlsx), "CN", None)
+            capsule_specs_cn_by_cat = _unwrap(app.load_capsule_details)(str(capsule_xlsx), "CN", None)
         except Exception:
-            capsule_specs_by_cat = {}
+            capsule_specs_cn_by_cat = {}
+        try:
+            capsule_specs_en_by_cat = _unwrap(app.load_capsule_details)(str(capsule_xlsx), "EN", None)
+        except Exception:
+            capsule_specs_en_by_cat = {}
 
     categories: List[Dict[str, Any]] = []
     for cat, scenarios in formula_scenarios.items():
@@ -146,29 +151,71 @@ def main() -> int:
             # Specs: choose scenario record by matching label
             specs_out: List[Dict[str, Any]] = []
             try:
-                cat_specs = capsule_specs_by_cat.get(cat, {}) if isinstance(capsule_specs_by_cat, dict) else {}
-                cap_candidates = list(cat_specs.keys()) if isinstance(cat_specs, dict) else []
+                cat_specs_cn = (
+                    capsule_specs_cn_by_cat.get(cat, {}) if isinstance(capsule_specs_cn_by_cat, dict) else {}
+                )
+                cat_specs_en = (
+                    capsule_specs_en_by_cat.get(cat, {}) if isinstance(capsule_specs_en_by_cat, dict) else {}
+                )
+                cap_candidates = list(cat_specs_cn.keys()) if isinstance(cat_specs_cn, dict) else []
                 cap_key = _unwrap(app._pick_capsule_scenario)(scen, cap_candidates)
-                cap_record = cat_specs.get(cap_key) if isinstance(cat_specs, dict) and cap_key else None
-                specs = list(cap_record.get("specs", [])) if isinstance(cap_record, dict) else []
+                cap_record_cn = cat_specs_cn.get(cap_key) if isinstance(cat_specs_cn, dict) and cap_key else None
+                cap_record_en = cat_specs_en.get(cap_key) if isinstance(cat_specs_en, dict) and cap_key else None
 
-                def to_list(v: object) -> List[str]:
-                    if isinstance(v, list):
-                        return [str(x).strip() for x in v if str(x).strip()]
-                    return []
+                specs_cn = list(cap_record_cn.get("specs", [])) if isinstance(cap_record_cn, dict) else []
+                specs_en = list(cap_record_en.get("specs", [])) if isinstance(cap_record_en, dict) else []
 
-                for s in specs:
-                    title = _safe_str(s.get("title", ""))
-                    clinical = _safe_str(s.get("clinical", ""))
-                    exc = to_list(s.get("excipients", []))
-                    total = _safe_str(s.get("total", ""))
-                    # We will rehydrate EN using the EN sheet at runtime if needed; keep CN text here.
+                def normalize_total(t: str) -> str:
+                    return _unwrap(app._strip_mass_units)(
+                        _unwrap(app._normalize_total_text)(_safe_str(t))
+                    )
+
+                def parse_excipients(raw: str, lang: str) -> List[str]:
+                    parts = _unwrap(app._split_capsule_excipients)(_safe_str(raw))
+                    items: List[str] = []
+                    for p in parts:
+                        x = _unwrap(app._format_capsule_excipient_item)(p, lang)
+                        x = _unwrap(app._strip_mass_units)(_safe_str(x))
+                        if x:
+                            items.append(x)
+                    return items
+
+                def title_from_spec(spec_label: str, lang: str) -> str:
+                    s = _safe_str(spec_label)
+                    if not s:
+                        return ""
+                    # Prefer "Capsule 120B" style title
+                    import re
+
+                    m = re.search(r"(?i)(?:Capsule|胶囊)\s*(?P<dose>\d+\\s*B)\\b", s)
+                    if m:
+                        dose = m.group("dose").replace(" ", "")
+                        return f"{'Capsule' if lang == 'EN' else '胶囊'} {dose}"
+                    return s
+
+                # Keep the first 3 cards like Streamlit
+                for i in range(min(3, max(len(specs_cn), len(specs_en)))):
+                    s_cn = specs_cn[i] if i < len(specs_cn) else {}
+                    s_en = specs_en[i] if i < len(specs_en) else {}
+
+                    spec_label_cn = _safe_str(s_cn.get("spec", "")) or _safe_str(s_en.get("spec", ""))
+                    spec_label_en = _safe_str(s_en.get("spec", "")) or _safe_str(s_cn.get("spec", ""))
+
+                    clinical_cn = _safe_str(s_cn.get("clinical", ""))
+                    clinical_en = _safe_str(s_en.get("clinical", "")) or clinical_cn
+
+                    exc_cn = parse_excipients(_safe_str(s_cn.get("excipients", "")), "CN")
+                    exc_en = parse_excipients(_safe_str(s_en.get("excipients", "")), "EN")
+
+                    total_cn = normalize_total(_safe_str(s_cn.get("total", "")))
+                    total_en = normalize_total(_safe_str(s_en.get("total", "")) or _safe_str(s_cn.get("total", "")))
+
                     specs_out.append(
                         {
-                            "title": {"CN": title, "EN": title},
-                            "clinical": {"CN": clinical, "EN": clinical},
-                            "excipients": {"CN": exc, "EN": exc},
-                            "total": {"CN": total, "EN": total},
+                            "title": {"CN": title_from_spec(spec_label_cn, "CN"), "EN": title_from_spec(spec_label_en, "EN")},
+                            "clinical": {"CN": clinical_cn, "EN": clinical_en},
+                            "excipients": {"CN": exc_cn, "EN": exc_en},
+                            "total": {"CN": total_cn, "EN": total_en},
                         }
                     )
             except Exception:

@@ -568,56 +568,86 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+Lp90+pAkk11+BC99: 120B",
                   "EN": "LRa05+LCr86+LR08+Lp90+pAkk11+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "阿拉伯胶：25",
+                    "蔓越莓粉：40",
+                    "维生素C：10",
+                    "马铃薯淀粉：40"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Gum Arabic: 25",
+                    "Cranberry Powder: 40",
+                    "Vitamin C: 10",
+                    "Potato Starch: 40"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+Lp90+pAkk11+BC99: 240B",
                   "EN": "LRa05+LCr86+LR08+Lp90+pAkk11+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "阿拉伯胶：25",
+                    "蔓越莓粉：20",
+                    "维生素C：10",
+                    "马铃薯淀粉：30"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Gum Arabic: 25",
+                    "Cranberry Powder: 20",
+                    "Vitamin C: 10",
+                    "Potato Starch: 30"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+Lp90+pAkk11+BC99: 480B",
                   "EN": "LRa05+LCr86+LR08+Lp90+pAkk11+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -714,56 +744,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BLa80+BL21+BBr60+BC99: 120B",
                   "EN": "LRa05+LCr86+LR08+BLa80+BL21+BBr60+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：80",
+                    "维生素D3：2.5",
+                    "维生素K2：45",
+                    "富马酸亚铁：10",
+                    "马铃薯淀粉：20"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 80",
+                    "Vitamin D3: 2.5",
+                    "Vitamin K2: 45",
+                    "Ferrous Fumarate: 10",
+                    "Potato Starch: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BLa80+BL21+BBr60+BC99: 240B",
                   "EN": "LRa05+LCr86+LR08+BLa80+BL21+BBr60+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：80",
+                    "维生素D3：2.5",
+                    "维生素K2：45",
+                    "富马酸亚铁：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：10"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 80",
+                    "Vitamin D3: 2.5",
+                    "Vitamin K2: 45",
+                    "Ferrous Fumarate: 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 10"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BLa80+BL21+BBr60+BC99: 480B",
                   "EN": "LRa05+LCr86+LR08+BLa80+BL21+BBr60+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -852,56 +914,80 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BLa80+BBr60+BC99: 120B",
                   "EN": "LRa05+LCr86+LR08+BLa80+BBr60+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：50",
+                    "蔓越莓粉：50",
+                    "马铃薯淀粉：40"
+                  ],
+                  "EN": [
+                    "Inulin: 50",
+                    "Cranberry Powder: 50",
+                    "Potato Starch: 40"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BLa80+BBr60+BC99: 240B",
                   "EN": "LRa05+LCr86+LR08+BLa80+BBr60+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：30",
+                    "蔓越莓粉：30",
+                    "马铃薯淀粉：40",
+                    "硬脂酸镁：5.5"
+                  ],
+                  "EN": [
+                    "Inulin: 30",
+                    "Cranberry Powder: 30",
+                    "Potato Starch: 40",
+                    "Magnesium Stearate: 5.5"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BLa80+BBr60+BC99: 480B",
                   "EN": "LRa05+LCr86+LR08+BLa80+BBr60+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -990,56 +1076,84 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+PA53+Lp90+BC99: 120B",
                   "EN": "LRa05+LCr86+LR08+PA53+Lp90+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "低聚果糖：25",
+                    "蔓越莓粉：50",
+                    "马铃薯淀粉：40"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Fructooligosaccharides (FOS): 25",
+                    "Cranberry Powder: 50",
+                    "Potato Starch: 40"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+PA53+Lp90+BC99: 240B",
                   "EN": "LRa05+LCr86+LR08+PA53+Lp90+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "低聚果糖：25",
+                    "蔓越莓粉：25",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：30"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Fructooligosaccharides (FOS): 25",
+                    "Cranberry Powder: 25",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 30"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+PA53+Lp90+BC99: 480B",
                   "EN": "LRa05+LCr86+LR08+PA53+Lp90+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -1129,56 +1243,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BLa80+Lp90+BC99: 120B",
                   "EN": "LRa05+LCr86+LR08+BLa80+Lp90+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "红石榴浓缩粉：10",
+                    "维生素D3：2.5",
+                    "维生素K2：45",
+                    "香瓜粉：10",
+                    "马铃薯淀粉：100"
+                  ],
+                  "EN": [
+                    "Pomegranate Concentrate Powder: 10",
+                    "Vitamin D3: 2.5",
+                    "Vitamin K2: 45",
+                    "Melon Powder: 10",
+                    "Potato Starch: 100"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BLa80+Lp90+BC99: 240B",
                   "EN": "LRa05+LCr86+LR08+BLa80+Lp90+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "红石榴浓缩粉：10",
+                    "维生素D3：2.5",
+                    "维生素K2：45",
+                    "香瓜粉：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：60"
+                  ],
+                  "EN": [
+                    "Pomegranate Concentrate Powder: 10",
+                    "Vitamin D3: 2.5",
+                    "Vitamin K2: 45",
+                    "Melon Powder: 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 60"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BLa80+Lp90+BC99: 480B",
                   "EN": "LRa05+LCr86+LR08+BLa80+Lp90+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -1261,56 +1407,84 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BBr60+Lp90+BC99: 120B",
                   "EN": "LRa05+LCr86+LR08+BBr60+Lp90+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "低聚果糖：25",
+                    "藏红花提取物：10",
+                    "马铃薯淀粉：80"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Fructooligosaccharides (FOS): 25",
+                    "Saffron Extract: 10",
+                    "Potato Starch: 80"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BBr60+Lp90+BC99: 240B",
                   "EN": "LRa05+LCr86+LR08+BBr60+Lp90+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "低聚果糖：25",
+                    "藏红花提取物：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：50"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Fructooligosaccharides (FOS): 25",
+                    "Saffron Extract: 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 50"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BBr60+Lp90+BC99: 480B",
                   "EN": "LRa05+LCr86+LR08+BBr60+Lp90+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -1410,56 +1584,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BBr60+Lp90+Akk11+BC99: 120B",
                   "EN": "LRa05+LCr86+LR08+BBr60+Lp90+Akk11+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：55",
+                    "雨生红球藻粉：5",
+                    "绿茶粉：50",
+                    "红石榴浓缩粉：10",
+                    "马铃薯淀粉：10"
+                  ],
+                  "EN": [
+                    "Inulin: 55",
+                    "Haematococcus pluvialis Powder: 5",
+                    "Green Tea Powder: 50",
+                    "Pomegranate Concentrate Powder: 10",
+                    "Potato Starch: 10"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BBr60+Lp90+Akk11+BC99: 240B",
                   "EN": "LRa05+LCr86+LR08+BBr60+Lp90+Akk11+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：50",
+                    "雨生红球藻粉：5",
+                    "绿茶粉：25",
+                    "红石榴浓缩粉：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：20"
+                  ],
+                  "EN": [
+                    "Inulin: 50",
+                    "Haematococcus pluvialis Powder: 5",
+                    "Green Tea Powder: 25",
+                    "Pomegranate Concentrate Powder: 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BBr60+Lp90+Akk11+BC99: 480B",
                   "EN": "LRa05+LCr86+LR08+BBr60+Lp90+Akk11+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -1546,56 +1752,92 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BBr60+PA53+Lp90+BC99: 120B",
                   "EN": "LRa05+LCr86+LR08+BBr60+PA53+Lp90+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：50",
+                    "藏红花提取物：5",
+                    "维生素D3：2.5",
+                    "维生素K2：45",
+                    "维生素B6：3",
+                    "微晶纤维素：80"
+                  ],
+                  "EN": [
+                    "Inulin: 50",
+                    "Saffron Extract: 5",
+                    "Vitamin D3: 2.5",
+                    "Vitamin K2: 45",
+                    "Vitamin B6: 3",
+                    "Microcrystalline Cellulose: 80"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BBr60+PA53+Lp90+BC99: 240B",
                   "EN": "LRa05+LCr86+LR08+BBr60+PA53+Lp90+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：50",
+                    "藏红花提取物：5",
+                    "维生素D3：2.5",
+                    "维生素K2：45",
+                    "维生素B6：3",
+                    "硬脂酸镁：5.5",
+                    "微晶纤维素：20"
+                  ],
+                  "EN": [
+                    "Inulin: 50",
+                    "Saffron Extract: 5",
+                    "Vitamin D3: 2.5",
+                    "Vitamin K2: 45",
+                    "Vitamin B6: 3",
+                    "Magnesium Stearate: 5.5",
+                    "Microcrystalline Cellulose: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "LRa05+LCr86+LR08+BBr60+PA53+Lp90+BC99: 480B",
                   "EN": "LRa05+LCr86+LR08+BBr60+PA53+Lp90+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -1696,56 +1938,100 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+BL21+BAC30+BI45+BC99: 120B",
                   "EN": "BLa80+LRa05+BBr60+BL21+BAC30+BI45+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "低聚果糖：25",
+                    "褪黑素：1",
+                    "L-茶氨酸：20",
+                    "γ-氨基丁酸：40",
+                    "厚朴粉：5",
+                    "南非醉茄粉：20",
+                    "马铃薯淀粉：10"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Fructooligosaccharides (FOS): 25",
+                    "Melatonin: 1",
+                    "L-Theanine: 20",
+                    "Gamma-Aminobutyric Acid (GABA): 40",
+                    "Magnolia Bark Powder: 5",
+                    "Ashwagandha Powder: 20",
+                    "Potato Starch: 10"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+BL21+BAC30+BI45+BC99: 240B",
                   "EN": "BLa80+LRa05+BBr60+BL21+BAC30+BI45+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：20",
+                    "低聚果糖：20",
+                    "褪黑素：1",
+                    "L-茶氨酸：20",
+                    "γ-氨基丁酸：20",
+                    "厚朴粉：5",
+                    "南非醉茄粉：5",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：10"
+                  ],
+                  "EN": [
+                    "Inulin: 20",
+                    "Fructooligosaccharides (FOS): 20",
+                    "Melatonin: 1",
+                    "L-Theanine: 20",
+                    "Gamma-Aminobutyric Acid (GABA): 20",
+                    "Magnolia Bark Powder: 5",
+                    "Ashwagandha Powder: 5",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 10"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+BL21+BAC30+BI45+BC99: 480B",
                   "EN": "BLa80+LRa05+BBr60+BL21+BAC30+BI45+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -1825,56 +2111,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+Lp90+BC99: 120B",
                   "EN": "BLa80+LRa05+BBr60+PA53+Lp90+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：50",
+                    "假马齿苋提取物：10",
+                    "维生素B6：4",
+                    "燕窝酸：5",
+                    "马铃薯淀粉：50"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 50",
+                    "Portulaca oleracea Extract: 10",
+                    "Vitamin B6: 4",
+                    "Sialic Acid: 5",
+                    "Potato Starch: 50"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+Lp90+BC99: 240B",
                   "EN": "BLa80+LRa05+BBr60+PA53+Lp90+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：50",
+                    "假马齿苋提取物：10",
+                    "维生素B6：4",
+                    "燕窝酸：5",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：40"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 50",
+                    "Portulaca oleracea Extract: 10",
+                    "Vitamin B6: 4",
+                    "Sialic Acid: 5",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 40"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+Lp90+BC99: 480B",
                   "EN": "BLa80+LRa05+BBr60+PA53+Lp90+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -1963,56 +2281,92 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+LR08+BC99: 120B",
                   "EN": "BLa80+LRa05+BBr60+PA53+LR08+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：20",
+                    "南非醉茄粉：20",
+                    "L-茶氨酸：20",
+                    "γ-氨基丁酸：20",
+                    "白藜芦醇：15",
+                    "马铃薯淀粉：20"
+                  ],
+                  "EN": [
+                    "Inulin: 20",
+                    "Ashwagandha Powder: 20",
+                    "L-Theanine: 20",
+                    "Gamma-Aminobutyric Acid (GABA): 20",
+                    "Resveratrol: 15",
+                    "Potato Starch: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+LR08+BC99: 240B",
                   "EN": "BLa80+LRa05+BBr60+PA53+LR08+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：20",
+                    "南非醉茄粉：20",
+                    "L-茶氨酸：20",
+                    "γ-氨基丁酸：20",
+                    "白藜芦醇：15",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：10"
+                  ],
+                  "EN": [
+                    "Inulin: 20",
+                    "Ashwagandha Powder: 20",
+                    "L-Theanine: 20",
+                    "Gamma-Aminobutyric Acid (GABA): 20",
+                    "Resveratrol: 15",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 10"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+LR08+BC99: 480B",
                   "EN": "BLa80+LRa05+BBr60+PA53+LR08+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -2101,56 +2455,92 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+BL21+BC99: 120B",
                   "EN": "BLa80+LRa05+BBr60+PA53+BL21+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：20",
+                    "南非醉茄粉：20",
+                    "L-茶氨酸：20",
+                    "维生素B6：3",
+                    "辅酶Q10：10",
+                    "马铃薯淀粉：80"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 20",
+                    "Ashwagandha Powder: 20",
+                    "L-Theanine: 20",
+                    "Vitamin B6: 3",
+                    "Coenzyme Q10: 10",
+                    "Potato Starch: 80"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+BL21+BC99: 240B",
                   "EN": "BLa80+LRa05+BBr60+PA53+BL21+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：20",
+                    "南非醉茄粉：20",
+                    "L-茶氨酸：20",
+                    "维生素B6：3",
+                    "辅酶Q10：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：10"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 20",
+                    "Ashwagandha Powder: 20",
+                    "L-Theanine: 20",
+                    "Vitamin B6: 3",
+                    "Coenzyme Q10: 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 10"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+BL21+BC99: 480B",
                   "EN": "BLa80+LRa05+BBr60+PA53+BL21+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -2260,56 +2650,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 120B",
                   "EN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "阿拉伯胶：25",
+                    "绿茶粉：50",
+                    "血橙浓缩粉：10",
+                    "马铃薯淀粉：80"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Gum Arabic: 25",
+                    "Green Tea Powder: 50",
+                    "Blood Orange Concentrate Powder: 10",
+                    "Potato Starch: 80"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 240B",
                   "EN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "阿拉伯胶：25",
+                    "绿茶粉：10",
+                    "血橙浓缩粉：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：20"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Gum Arabic: 25",
+                    "Green Tea Powder: 10",
+                    "Blood Orange Concentrate Powder: 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 480B",
                   "EN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -2412,56 +2834,92 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+Akk11+BC99: 120B",
                   "EN": "BBr60+LRa05+BL21+BLa80+Akk11+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "抗性糊精：30",
+                    "低聚果糖：30",
+                    "维生素B6：3",
+                    "维生素K2：45",
+                    "黑胡椒提取物：10",
+                    "马铃薯淀粉：90"
+                  ],
+                  "EN": [
+                    "Resistant Dextrin: 30",
+                    "Fructooligosaccharides (FOS): 30",
+                    "Vitamin B6: 3",
+                    "Vitamin K2: 45",
+                    "Black Pepper Extract: 10",
+                    "Potato Starch: 90"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+Akk11+BC99: 240B",
                   "EN": "BBr60+LRa05+BL21+BLa80+Akk11+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "抗性糊精：30",
+                    "低聚果糖：30",
+                    "维生素B6：3",
+                    "维生素K2：45",
+                    "黑胡椒提取物：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：40"
+                  ],
+                  "EN": [
+                    "Resistant Dextrin: 30",
+                    "Fructooligosaccharides (FOS): 30",
+                    "Vitamin B6: 3",
+                    "Vitamin K2: 45",
+                    "Black Pepper Extract: 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 40"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+Akk11+BC99: 480B",
                   "EN": "BBr60+LRa05+BL21+BLa80+Akk11+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -2569,56 +3027,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+BC99+BC179+Akk11: 120B",
                   "EN": "BBr60+LRa05+BL21+BLa80+BC99+BC179+Akk11: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：25",
+                    "菊粉：25",
+                    "姜黄粉：50",
+                    "水飞蓟提取物：5",
+                    "马铃薯淀粉：90"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 25",
+                    "Inulin: 25",
+                    "Turmeric Powder: 50",
+                    "Milk Thistle Extract: 5",
+                    "Potato Starch: 90"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+BC99+BC179+Akk11: 240B",
                   "EN": "BBr60+LRa05+BL21+BLa80+BC99+BC179+Akk11: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：25",
+                    "菊粉：25",
+                    "姜黄粉：20",
+                    "水飞蓟提取物：5",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：30"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 25",
+                    "Inulin: 25",
+                    "Turmeric Powder: 20",
+                    "Milk Thistle Extract: 5",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 30"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+BC99+BC179+Akk11: 480B",
                   "EN": "BBr60+LRa05+BL21+BLa80+BC99+BC179+Akk11: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -2663,56 +3153,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+BC99+LA85+LC86+PA53+Lp05: 120B",
                   "EN": "BBr60+LRa05+BL21+BLa80+BC99+LA85+LC86+PA53+Lp05: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：50",
+                    "雨生红球藻粉：20",
+                    "红石榴浓缩粉：20",
+                    "白藜芦醇：10",
+                    "马铃薯淀粉：80"
+                  ],
+                  "EN": [
+                    "Inulin: 50",
+                    "Haematococcus pluvialis Powder: 20",
+                    "Pomegranate Concentrate Powder: 20",
+                    "Resveratrol: 10",
+                    "Potato Starch: 80"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+BC99+LA85+LC86+PA53+Lp05: 240B",
                   "EN": "BBr60+LRa05+BL21+BLa80+BC99+LA85+LC86+PA53+Lp05: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：40",
+                    "雨生红球藻粉：20",
+                    "红石榴浓缩粉：20",
+                    "白藜芦醇：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：10"
+                  ],
+                  "EN": [
+                    "Inulin: 40",
+                    "Haematococcus pluvialis Powder: 20",
+                    "Pomegranate Concentrate Powder: 20",
+                    "Resveratrol: 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 10"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+BC99+LA85+LC86+PA53+Lp05: 480B",
                   "EN": "BBr60+LRa05+BL21+BLa80+BC99+LA85+LC86+PA53+Lp05: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -2812,56 +3334,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+pAkk11+BC99: 120B",
                   "EN": "BBr60+LRa05+BL21+BLa80+pAkk11+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "阿拉伯胶：25",
+                    "绿茶粉：50",
+                    "食用菌浓缩粉（双孢蘑菇）：10",
+                    "马铃薯淀粉：80"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Gum Arabic: 25",
+                    "Green Tea Powder: 50",
+                    "Mushroom Concentrate (Agaricus bisporus): 10",
+                    "Potato Starch: 80"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+pAkk11+BC99: 240B",
                   "EN": "BBr60+LRa05+BL21+BLa80+pAkk11+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "阿拉伯胶：25",
+                    "绿茶粉：20",
+                    "食用菌浓缩粉（双孢蘑菇）：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：20"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Gum Arabic: 25",
+                    "Green Tea Powder: 20",
+                    "Mushroom Concentrate (Agaricus bisporus): 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+pAkk11+BC99: 480B",
                   "EN": "BBr60+LRa05+BL21+BLa80+pAkk11+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -2960,56 +3514,92 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+LR08+Akk11+BC99: 120B",
                   "EN": "BBr60+LRa05+BL21+Lp90+LR08+Akk11+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "阿拉伯胶：25",
+                    "绿茶粉：50",
+                    "维生素B6：3",
+                    "黑胡椒提取物：10",
+                    "马铃薯淀粉：90"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Gum Arabic: 25",
+                    "Green Tea Powder: 50",
+                    "Vitamin B6: 3",
+                    "Black Pepper Extract: 10",
+                    "Potato Starch: 90"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+LR08+Akk11+BC99: 240B",
                   "EN": "BBr60+LRa05+BL21+Lp90+LR08+Akk11+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "阿拉伯胶：25",
+                    "绿茶粉：20",
+                    "维生素B6：3",
+                    "黑胡椒提取物：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：20"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Gum Arabic: 25",
+                    "Green Tea Powder: 20",
+                    "Vitamin B6: 3",
+                    "Black Pepper Extract: 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+LR08+Akk11+BC99: 480B",
                   "EN": "BBr60+LRa05+BL21+Lp90+LR08+Akk11+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -3089,56 +3679,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 120B",
                   "EN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "阿拉伯胶：25",
+                    "绿茶粉：50",
+                    "血橙浓缩粉：10",
+                    "马铃薯淀粉：80"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Gum Arabic: 25",
+                    "Green Tea Powder: 50",
+                    "Blood Orange Concentrate Powder: 10",
+                    "Potato Starch: 80"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 240B",
                   "EN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "阿拉伯胶：25",
+                    "绿茶粉：10",
+                    "血橙浓缩粉：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：20"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Gum Arabic: 25",
+                    "Green Tea Powder: 10",
+                    "Blood Orange Concentrate Powder: 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 480B",
                   "EN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -3220,56 +3842,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+pAkk11+BC99: 120B",
                   "EN": "BBr60+LRa05+BL21+BLa80+pAkk11+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "阿拉伯胶：25",
+                    "绿茶粉：50",
+                    "食用菌浓缩粉（双孢蘑菇）：10",
+                    "马铃薯淀粉：80"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Gum Arabic: 25",
+                    "Green Tea Powder: 50",
+                    "Mushroom Concentrate (Agaricus bisporus): 10",
+                    "Potato Starch: 80"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+pAkk11+BC99: 240B",
                   "EN": "BBr60+LRa05+BL21+BLa80+pAkk11+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "阿拉伯胶：25",
+                    "绿茶粉：20",
+                    "食用菌浓缩粉（双孢蘑菇）：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：20"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Gum Arabic: 25",
+                    "Green Tea Powder: 20",
+                    "Mushroom Concentrate (Agaricus bisporus): 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+pAkk11+BC99: 480B",
                   "EN": "BBr60+LRa05+BL21+BLa80+pAkk11+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -3367,56 +4021,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 120B",
                   "EN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "阿拉伯胶：25",
+                    "绿茶粉：50",
+                    "血橙浓缩粉：10",
+                    "马铃薯淀粉：80"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Gum Arabic: 25",
+                    "Green Tea Powder: 50",
+                    "Blood Orange Concentrate Powder: 10",
+                    "Potato Starch: 80"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 240B",
                   "EN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：25",
+                    "阿拉伯胶：25",
+                    "绿茶粉：10",
+                    "血橙浓缩粉：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：20"
+                  ],
+                  "EN": [
+                    "Inulin: 25",
+                    "Gum Arabic: 25",
+                    "Green Tea Powder: 10",
+                    "Blood Orange Concentrate Powder: 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 480B",
                   "EN": "BBr60+LRa05+BL21+Lp90+LR08+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -3470,56 +4156,80 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BLa80+BC99+BL21+LA85+LC86+PA53+Lp05+ST36: 120B",
                   "EN": "BBr60+LRa05+BLa80+BC99+BL21+LA85+LC86+PA53+Lp05+ST36: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：62.5",
+                    "低聚果糖：62.5",
+                    "马铃薯淀粉：60"
+                  ],
+                  "EN": [
+                    "Inulin: 62.5",
+                    "Fructooligosaccharides (FOS): 62.5",
+                    "Potato Starch: 60"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BLa80+BC99+BL21+LA85+LC86+PA53+Lp05+ST36: 240B",
                   "EN": "BBr60+LRa05+BLa80+BC99+BL21+LA85+LC86+PA53+Lp05+ST36: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：30",
+                    "低聚果糖：30",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：50"
+                  ],
+                  "EN": [
+                    "Inulin: 30",
+                    "Fructooligosaccharides (FOS): 30",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 50"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BLa80+BC99+BL21+LA85+LC86+PA53+Lp05+ST36: 480B",
                   "EN": "BBr60+LRa05+BLa80+BC99+BL21+LA85+LC86+PA53+Lp05+ST36: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -3584,56 +4294,84 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+BLa36+LC89+CCFM7902+BAC30+BC99: 120B",
                   "EN": "BBr60+LRa05+BL21+Lp90+BLa36+LC89+CCFM7902+BAC30+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：62.5",
+                    "低聚果糖：62.5",
+                    "食用菌浓缩粉（双孢蘑菇）：20",
+                    "马铃薯淀粉：140"
+                  ],
+                  "EN": [
+                    "Inulin: 62.5",
+                    "Fructooligosaccharides (FOS): 62.5",
+                    "Mushroom Concentrate (Agaricus bisporus): 20",
+                    "Potato Starch: 140"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 500mg",
-                  "EN": "Total: 500mg"
+                  "CN": "500",
+                  "EN": "500"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+BLa36+LC89+CCFM7902+BAC30+BC99: 240B",
                   "EN": "BBr60+LRa05+BL21+Lp90+BLa36+LC89+CCFM7902+BAC30+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：30",
+                    "低聚果糖：30",
+                    "食用菌浓缩粉（双孢蘑菇）：20",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：20"
+                  ],
+                  "EN": [
+                    "Inulin: 30",
+                    "Fructooligosaccharides (FOS): 30",
+                    "Mushroom Concentrate (Agaricus bisporus): 20",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+Lp90+BLa36+LC89+CCFM7902+BAC30+BC99: 480B",
                   "EN": "BBr60+LRa05+BL21+Lp90+BLa36+LC89+CCFM7902+BAC30+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -3717,56 +4455,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+LR08+BC99: 120B",
                   "EN": "BBr60+LRa05+BL21+BLa80+LR08+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：40",
+                    "聚果糖：40",
+                    "姜黄粉：30",
+                    "维生素D3：2.5",
+                    "马铃薯淀粉：80"
+                  ],
+                  "EN": [
+                    "Inulin: 40",
+                    "Fructan: 40",
+                    "Turmeric Powder: 30",
+                    "Vitamin D3: 2.5",
+                    "Potato Starch: 80"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+LR08+BC99: 240B",
                   "EN": "BBr60+LRa05+BL21+BLa80+LR08+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：20",
+                    "聚果糖：20",
+                    "姜黄粉：20",
+                    "维生素D3：2.5",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：40"
+                  ],
+                  "EN": [
+                    "Inulin: 20",
+                    "Fructan: 20",
+                    "Turmeric Powder: 20",
+                    "Vitamin D3: 2.5",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 40"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BBr60+LRa05+BL21+BLa80+LR08+BC99: 480B",
                   "EN": "BBr60+LRa05+BL21+BLa80+LR08+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -3862,56 +4632,84 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+LA85+BL21+BBr60+BAC30+BI45+BC99: 120B",
                   "EN": "BLa80+LRa05+LA85+BL21+BBr60+BAC30+BI45+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：30",
+                    "低聚果糖：30",
+                    "抗性糊精：40",
+                    "马铃薯淀粉：90"
+                  ],
+                  "EN": [
+                    "Inulin: 30",
+                    "Fructooligosaccharides (FOS): 30",
+                    "Resistant Dextrin: 40",
+                    "Potato Starch: 90"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+LA85+BL21+BBr60+BAC30+BI45+BC99: 240B",
                   "EN": "BLa80+LRa05+LA85+BL21+BBr60+BAC30+BI45+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：30",
+                    "低聚果糖：30",
+                    "抗性糊精：20",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：20"
+                  ],
+                  "EN": [
+                    "Inulin: 30",
+                    "Fructooligosaccharides (FOS): 30",
+                    "Resistant Dextrin: 20",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+LA85+BL21+BBr60+BAC30+BI45+BC99: 480B",
                   "EN": "BLa80+LRa05+LA85+BL21+BBr60+BAC30+BI45+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -4003,56 +4801,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+LA85+BL21+BBr60+BC99: 120B",
                   "EN": "BLa80+LRa05+LA85+BL21+BBr60+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：50",
+                    "阿拉伯胶：30",
+                    "抗性糊精：30",
+                    "酵母β葡聚糖：10",
+                    "马铃薯淀粉：70"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 50",
+                    "Gum Arabic: 30",
+                    "Resistant Dextrin: 30",
+                    "Yeast Beta-Glucan: 10",
+                    "Potato Starch: 70"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+LA85+BL21+BBr60+BC99: 240B",
                   "EN": "BLa80+LRa05+LA85+BL21+BBr60+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：20",
+                    "阿拉伯胶：20",
+                    "抗性糊精：20",
+                    "酵母β葡聚糖：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：30"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 20",
+                    "Gum Arabic: 20",
+                    "Resistant Dextrin: 20",
+                    "Yeast Beta-Glucan: 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 30"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+LA85+BL21+BBr60+BC99: 480B",
                   "EN": "BLa80+LRa05+LA85+BL21+BBr60+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -4141,56 +4971,84 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+BBr60+Lp05+BC99: 120B",
                   "EN": "BLa80+LRa05+BL21+BBr60+Lp05+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：50",
+                    "抗性糊精：40",
+                    "L-谷氨酰胺：40",
+                    "马铃薯淀粉：60"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 50",
+                    "Resistant Dextrin: 40",
+                    "L-Glutamine: 40",
+                    "Potato Starch: 60"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+BBr60+Lp05+BC99: 240B",
                   "EN": "BLa80+LRa05+BL21+BBr60+Lp05+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：20",
+                    "抗性糊精：20",
+                    "L-谷氨酰胺：40",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：20"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 20",
+                    "Resistant Dextrin: 20",
+                    "L-Glutamine: 40",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+BBr60+Lp05+BC99: 480B",
                   "EN": "BLa80+LRa05+BL21+BBr60+Lp05+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -4287,56 +5145,84 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+LA85+BL21+BBr60+BAC30+BI45+BC99: 120B",
                   "EN": "BLa80+LRa05+LA85+BL21+BBr60+BAC30+BI45+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：30",
+                    "低聚果糖：30",
+                    "抗性糊精：40",
+                    "马铃薯淀粉：90"
+                  ],
+                  "EN": [
+                    "Inulin: 30",
+                    "Fructooligosaccharides (FOS): 30",
+                    "Resistant Dextrin: 40",
+                    "Potato Starch: 90"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+LA85+BL21+BBr60+BAC30+BI45+BC99: 240B",
                   "EN": "BLa80+LRa05+LA85+BL21+BBr60+BAC30+BI45+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "菊粉：30",
+                    "低聚果糖：30",
+                    "抗性糊精：20",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：20"
+                  ],
+                  "EN": [
+                    "Inulin: 30",
+                    "Fructooligosaccharides (FOS): 30",
+                    "Resistant Dextrin: 20",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+LA85+BL21+BBr60+BAC30+BI45+BC99: 480B",
                   "EN": "BLa80+LRa05+LA85+BL21+BBr60+BAC30+BI45+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -4428,56 +5314,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+ST36+BC99: 120B",
                   "EN": "BLa80+LRa05+BBr60+PA53+ST36+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：40",
+                    "阿拉伯胶：30",
+                    "抗性糊精：30",
+                    "蛋白酶：30",
+                    "马铃薯淀粉：90"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 40",
+                    "Gum Arabic: 30",
+                    "Resistant Dextrin: 30",
+                    "Protease: 30",
+                    "Potato Starch: 90"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+ST36+BC99: 240B",
                   "EN": "BLa80+LRa05+BBr60+PA53+ST36+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：20",
+                    "阿拉伯胶：20",
+                    "抗性糊精：20",
+                    "蛋白酶：20",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：10"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 20",
+                    "Gum Arabic: 20",
+                    "Resistant Dextrin: 20",
+                    "Protease: 20",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 10"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+ST36+BC99: 480B",
                   "EN": "BLa80+LRa05+BBr60+PA53+ST36+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -4569,56 +5487,76 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+LA85+BL21+BI45+BC99: 120B",
                   "EN": "BLa80+LRa05+LA85+BL21+BI45+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：100",
+                    "马铃薯淀粉：90"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 100",
+                    "Potato Starch: 90"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+LA85+BL21+BI45+BC99: 240B",
                   "EN": "BLa80+LRa05+LA85+BL21+BI45+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：60",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：50"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 60",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 50"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+LA85+BL21+BI45+BC99: 480B",
                   "EN": "BLa80+LRa05+LA85+BL21+BI45+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -4731,56 +5669,92 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+BBr60+Akk11/pAkk11+BC99: 120B",
                   "EN": "BLa80+LRa05+BL21+BBr60+Akk11/pAkk11+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：50",
+                    "菊粉：25",
+                    "阿拉伯胶：15",
+                    "抗性糊精：15",
+                    "低聚半乳糖：15",
+                    "马铃薯淀粉：60"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 50",
+                    "Inulin: 25",
+                    "Gum Arabic: 15",
+                    "Resistant Dextrin: 15",
+                    "Galactooligosaccharides (GOS): 15",
+                    "Potato Starch: 60"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+BBr60+Akk11/pAkk11+BC99: 240B",
                   "EN": "BLa80+LRa05+BL21+BBr60+Akk11/pAkk11+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：20",
+                    "菊粉：20",
+                    "阿拉伯胶：15",
+                    "抗性糊精：15",
+                    "低聚半乳糖：15",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：20"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 20",
+                    "Inulin: 20",
+                    "Gum Arabic: 15",
+                    "Resistant Dextrin: 15",
+                    "Galactooligosaccharides (GOS): 15",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+BBr60+Akk11/pAkk11+BC99: 480B",
                   "EN": "BLa80+LRa05+BL21+BBr60+Akk11/pAkk11+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -4916,56 +5890,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+LR08+BBr60+BI45+BC99: 120B",
                   "EN": "BLa80+LRa05+BL21+LR08+BBr60+BI45+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：50",
+                    "低聚半乳糖：50",
+                    "非活性食用酵母：5",
+                    "葡萄糖酸锌：20",
+                    "麦芽糊精：20"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 50",
+                    "Galactooligosaccharides (GOS): 50",
+                    "Inactive Nutritional Yeast: 5",
+                    "Zinc Gluconate: 20",
+                    "Maltodextrin: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+LR08+BBr60+BI45+BC99: 240B",
                   "EN": "BLa80+LRa05+BL21+LR08+BBr60+BI45+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：25",
+                    "低聚半乳糖：25",
+                    "非活性食用酵母：5",
+                    "葡萄糖酸锌：20",
+                    "硬脂酸镁：5.5",
+                    "麦芽糊精：20"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 25",
+                    "Galactooligosaccharides (GOS): 25",
+                    "Inactive Nutritional Yeast: 5",
+                    "Zinc Gluconate: 20",
+                    "Magnesium Stearate: 5.5",
+                    "Maltodextrin: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+LR08+BBr60+BI45+BC99: 480B",
                   "EN": "BLa80+LRa05+BL21+LR08+BBr60+BI45+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -5069,56 +6075,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+Akk11/pAkk11+BC99: 120B",
                   "EN": "BLa80+LRa05+BBr60+PA53+Akk11/pAkk11+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：50",
+                    "低聚半乳糖：50",
+                    "酵母β葡聚糖：10",
+                    "白桦茸粉：10",
+                    "马铃薯淀粉：90"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 50",
+                    "Galactooligosaccharides (GOS): 50",
+                    "Yeast Beta-Glucan: 10",
+                    "Chaga Mushroom Powder: 10",
+                    "Potato Starch: 90"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+Akk11/pAkk11+BC99: 240B",
                   "EN": "BLa80+LRa05+BBr60+PA53+Akk11/pAkk11+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：20",
+                    "低聚半乳糖：20",
+                    "酵母β葡聚糖：10",
+                    "白桦茸粉：10",
+                    "硬脂酸镁：5.5",
+                    "马铃薯淀粉：30"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 20",
+                    "Galactooligosaccharides (GOS): 20",
+                    "Yeast Beta-Glucan: 10",
+                    "Chaga Mushroom Powder: 10",
+                    "Magnesium Stearate: 5.5",
+                    "Potato Starch: 30"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BBr60+PA53+Akk11/pAkk11+BC99: 480B",
                   "EN": "BLa80+LRa05+BBr60+PA53+Akk11/pAkk11+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -5211,56 +6249,84 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+BBr60+BI45+BC99: 120B",
                   "EN": "BLa80+LRa05+BL21+BBr60+BI45+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：60",
+                    "低聚半乳糖：50",
+                    "非活性食用酵母：5",
+                    "麦芽糊精：80"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 60",
+                    "Galactooligosaccharides (GOS): 50",
+                    "Inactive Nutritional Yeast: 5",
+                    "Maltodextrin: 80"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 450mg",
-                  "EN": "Total: 450mg"
+                  "CN": "450",
+                  "EN": "450"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+BBr60+BI45+BC99: 240B",
                   "EN": "BLa80+LRa05+BL21+BBr60+BI45+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：30",
+                    "低聚半乳糖：30",
+                    "非活性食用酵母：5",
+                    "硬脂酸镁：5.5",
+                    "麦芽糊精：30"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 30",
+                    "Galactooligosaccharides (GOS): 30",
+                    "Inactive Nutritional Yeast: 5",
+                    "Magnesium Stearate: 5.5",
+                    "Maltodextrin: 30"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+BBr60+BI45+BC99: 480B",
                   "EN": "BLa80+LRa05+BL21+BBr60+BI45+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -5361,56 +6427,80 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+LR08+Akk11/pAkk11+BC99: 120B",
                   "EN": "BLa80+LRa05+BL21+LR08+Akk11/pAkk11+BC99: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：50",
+                    "低聚半乳糖：50",
+                    "麦芽糊精：40"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 50",
+                    "Galactooligosaccharides (GOS): 50",
+                    "Maltodextrin: 40"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+LR08+Akk11/pAkk11+BC99: 240B",
                   "EN": "BLa80+LRa05+BL21+LR08+Akk11/pAkk11+BC99: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：30",
+                    "低聚半乳糖：30",
+                    "硬脂酸镁：5.5",
+                    "麦芽糊精：40"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 30",
+                    "Galactooligosaccharides (GOS): 30",
+                    "Magnesium Stearate: 5.5",
+                    "Maltodextrin: 40"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05+BL21+LR08+Akk11/pAkk11+BC99: 480B",
                   "EN": "BLa80+LRa05+BL21+LR08+Akk11/pAkk11+BC99: 480B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -5486,56 +6576,84 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（60B+60B）",
                   "EN": "BLa80+LRa05\n（60B+60B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：50",
+                    "低聚半乳糖：25",
+                    "2'-岩藻糖基乳糖（2'-FL）：25",
+                    "麦芽糊精：90"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 50",
+                    "Galactooligosaccharides (GOS): 25",
+                    "2'-Fucosyllactose (2'-FL): 25",
+                    "Maltodextrin: 90"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（120B+120B）",
                   "EN": "BLa80+LRa05\n（120B+120B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：25",
+                    "低聚半乳糖：25",
+                    "2'-岩藻糖基乳糖（2'-FL）：25",
+                    "硬脂酸镁：5.5",
+                    "麦芽糊精：30"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 25",
+                    "Galactooligosaccharides (GOS): 25",
+                    "2'-Fucosyllactose (2'-FL): 25",
+                    "Magnesium Stearate: 5.5",
+                    "Maltodextrin: 30"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（480B+480B）",
                   "EN": "BLa80+LRa05\n（480B+480B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -5589,56 +6707,80 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（60B+60B）",
                   "EN": "BLa80+LRa05\n（60B+60B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：50",
+                    "抗性糊精：50",
+                    "麦芽糊精：90"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 50",
+                    "Resistant Dextrin: 50",
+                    "Maltodextrin: 90"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（120B+120B）",
                   "EN": "BLa80+LRa05\n（120B+120B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：30",
+                    "抗性糊精：30",
+                    "硬脂酸镁：5.5",
+                    "麦芽糊精：30"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 30",
+                    "Resistant Dextrin: 30",
+                    "Magnesium Stearate: 5.5",
+                    "Maltodextrin: 30"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（480B+480B）",
                   "EN": "BLa80+LRa05\n（480B+480B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -5691,56 +6833,88 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（60B+60B）",
                   "EN": "BLa80+LRa05\n（60B+60B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：50",
+                    "抗性糊精：50",
+                    "维生素D3：2.5",
+                    "葡萄糖酸锌：20",
+                    "麦芽糊精：60"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 50",
+                    "Resistant Dextrin: 50",
+                    "Vitamin D3: 2.5",
+                    "Zinc Gluconate: 20",
+                    "Maltodextrin: 60"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（120B+120B）",
                   "EN": "BLa80+LRa05\n（120B+120B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：30",
+                    "抗性糊精：30",
+                    "维生素D3：2.5",
+                    "葡萄糖酸锌：20",
+                    "硬脂酸镁：5.5",
+                    "麦芽糊精：20"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 30",
+                    "Resistant Dextrin: 30",
+                    "Vitamin D3: 2.5",
+                    "Zinc Gluconate: 20",
+                    "Magnesium Stearate: 5.5",
+                    "Maltodextrin: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（480B+480B）",
                   "EN": "BLa80+LRa05\n（480B+480B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -5784,56 +6958,80 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（60B+60B）",
                   "EN": "BLa80+LRa05\n（60B+60B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：50",
+                    "抗性糊精：50",
+                    "麦芽糊精：90"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 50",
+                    "Resistant Dextrin: 50",
+                    "Maltodextrin: 90"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（120B+120B）",
                   "EN": "BLa80+LRa05\n（120B+120B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：30",
+                    "抗性糊精：30",
+                    "硬脂酸镁：5.5",
+                    "麦芽糊精：20"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 30",
+                    "Resistant Dextrin: 30",
+                    "Magnesium Stearate: 5.5",
+                    "Maltodextrin: 20"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（480B+480B）",
                   "EN": "BLa80+LRa05\n（480B+480B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -5863,56 +7061,84 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（60B+60B）",
                   "EN": "BLa80+LRa05\n（60B+60B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：50",
+                    "抗性糊精：50",
+                    "低聚半乳糖：25",
+                    "麦芽糊精：80"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 50",
+                    "Resistant Dextrin: 50",
+                    "Galactooligosaccharides (GOS): 25",
+                    "Maltodextrin: 80"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（120B+120B）",
                   "EN": "BLa80+LRa05\n（120B+120B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "低聚果糖：25",
+                    "抗性糊精：25",
+                    "低聚半乳糖：25",
+                    "硬脂酸镁：5.5",
+                    "麦芽糊精：10"
+                  ],
+                  "EN": [
+                    "Fructooligosaccharides (FOS): 25",
+                    "Resistant Dextrin: 25",
+                    "Galactooligosaccharides (GOS): 25",
+                    "Magnesium Stearate: 5.5",
+                    "Maltodextrin: 10"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 480B",
+                  "EN": "Capsule 480B"
                 },
                 "clinical": {
                   "CN": "BLa80+LRa05\n（480B+480B）",
                   "EN": "BLa80+LRa05\n（480B+480B）"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "硬脂酸镁：5.5",
+                    "二氧化硅：2.75"
+                  ],
+                  "EN": [
+                    "Magnesium Stearate: 5.5",
+                    "Silicon Dioxide: 2.75"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -5978,38 +7204,56 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "LS97+LA85+LC86: 120B",
                   "EN": "LS97+LA85+LC86: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "异麦芽酮糖醇：100",
+                    "薄荷粉：1",
+                    "麦芽糊精：100"
+                  ],
+                  "EN": [
+                    "Isomalt: 100",
+                    "Mint Powder: 1",
+                    "Maltodextrin: 100"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "LS97+LA85+LC86: 240B",
                   "EN": "LS97+LA85+LC86: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "异麦芽酮糖醇：50",
+                    "薄荷粉：1",
+                    "硬脂酸镁：5.5",
+                    "麦芽糊精：50"
+                  ],
+                  "EN": [
+                    "Isomalt: 50",
+                    "Mint Powder: 1",
+                    "Magnesium Stearate: 5.5",
+                    "Maltodextrin: 50"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -6054,38 +7298,56 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "LS97+LA85+LC86: 120B",
                   "EN": "LS97+LA85+LC86: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "异麦芽酮糖醇：100",
+                    "薄荷粉：1",
+                    "麦芽糊精：100"
+                  ],
+                  "EN": [
+                    "Isomalt: 100",
+                    "Mint Powder: 1",
+                    "Maltodextrin: 100"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "LS97+LA85+LC86: 240B",
                   "EN": "LS97+LA85+LC86: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "异麦芽酮糖醇：50",
+                    "薄荷粉：1",
+                    "硬脂酸镁：5.5",
+                    "麦芽糊精：50"
+                  ],
+                  "EN": [
+                    "Isomalt: 50",
+                    "Mint Powder: 1",
+                    "Magnesium Stearate: 5.5",
+                    "Maltodextrin: 50"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
@@ -6130,38 +7392,56 @@
             "specs": [
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "0# 胶囊 120B",
+                  "EN": "Capsule 120B"
                 },
                 "clinical": {
                   "CN": "LS97+LA85+LC86: 120B",
                   "EN": "LS97+LA85+LC86: 120B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "异麦芽酮糖醇：100",
+                    "薄荷粉：1",
+                    "麦芽糊精：100"
+                  ],
+                  "EN": [
+                    "Isomalt: 100",
+                    "Mint Powder: 1",
+                    "Maltodextrin: 100"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 400mg",
-                  "EN": "Total: 400mg"
+                  "CN": "400",
+                  "EN": "400"
                 }
               },
               {
                 "title": {
-                  "CN": "",
-                  "EN": ""
+                  "CN": "00# 胶囊 240B",
+                  "EN": "Capsule 240B"
                 },
                 "clinical": {
                   "CN": "LS97+LA85+LC86: 240B",
                   "EN": "LS97+LA85+LC86: 240B"
                 },
                 "excipients": {
-                  "CN": [],
-                  "EN": []
+                  "CN": [
+                    "异麦芽酮糖醇：50",
+                    "薄荷粉：1",
+                    "硬脂酸镁：5.5",
+                    "麦芽糊精：50"
+                  ],
+                  "EN": [
+                    "Isomalt: 50",
+                    "Mint Powder: 1",
+                    "Magnesium Stearate: 5.5",
+                    "Maltodextrin: 50"
+                  ]
                 },
                 "total": {
-                  "CN": "Total: 550mg",
-                  "EN": "Total: 550mg"
+                  "CN": "550",
+                  "EN": "550"
                 }
               }
             ]
