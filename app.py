@@ -2281,6 +2281,16 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           color: var(--text);
           font-weight: 650;
         }
+        .clinical-grid{
+          grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+          align-items: start;
+        }
+        .clinical-grid .kv-k{
+          white-space: normal;
+          overflow-wrap: anywhere;
+          word-break: break-word;
+        }
+        .clinical-grid .kv-v{ min-width: 0; }
 
         /* WecPro® Formula: 7-row list */
         .f-row-wrap{
@@ -3478,7 +3488,7 @@ def main() -> None:
                 )
             st.markdown(
                 "<div class='kv-table'>"
-                "<div class='kv-grid' style='grid-template-columns: 130px 1fr;'>"
+                "<div class='kv-grid clinical-grid'>"
                 f"{rows_html}"
                 "</div>"
                 "</div>",
