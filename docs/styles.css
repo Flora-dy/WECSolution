@@ -11,6 +11,7 @@
 }
 
 *{ box-sizing: border-box; }
+[hidden]{ display: none !important; }
 html, body{ height: 100%; }
 body{
   margin: 0;
@@ -491,6 +492,7 @@ a.tile-badge.tile-badge-link:hover{
   justify-content:center;
   padding: 18px;
 }
+.modal[hidden]{ display:none !important; }
 .modal-backdrop{
   position:absolute;
   inset:0;
@@ -507,12 +509,12 @@ a.tile-badge.tile-badge-link:hover{
   border-radius: 18px;
   box-shadow: 0 22px 70px rgba(2,6,23,0.18);
   padding: 18px 18px 16px;
+  z-index: 1;
 }
 .modal-close{
-  position: sticky;
-  top: 0;
-  float: right;
-  margin-left: auto;
+  position: absolute;
+  top: 12px;
+  right: 12px;
   width: 38px;
   height: 38px;
   border-radius: 999px;
@@ -521,6 +523,7 @@ a.tile-badge.tile-badge-link:hover{
   font-size: 22px;
   line-height: 1;
   cursor: pointer;
+  z-index: 2;
 }
 
 @media (max-width: 860px){

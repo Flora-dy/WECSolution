@@ -78,7 +78,7 @@ function showPanel(series) {
 
 function openModal(html) {
   const modal = el("modal");
-  el("modal-body").innerHTML = html;
+  el("modal-body").innerHTML = html || "";
   modal.hidden = false;
   document.body.style.overflow = "hidden";
 }
@@ -95,6 +95,7 @@ function renderWecLac(data, lang) {
   const areas = el("weclac-areas");
   const strains = Array.isArray(data?.weclac?.strains) ? data.weclac.strains : [];
   const coreSet = new Set(Array.isArray(data?.weclac?.core_codes) ? data.weclac.core_codes : []);
+  const byCode = new Map(strains.map((s) => [safeText(s.code), s]));
   grid.innerHTML = strains
     .map((s) => {
       const code = safeText(s.code);
@@ -112,23 +113,10 @@ function renderWecLac(data, lang) {
       const patent = safeText(s.patent?.[lang] ?? s.patent ?? "");
       const spec = safeText(s.spec?.[lang] ?? s.spec ?? "");
 
-      const modalHtml = `
-        <div class="section-title">${latinHtml ? latinHtml + " " : ""}<span class="code-pill">${code}</span>${coreStar}</div>
-        ${name ? `<div style="color:rgba(15,23,42,0.65);font-weight:800;margin-top:-6px">${name}</div>` : ""}
-        <div style="margin-top:12px" class="kv-table">
-          <div class="kv-grid">
-            <div class="kv-k">${kFeature}</div><div class="kv-v">${escapeHtml(feature) || "—"}</div>
-            <div class="kv-k">${kClinical}</div><div class="kv-v">${escapeHtml(clinical) || "—"}</div>
-            <div class="kv-k">${kPatent}</div><div class="kv-v">${escapeHtml(patent) || "—"}</div>
-            <div class="kv-k">${kSpec}</div><div class="kv-v">${escapeHtml(spec) || "—"}</div>
-          </div>
-        </div>
-      `;
-
       return `
         <div class="ip-wrap">
           <div class="ip-card">
-            <div class="ip-avatar" role="button" tabindex="0" data-open="${encodeURIComponent(code)}">
+            <div class="ip-avatar" role="button" tabindex="0" data-code="${encodeURIComponent(code)}">
               ${icon ? `<img src="${icon}" alt="${code}"/>` : `<div class="code-pill">${code}</div>`}
             </div>
             <div class="ip-code">
@@ -145,24 +133,49 @@ function renderWecLac(data, lang) {
                 <div class="ip-k">${kSpec}</div><div class="ip-v">${escapeHtml(spec) || "—"}</div>
               </div>
             </details>
-            <template data-modal="${encodeURIComponent(code)}">${modalHtml}</template>
           </div>
         </div>
       `;
     })
     .join("");
 
-  grid.querySelectorAll("[data-open]").forEach((node) => {
-    const code = decodeURIComponent(node.getAttribute("data-open") || "");
-    node.addEventListener("click", () => {
-      const tpl = grid.querySelector(`template[data-modal="${encodeURIComponent(code)}"]`);
-      openModal(tpl?.innerHTML || "");
-    });
+  const openByCode = (code) => {
+    const s = byCode.get(code);
+    if (!s) return;
+    const name = getLabel(s.base_name, lang);
+    const latinHtml = safeText(s.latin_html || "");
+    const coreStar = coreSet.has(code) ? " <span title='Core' style='color:rgba(236,72,153,0.9)'>★</span>" : "";
+    const kFeature = lang === "EN" ? "Highlights" : "特点";
+    const kClinical = lang === "EN" ? "Clinical" : "临床";
+    const kPatent = lang === "EN" ? "Patents" : "专利";
+    const kSpec = lang === "EN" ? "Specification" : "规格";
+    const feature = safeText(s.feature?.[lang] ?? s.feature ?? "");
+    const clinical = safeText(s.clinical?.[lang] ?? s.clinical ?? "");
+    const patent = safeText(s.patent?.[lang] ?? s.patent ?? "");
+    const spec = safeText(s.spec?.[lang] ?? s.spec ?? "");
+
+    const modalHtml = `
+      <div class="section-title">${latinHtml ? latinHtml + " " : ""}<span class="code-pill">${code}</span>${coreStar}</div>
+      ${name ? `<div style="color:rgba(15,23,42,0.65);font-weight:800;margin-top:-6px">${escapeHtml(name)}</div>` : ""}
+      <div style="margin-top:12px" class="kv-table">
+        <div class="kv-grid">
+          <div class="kv-k">${kFeature}</div><div class="kv-v">${escapeHtml(feature) || "—"}</div>
+          <div class="kv-k">${kClinical}</div><div class="kv-v">${escapeHtml(clinical) || "—"}</div>
+          <div class="kv-k">${kPatent}</div><div class="kv-v">${escapeHtml(patent) || "—"}</div>
+          <div class="kv-k">${kSpec}</div><div class="kv-v">${escapeHtml(spec) || "—"}</div>
+        </div>
+      </div>
+    `;
+    openModal(modalHtml);
+  };
+
+  grid.querySelectorAll("[data-code]").forEach((node) => {
+    const code = decodeURIComponent(node.getAttribute("data-code") || "");
+    node.addEventListener("click", () => openByCode(code));
     node.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        const tpl = grid.querySelector(`template[data-modal="${encodeURIComponent(code)}"]`);
-        openModal(tpl?.innerHTML || "");
+        openByCode(code);
       }
     });
   });
@@ -417,6 +430,7 @@ function init() {
   el("modal").addEventListener("click", (e) => {
     if (e.target?.dataset?.close === "1") closeModal();
   });
+  document.querySelectorAll("[data-close='1']").forEach((btn) => btn.addEventListener("click", closeModal));
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeModal();
   });
