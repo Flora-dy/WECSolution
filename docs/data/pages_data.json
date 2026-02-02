@@ -233,7 +233,7 @@
           "EN": "Lactiplantibacillus plantarum"
         },
         "latin_html": "<span class='latin'>Lactiplantibacillus plantarum</span>",
-        "icon": "",
+        "icon": "./assets/strains/Lp05.png",
         "feature": {
           "CN": "护胃菌、泡菜来源",
           "EN": "Gastric‑protective strain, kimchi-derived"
@@ -283,7 +283,7 @@
           "EN": "Limosilactobacillus reuteri"
         },
         "latin_html": "<span class='latin'>Limosilactobacillus reuteri</span>",
-        "icon": "",
+        "icon": "./assets/strains/LR08.png",
         "feature": {
           "CN": "轻享菌，奶豆腐来源",
           "EN": "Light wellness strain, fermented dairy source"
