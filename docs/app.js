@@ -333,7 +333,7 @@ function renderSolution(data, lang, view) {
           return `<div class="kv-k">${escapeHtml(k)}</div><div class="kv-v"><div style="display:flex;gap:8px;flex-wrap:wrap">${badges}</div></div>`;
         })
         .join("");
-      el("solution-clinical").innerHTML = `<div class="kv-grid" style="grid-template-columns:130px 1fr">${rows}</div>`;
+      el("solution-clinical").innerHTML = `<div class="kv-grid clinical-grid">${rows}</div>`;
     }
 
     // Specs

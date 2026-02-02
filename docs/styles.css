@@ -380,6 +380,17 @@ body{
 .kv-k{ color: var(--muted); font-weight: 900; white-space: nowrap; }
 .kv-v{ color: var(--text); font-weight: 650; }
 
+.clinical-grid{
+  grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+  align-items: start;
+}
+.clinical-grid .kv-k{
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.clinical-grid .kv-v{ min-width: 0; }
+
 .tile-badge{
   display:inline-flex;
   align-items:center;
