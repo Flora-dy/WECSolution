@@ -224,6 +224,8 @@ body{
 }
 .ip-latin .latin{ font-style: italic; }
 .ip-latin .latin-noi{ font-style: normal; }
+.latin{ font-style: italic; }
+.latin-noi{ font-style: normal; }
 .code-pill{
   display:inline-flex;
   align-items:center;

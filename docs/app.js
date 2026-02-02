@@ -99,7 +99,7 @@ function renderWecLac(data, lang) {
   grid.innerHTML = strains
     .map((s) => {
       const code = safeText(s.code);
-      const name = getLabel(s.base_name, lang);
+      const name = lang === "EN" ? "" : getLabel(s.base_name, lang);
       const latinHtml = safeText(s.latin_html || "");
       const icon = safeText(s.icon || "");
       const coreStar = coreSet.has(code) ? " <span title='Core' style='color:rgba(236,72,153,0.9)'>★</span>" : "";
@@ -142,7 +142,7 @@ function renderWecLac(data, lang) {
   const openByCode = (code) => {
     const s = byCode.get(code);
     if (!s) return;
-    const name = getLabel(s.base_name, lang);
+    const name = lang === "EN" ? "" : getLabel(s.base_name, lang);
     const latinHtml = safeText(s.latin_html || "");
     const coreStar = coreSet.has(code) ? " <span title='Core' style='color:rgba(236,72,153,0.9)'>★</span>" : "";
     const kFeature = lang === "EN" ? "Highlights" : "特点";
