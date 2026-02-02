@@ -258,7 +258,7 @@
           "EN": "Lactobacillus curvatus"
         },
         "latin_html": "<span class='latin'>Lactobacillus crispatus</span>",
-        "icon": "",
+        "icon": "./assets/strains/LCr86.png",
         "feature": {
           "CN": "密护菌，奶酪来源",
           "EN": "Intimate care strain, cheese-derived"
