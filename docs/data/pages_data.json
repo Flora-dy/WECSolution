@@ -317,6 +317,78 @@
       "婴童健康",
       "情绪健康",
       "口腔健康"
+    ],
+    "area_details": [
+      {
+        "direction": {
+          "CN": "胃肠健康",
+          "EN": "Gastrointestinal Health"
+        },
+        "desc_html": {
+          "CN": "缓解便秘、缓解腹泻、改善IBS、调节肠道菌群、促进规律排便、预防肠道损伤、蛋白吸收、护胃清幽",
+          "EN": "Constipation &amp; diarrhea relief, IBS support, gut microbiota modulation, bowel regularity, intestinal protection, protein absorption, gastric &amp; <span class='latin'>H. pylori</span> support"
+        }
+      },
+      {
+        "direction": {
+          "CN": "代谢健康",
+          "EN": "Metabolic Health"
+        },
+        "desc_html": {
+          "CN": "体重管理、控制纤体、改善肥胖、调节血糖、改善代谢综合征、糖代谢调节、解酒护肝、减轻酒精性肝损伤、降尿酸",
+          "EN": "Weight management, obesity support, blood glucose regulation, metabolic syndrome support, alcohol metabolism &amp; liver support, uric acid reduction"
+        }
+      },
+      {
+        "direction": {
+          "CN": "免疫健康",
+          "EN": "Immunological Health"
+        },
+        "desc_html": {
+          "CN": "缓解湿疹、成人过敏、儿童过敏、改善病毒性肺炎",
+          "EN": "Eczema relief, adult &amp; pediatric allergy support, viral respiratory health"
+        }
+      },
+      {
+        "direction": {
+          "CN": "女性健康",
+          "EN": "Women's Health"
+        },
+        "desc_html": {
+          "CN": "卵巢健康、改善妇科疾病、阴道炎症、改善妊娠糖尿病、生殖健康",
+          "EN": "Ovarian health, gynecological balance, vaginal health, gestational diabetes support, reproductive health"
+        }
+      },
+      {
+        "direction": {
+          "CN": "婴童健康",
+          "EN": "Infant Health"
+        },
+        "desc_html": {
+          "CN": "刨腹产儿童菌群调节、婴幼儿免疫健康、生长发育",
+          "EN": "Gut microbiota support for C-section infants, immune development, growth &amp; development"
+        }
+      },
+      {
+        "direction": {
+          "CN": "情绪健康",
+          "EN": "Mental Health"
+        },
+        "desc_html": {
+          "CN": "助眠舒压、缓解焦虑、改善ADHD、缓解帕金森、脑肠轴健康",
+          "EN": "Sleep &amp; stress support, anxiety relief, ADHD support, Parkinson’s-related gut–brain axis support"
+        }
+      },
+      {
+        "direction": {
+          "CN": "口腔健康",
+          "EN": "Dental & Oral Health"
+        },
+        "desc_html": {
+          "CN": "改善口腔菌群、改善口臭、改善牙龈炎",
+          "EN": "Oral microbiota balance, halitosis relief, gingival health support"
+        }
+      }
     ]
   },
   "formula": {

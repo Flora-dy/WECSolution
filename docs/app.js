@@ -181,6 +181,7 @@ function renderWecLac(data, lang) {
   });
 
   const areasList = Array.isArray(data?.weclac?.areas) ? data.weclac.areas : [];
+  const areaDetails = Array.isArray(data?.weclac?.area_details) ? data.weclac.area_details : [];
   if (!areasList.length) {
     areas.hidden = true;
     return;
@@ -188,7 +189,25 @@ function renderWecLac(data, lang) {
   areas.hidden = false;
   const title = lang === "EN" ? "Supported Application Areas" : "功能方向";
   const chips = areasList.map((a) => `<span class="chip">${escapeHtml(getLabel(a, lang) || a)}</span>`).join("");
-  areas.innerHTML = `<div class="section-title">${title}</div><div style="display:flex;gap:10px;flex-wrap:wrap">${chips}</div>`;
+  let detailsHtml = "";
+  if (areaDetails.length) {
+    const summary = lang === "EN" ? "Show area details" : "展开方向详情";
+    const rows = areaDetails
+      .map((row) => {
+        const d = getLabel(row.direction, lang) || safeText(row.direction);
+        const desc = safeHtml(row?.desc_html?.[lang] ?? row?.desc_html ?? "");
+        if (!d) return "";
+        return `<div class="ip-k">${escapeHtml(d)}</div><div class="ip-v">${desc || "—"}</div>`;
+      })
+      .join("");
+    detailsHtml = `
+      <details class="ip-details" style="margin-top:12px">
+        <summary>${escapeHtml(summary)}</summary>
+        <div class="ip-kv" style="grid-template-columns:190px 1fr">${rows}</div>
+      </details>
+    `;
+  }
+  areas.innerHTML = `<div class="section-title">${title}</div><div style="display:flex;gap:10px;flex-wrap:wrap">${chips}</div>${detailsHtml}`;
 }
 
 function renderFormula(data, lang) {

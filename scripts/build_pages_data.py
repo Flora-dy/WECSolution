@@ -280,22 +280,59 @@ def main() -> int:
         if len(weclac_items) >= 12:
             break
 
-    areas: List[str] = []
-    try:
-        # Extract supported areas from first strain's functions
-        functions = []
-        for it in strains_cn:
+    def first_functions(strains: List[Dict[str, Any]]) -> List[Dict[str, str]]:
+        for it in strains:
             f = it.get("functions", [])
             if isinstance(f, list) and f:
-                functions = [x for x in f if isinstance(x, dict)]
-                break
-        for f in functions:
-            d = _safe_str(f.get("direction", ""))
-            if d:
-                areas.append(d)
-        areas = list(dict.fromkeys(areas))
-    except Exception:
-        areas = []
+                return [x for x in f if isinstance(x, dict)]
+        return []
+
+    functions_cn = first_functions(strains_cn)
+    functions_en = first_functions(strains_en)
+
+    # Align EN area labels to match Streamlit mapping
+    area_aliases = {
+        "Emotional & Cognitive Health": "Mental Health",
+        "Emotional and Cognitive Health": "Mental Health",
+        "Oral Health": "Dental & Oral Health",
+        "Immune Health": "Immunological Health",
+        "Infant and Child Health": "Infant Health",
+        "Infant & Child Health": "Infant Health",
+    }
+
+    def map_area_en(label: str) -> str:
+        raw = (label or "").strip()
+        if not raw:
+            return ""
+        for k, v in area_aliases.items():
+            if raw.lower() == k.lower():
+                return v
+        return raw
+
+    areas: List[str] = []
+    for f in functions_cn:
+        d = _safe_str(f.get("direction", ""))
+        if d:
+            areas.append(d)
+    areas = list(dict.fromkeys(areas))
+
+    # Build area detail rows: direction -> desc (CN/EN)
+    cn_map = { _safe_str(f.get("direction","")): _safe_str(f.get("desc","")) for f in functions_cn if _safe_str(f.get("direction","")) }
+    en_map = { map_area_en(_safe_str(f.get("direction",""))): _safe_str(f.get("desc","")) for f in functions_en if _safe_str(f.get("direction","")) }
+    area_details: List[Dict[str, Any]] = []
+    for d_cn in areas:
+        d_en = app._CATEGORY_LABELS_EN.get(d_cn, "") or map_area_en(d_cn) or d_cn
+        desc_cn = cn_map.get(d_cn, "")
+        desc_en = en_map.get(d_en, "") or ""
+        area_details.append(
+            {
+                "direction": {"CN": d_cn, "EN": d_en},
+                "desc_html": {
+                    "CN": _unwrap(app._italicize_microbe_tokens_html)(desc_cn) if desc_cn else "",
+                    "EN": _unwrap(app._italicize_microbe_tokens_html)(desc_en) if desc_en else "",
+                },
+            }
+        )
 
     # WecPro® Formula list from Formula.pptx
     formula_items_raw = _unwrap(app.load_wecpro_formula_catalog)(str(repo / "Final" / "Formula.pptx"), None)
@@ -342,7 +379,12 @@ def main() -> int:
         )
 
     out: Dict[str, Any] = {
-        "weclac": {"strains": weclac_items, "core_codes": sorted(list(getattr(app, "WECLAC_CORE_CODES", set()))), "areas": areas},
+        "weclac": {
+            "strains": weclac_items,
+            "core_codes": sorted(list(getattr(app, "WECLAC_CORE_CODES", set()))),
+            "areas": areas,
+            "area_details": area_details,
+        },
         "formula": {"items": formula_items},
         "solutions": {
             "pdf": {"CN": "./assets/solutions_cn.pdf", "EN": "./assets/solutions_en.pdf"},
