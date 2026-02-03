@@ -2781,6 +2781,16 @@ def _get_query_param_first(key: str) -> str:
             return ""
 
 
+def _stat_cache_buster(path: Path) -> int | None:
+    """Return a high-resolution cache key for local files."""
+    try:
+        st = path.stat()
+        # st_mtime_ns is available on Python 3.3+; fall back to seconds if needed.
+        return int(getattr(st, "st_mtime_ns", int(st.st_mtime * 1_000_000_000)))
+    except Exception:
+        return None
+
+
 def _weclac_placeholder_svg_data_uri(accent1: str, accent2: str) -> str:
     a1 = (accent1 or "#7C3AED").strip()
     a2 = (accent2 or "#FF2D55").strip()
@@ -2856,10 +2866,7 @@ def _render_weclac_page() -> None:
         st.error(f"未找到 `WecLac.pptx`：`{pptx_path}`")
         return
 
-    try:
-        cache_buster = p.stat().st_mtime
-    except Exception:
-        cache_buster = None
+    cache_buster = _stat_cache_buster(p)
 
     data = load_weclac_catalog(str(p), ui_lang, cache_buster)
     strains = list(data.get("strains", [])) if isinstance(data, dict) else []
@@ -3125,10 +3132,7 @@ def _render_wecpro_formula_page() -> None:
         st.error(f"未找到 `Formula.pptx`：`{pptx_path}`")
         return
 
-    try:
-        cache_buster = p.stat().st_mtime
-    except Exception:
-        cache_buster = None
+    cache_buster = _stat_cache_buster(p)
 
     items = load_wecpro_formula_catalog(str(p), cache_buster)
     if not items:
@@ -3270,6 +3274,19 @@ def main() -> None:
     st.set_page_config(page_title="WECARE 产品解决方案", layout="wide")
     _start_packaged_autoshutdown()
     _render_packaged_quit_button()
+
+    # Debug / emergency: force-clear Streamlit caches via URL
+    # Example: https://...streamlit.app/?clear_cache=1
+    if _get_query_param_first("clear_cache").strip() in {"1", "true", "yes"}:
+        try:
+            st.cache_data.clear()
+        except Exception:
+            pass
+        try:
+            st.cache_resource.clear()
+        except Exception:
+            pass
+        st.warning("Cache cleared. Please refresh once.")
 
     # UI 语言：CN / EN（可通过 ?lang=EN 直达）
     lang_from_url = _get_query_param_first("lang").strip().upper()
