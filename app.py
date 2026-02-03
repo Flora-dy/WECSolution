@@ -637,6 +637,13 @@ def _normalize_match_key(text: str) -> str:
     )
 
 
+def _clean_ui_key(v: object) -> str:
+    """Normalize UI keys (category/scenario labels) to avoid hidden whitespace issues."""
+    s = str(v or "")
+    s = s.replace("\u00a0", " ").replace("\u200b", "")
+    return s.strip()
+
+
 @st.cache_data
 def load_ppt_solution_deck(
     pptx_path: str, _cache_buster: float | None = None
@@ -3090,7 +3097,11 @@ def _render_wecpro_formula_page() -> None:
         benefit = str(item.get("benefit", "")).strip()
         strains = [str(s).strip() for s in item.get("strains", []) if str(s).strip()]  # type: ignore[arg-type]
 
-        direction_label = _CATEGORY_LABELS_EN.get(direction, direction) if ui_lang == "EN" else direction
+        direction_label = (
+            _CATEGORY_LABELS_EN.get(_clean_ui_key(direction), _clean_ui_key(direction))
+            if ui_lang == "EN"
+            else _clean_ui_key(direction)
+        )
         benefit_text = (
             _WECPRO_FORMULA_BENEFIT_EN.get(direction, benefit)
             if ui_lang == "EN"
@@ -3336,7 +3347,7 @@ def main() -> None:
         alias_map = {}
 
     # Header (color matches the selected 功能方向)
-    current_cat = str(st.session_state.get("filter_cat", "")).strip()
+    current_cat = _clean_ui_key(st.session_state.get("filter_cat", ""))
     badge_label = current_cat if ui_lang == "CN" else _CATEGORY_LABELS_EN.get(current_cat, current_cat)
     _render_header(series=series, category=current_cat, badge=badge_label)
 
@@ -3344,7 +3355,7 @@ def main() -> None:
     scenario_label_en: Dict[str, str] = {}
 
     def _format_cat(v: object) -> str:
-        s = str(v)
+        s = _clean_ui_key(v)
         return _CATEGORY_LABELS_EN.get(s, s) if ui_lang == "EN" else s
 
     with st.container(border=True):
@@ -3392,7 +3403,7 @@ def main() -> None:
 
                 st.selectbox(t("应用场景", "Use Case"), sub_options, key="filter_sub", format_func=_format_sub)
 
-        cat = str(st.session_state["filter_cat"])
+        cat = _clean_ui_key(st.session_state.get("filter_cat", ""))
         sub = str(st.session_state.get("filter_sub", "")).strip() or (sub_options[0] if sub_options else "")
         cat_label = _CATEGORY_LABELS_EN.get(cat, cat) if ui_lang == "EN" else cat
         sub_label = scenario_title_en.get(sub, sub) if ui_lang == "EN" else sub
