@@ -623,6 +623,55 @@ def _ppt_solution_title_from_lines(lines: List[str]) -> str:
     return lines[idx + 1].strip()
 
 
+def _pdf_solution_title_from_text(text: str) -> str:
+    """Extract a Solution title from PDF page text (EN fallback when PPT text is not extractable)."""
+    lines = [l.strip() for l in (text or "").splitlines() if l.strip()]
+    if not lines:
+        return ""
+
+    for line in lines:
+        if re.search(r"\bSolution\b", line, flags=re.IGNORECASE) and ("|" in line or "｜" in line):
+            parts = re.split(r"[|｜]", line)
+            if len(parts) >= 2:
+                cand = parts[-1].strip()
+                if cand:
+                    return cand
+
+    for i, line in enumerate(lines[:-1]):
+        if line.strip().lower() == "solution":
+            return lines[i + 1].strip()
+
+    return ""
+
+
+@st.cache_data
+def load_pdf_solution_titles(
+    pdf_path: str, _cache_buster: float | None = None
+) -> Dict[int, str]:
+    """Return {page_no(1-based): title} extracted from the Solutions PDF."""
+    p = Path(pdf_path)
+    if not p.exists():
+        return {}
+    try:
+        import fitz  # type: ignore[import-not-found]
+    except Exception:
+        return {}
+
+    titles: Dict[int, str] = {}
+    doc = fitz.open(str(p))
+    try:
+        total = int(getattr(doc, "page_count", len(doc)))
+        for i in range(total):
+            page = doc.load_page(i)
+            txt = page.get_text("text") or ""
+            title = _pdf_solution_title_from_text(txt)
+            if title:
+                titles[i + 1] = title
+    finally:
+        doc.close()
+    return titles
+
+
 def _normalize_match_key(text: str) -> str:
     return (
         (text or "")
@@ -3328,6 +3377,7 @@ def main() -> None:
     # 解决方案 PPT：CN 用于映射/定位页码；EN 用于英文标题/核心功能解析
     solutions_pptx_cn = resolve_solutions_pptx_path("CN")
     solutions_pptx_en = resolve_solutions_pptx_path("EN")
+    solutions_pdf_en = resolve_solutions_pdf_path("EN") if ui_lang == "EN" else None
 
     solutions_deck: Dict[str, Dict[str, object]] = {}
     alias_map: Dict[str, str] = {}
@@ -3353,6 +3403,14 @@ def main() -> None:
 
     scenario_title_en: Dict[str, str] = {}
     scenario_label_en: Dict[str, str] = {}
+    pdf_titles_en: Dict[int, str] = {}
+    if ui_lang == "EN" and solutions_pdf_en and solutions_pdf_en.exists():
+        try:
+            pdf_titles_en = load_pdf_solution_titles(
+                str(solutions_pdf_en), solutions_pdf_en.stat().st_mtime
+            )
+        except Exception:
+            pdf_titles_en = {}
 
     def _format_cat(v: object) -> str:
         s = _clean_ui_key(v)
@@ -3376,9 +3434,15 @@ def main() -> None:
                 if st.session_state.get("filter_sub") not in sub_options:
                     st.session_state["filter_sub"] = sub_options[0]
 
-                if ui_lang == "EN" and solutions_pptx_en and solutions_pptx_en.exists() and solutions_deck and alias_map:
+                if ui_lang == "EN" and solutions_deck and alias_map and (
+                    (solutions_pptx_en and solutions_pptx_en.exists()) or pdf_titles_en
+                ):
                     try:
-                        en_cache_buster = solutions_pptx_en.stat().st_mtime
+                        en_cache_buster = (
+                            solutions_pptx_en.stat().st_mtime
+                            if solutions_pptx_en and solutions_pptx_en.exists()
+                            else None
+                        )
                     except Exception:
                         en_cache_buster = None
                     for scen in sub_options:
@@ -3387,10 +3451,13 @@ def main() -> None:
                         slide_no = int(sol.get("slide_no", 0)) if sol else 0
                         en_title = ""
                         if slide_no:
-                            en_lines = load_pptx_slide_lines(
-                                str(solutions_pptx_en), slide_no, en_cache_buster
-                            )
-                            en_title = _ppt_solution_title_from_lines(en_lines).strip()
+                            if solutions_pptx_en and solutions_pptx_en.exists():
+                                en_lines = load_pptx_slide_lines(
+                                    str(solutions_pptx_en), slide_no, en_cache_buster
+                                )
+                                en_title = _ppt_solution_title_from_lines(en_lines).strip()
+                            if not en_title and pdf_titles_en:
+                                en_title = str(pdf_titles_en.get(slide_no, "")).strip()
                         if not en_title:
                             en_title = mk
                         scenario_title_en[scen] = en_title
