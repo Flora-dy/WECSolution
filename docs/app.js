@@ -428,6 +428,9 @@ function safeHtml(html) {
 }
 
 function init() {
+  // Ensure scroll is never left locked (some browsers can get stuck after a modal interaction).
+  document.body.style.overflow = "";
+
   const lang = (localStorage.getItem(STORAGE_LANG) || DEFAULT_LANG).toUpperCase() === "EN" ? "EN" : "CN";
   const series = localStorage.getItem(STORAGE_SERIES) || DEFAULT_SERIES;
   const view = (localStorage.getItem(STORAGE_VIEW) || DEFAULT_VIEW).toLowerCase();
