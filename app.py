@@ -1753,21 +1753,21 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
     st.markdown(
         """
         <style>
-        /* 更适合对外展示的彩色极简样式（欧美 SaaS 风） */
+        /* 更适合对外展示的商务风样式（干净克制、更像企业官网） */
         :root{
-          --bg: #f8fafc;
-          --card: rgba(255,255,255,0.92);
-          --border: rgba(15,23,42,0.10);
-          --shadow: 0 18px 55px rgba(2,6,23,0.08);
+          --bg: #f4f6fb;
+          --card: rgba(255,255,255,0.96);
+          --border: rgba(15,23,42,0.14);
+          --shadow: 0 12px 34px rgba(2,6,23,0.06);
           --text: #0f172a;
-          --muted: #475569;
-          --accent1: #6366f1;
-          --accent2: #ec4899;
-          --accent3: #22c55e;
-          --tint: rgba(255,255,255,0.75);
-          --accent1-rgb: 99,102,241;
-          --accent2-rgb: 236,72,153;
-          --accent3-rgb: 34,197,94;
+          --muted: #334155;
+          --accent1: #1d4ed8;
+          --accent2: #0ea5e9;
+          --accent3: #10b981;
+          --tint: rgba(255,255,255,0.78);
+          --accent1-rgb: 29,78,216;
+          --accent2-rgb: 14,165,233;
+          --accent3-rgb: 16,185,129;
         }
 
         html, body, [class*="css"]  {
@@ -1778,9 +1778,9 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
 
         [data-testid="stAppViewContainer"]{
           background:
-            radial-gradient(900px 480px at 14% 8%, rgba(var(--accent1-rgb),0.18), transparent 55%),
-            radial-gradient(820px 520px at 86% 12%, rgba(var(--accent2-rgb),0.14), transparent 55%),
-            radial-gradient(820px 520px at 60% 92%, rgba(var(--accent3-rgb),0.12), transparent 55%),
+            radial-gradient(980px 520px at 18% 10%, rgba(var(--accent1-rgb),0.08), transparent 60%),
+            radial-gradient(860px 520px at 86% 8%, rgba(var(--accent2-rgb),0.06), transparent 60%),
+            linear-gradient(180deg, rgba(15,23,42,0.03), transparent 40%),
             var(--bg);
         }
 
@@ -1805,20 +1805,22 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           border-radius: 999px;
           padding: 8px 14px;
           margin-right: 8px;
-          background: rgba(99,102,241,0.08);
+          background: rgba(255,255,255,0.65);
+          border: 1px solid rgba(15,23,42,0.10);
         }
         div[data-testid="stTabs"] button[data-baseweb="tab"][aria-selected="true"]{
-          background: linear-gradient(90deg, var(--accent1), var(--accent2));
-          color: #fff;
+          background: rgba(var(--accent1-rgb),0.12);
+          border-color: rgba(var(--accent1-rgb),0.28);
+          color: var(--text);
         }
 
         /* Segmented control (pills) */
         [data-testid="stSegmentedControl"]{
-          background: rgba(255,255,255,0.58);
-          border: 1px solid rgba(15,23,42,0.10);
+          background: rgba(255,255,255,0.72);
+          border: 1px solid rgba(15,23,42,0.12);
           border-radius: 999px;
           padding: 4px;
-          backdrop-filter: blur(10px);
+          backdrop-filter: none;
         }
         [data-testid="stSegmentedControl"] button{
           border-radius: 999px !important;
@@ -1833,19 +1835,16 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         }
         [data-testid="stSegmentedControl"] button[aria-selected="true"],
         [data-testid="stSegmentedControl"] button[aria-pressed="true"]{
-          background: linear-gradient(
-            90deg,
-            rgba(var(--accent1-rgb),0.22),
-            rgba(var(--accent2-rgb),0.20)
-          ) !important;
+          background: rgba(var(--accent1-rgb),0.14) !important;
+          border: 1px solid rgba(var(--accent1-rgb),0.22) !important;
           color: var(--text) !important;
-          box-shadow: 0 10px 22px rgba(2,6,23,0.12) !important;
+          box-shadow: 0 8px 18px rgba(2,6,23,0.10) !important;
         }
 
         /* Download button */
         [data-testid="stDownloadButton"] button{
-          background: linear-gradient(90deg, var(--accent1), var(--accent2));
-          border: 0;
+          background: var(--accent1);
+          border: 1px solid rgba(15,23,42,0.10);
         }
         [data-testid="stDownloadButton"] button p{ color: #fff; font-weight: 600; }
 
@@ -1925,16 +1924,16 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           font-weight: 800;
           letter-spacing: -0.01em;
           color: #fff;
-          background: linear-gradient(90deg, var(--accent1), var(--accent2));
-          box-shadow: 0 12px 30px rgba(2,6,23,0.10);
+          background: var(--accent1);
+          box-shadow: 0 10px 24px rgba(2,6,23,0.08);
           border: 1px solid rgba(255,255,255,0.25);
         }
 
         .spec-box{
           border-radius: 18px;
-          border: 1px solid rgba(15,23,42,0.08);
-          background: rgba(255,255,255,0.56);
-          backdrop-filter: blur(12px);
+          border: 1px solid rgba(15,23,42,0.10);
+          background: rgba(255,255,255,0.90);
+          backdrop-filter: none;
           padding: 12px 12px 10px 12px;
           height: 100%;
           display:flex;
@@ -1964,8 +1963,9 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         .tile-wrap{
           border-radius: 18px;
           padding: 6px;
-          background: linear-gradient(90deg, var(--accent1), var(--accent2));
-          box-shadow: 0 18px 55px rgba(2,6,23,0.10);
+          background: rgba(255,255,255,0.90);
+          border: 1px solid rgba(var(--accent1-rgb),0.22);
+          box-shadow: 0 14px 40px rgba(2,6,23,0.08);
         }
         .tile{
           border-radius: 14px;
