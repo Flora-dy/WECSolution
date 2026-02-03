@@ -15,6 +15,29 @@ def _safe_str(v: object) -> str:
     return str(v or "").strip()
 
 
+def _pick_latest(final_dir: Path, patterns: List[str]) -> Path | None:
+    candidates: List[Path] = []
+    for pat in patterns:
+        candidates.extend(final_dir.glob(pat))
+
+    files = [
+        p
+        for p in candidates
+        if p.is_file() and not p.name.startswith("~$") and not p.name.startswith(".")
+    ]
+    if not files:
+        return None
+
+    def key(p: Path) -> Tuple[float, str]:
+        try:
+            ts = float(p.stat().st_mtime)
+        except Exception:
+            ts = 0.0
+        return (ts, p.name)
+
+    return sorted(files, key=key, reverse=True)[0]
+
+
 def main() -> int:
     repo = Path(__file__).resolve().parents[1]
     sys.path.insert(0, str(repo))
@@ -24,9 +47,16 @@ def main() -> int:
     # Import app.py (Streamlit UI) only for its PPTX parsing helpers.
     import app  # type: ignore
 
-    formula_pptx = repo / "Final" / "Formula&Solution.pptx"
-    solutions_pptx_cn = repo / "Final" / "43 Solutions解决方案中文版20260130.pptx"
-    solutions_pptx_en = repo / "Final" / "43 Solutions解决方案英文版20260130.pptx"
+    final_dir = repo / "Final"
+    formula_pptx = final_dir / "Formula&Solution.pptx"
+    solutions_pptx_cn = _pick_latest(
+        final_dir,
+        ["43 Solutions解决方案中文版*.pptx", "*Solutions*中文*.pptx", "*中文*Solutions*.pptx", "*中文*.pptx"],
+    ) or (final_dir / "43 Solutions解决方案中文版20260130.pptx")
+    solutions_pptx_en = _pick_latest(
+        final_dir,
+        ["43 Solutions解决方案英文版*.pptx", "*Solutions*英文*.pptx", "*英文*Solutions*.pptx", "*English*Solutions*.pptx", "*英文*.pptx"],
+    ) or (final_dir / "43 Solutions解决方案英文版20260130.pptx")
 
     if not formula_pptx.exists():
         raise SystemExit(f"Missing: {formula_pptx}")

@@ -4,6 +4,7 @@ __pycache__/
 *.pyo
 *.pyd
 ~$*.xlsx
+~$*.pptx
 
 # Local env / tooling
 .venv/
@@ -29,6 +30,9 @@ tools/
 
 # Generated previews (not required at runtime)
 Final/_preview*.png
+
+# Local-only assets
+Final/logo.png
 
 # Logs
 *.log
