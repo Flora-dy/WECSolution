@@ -307,7 +307,7 @@
           "CN": "动物双歧杆菌乳亚种",
           "EN": "Bifidobacterium animalis subsp. lactis"
         },
-        "latin_html": "",
+        "latin_html": "<span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span>",
         "icon": "",
         "feature": {
           "CN": "骨力菌，中国母乳来源",
@@ -335,7 +335,7 @@
         "latin_html": "<span class='latin'>Lactiplantibacillus plantarum</span>",
         "icon": "",
         "feature": {
-          "CN": "悦卵菌，自然发酵泡菜汁",
+          "CN": "XX菌，自然发酵泡菜汁",
           "EN": "OvaryJoy strain, sourced from naturally fermented kimchi brine"
         },
         "clinical": {
@@ -357,7 +357,7 @@
           "CN": "植物乳植杆菌",
           "EN": "Lactiplantibacillus plantarum"
         },
-        "latin_html": "",
+        "latin_html": "<span class='latin'>Lactiplantibacillus plantarum</span>",
         "icon": "",
         "feature": {
           "CN": "顺肠菌，农家酸奶",
@@ -382,7 +382,7 @@
           "CN": "乳酸片球菌",
           "EN": "Pediococcus acidilactici"
         },
-        "latin_html": "",
+        "latin_html": "<span class='latin'>Pediococcus acidilactici</span>",
         "icon": "",
         "feature": {
           "CN": "屏衡菌，三江源",

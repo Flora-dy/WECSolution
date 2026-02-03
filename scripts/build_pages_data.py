@@ -307,7 +307,9 @@ def main() -> int:
             continue
         seen.add(code)
         en_it = code_to_en.get(code, {})
-        sci = app._STRAIN_SCI_NAMES.get(code, "")
+        sci = _safe_str(app._STRAIN_SCI_NAMES.get(code, ""))
+        if not sci:
+            sci = _safe_str(en_it.get("base_name", ""))  # e.g. "Bifidobacterium ... subsp. ..."
         latin_html = _unwrap(app._format_sci_name_html)(sci) if sci else ""
         icon_path = repo / "docs" / "assets" / "strains" / f"{code}.png"
         icon = f"./assets/strains/{code}.png" if icon_path.exists() else ""
