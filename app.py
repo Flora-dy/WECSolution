@@ -2213,20 +2213,24 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         .ip-details[open] summary:after{ content:"－"; }
         .ip-kv{
           display:grid;
-          grid-template-columns: 118px 1fr;
+          grid-template-columns: minmax(84px, 108px) minmax(0, 1fr);
           gap: 6px 10px;
           margin-top: 8px;
-          font-size: 0.85rem;
-          line-height: 1.35;
+          font-size: 0.82rem;
+          line-height: 1.3;
         }
         .ip-k{
           color: var(--muted);
           font-weight: 850;
-          white-space: nowrap;
+          white-space: normal;
+          overflow-wrap: anywhere;
         }
         .ip-v{
           color: var(--text);
           font-weight: 650;
+          min-width: 0;
+          overflow-wrap: anywhere;
+          word-break: break-word;
         }
         .chip{
           display:inline-flex;
