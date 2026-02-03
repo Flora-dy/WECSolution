@@ -297,7 +297,7 @@ def main() -> int:
         if code:
             code_to_en[code] = {"name": name, "base_name": base_name, **it}
 
-    # Enrich CN list to 12
+    # Enrich CN list (default up to 16 for a neat 4×4 grid)
     weclac_items: List[Dict[str, Any]] = []
     seen: set[str] = set()
     for it in strains_cn:
@@ -323,7 +323,7 @@ def main() -> int:
                 "spec": {"CN": _safe_str(it.get("spec", "")), "EN": _safe_str(en_it.get("spec", ""))},
             }
         )
-        if len(weclac_items) >= 12:
+        if len(weclac_items) >= 16:
             break
 
     def first_functions(strains: List[Dict[str, Any]]) -> List[Dict[str, str]]:

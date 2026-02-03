@@ -23,7 +23,7 @@
         },
         "spec": {
           "CN": "6000亿",
-          "EN": "6000亿"
+          "EN": "600B"
         }
       },
       {
@@ -48,7 +48,7 @@
         },
         "spec": {
           "CN": "6000亿",
-          "EN": "6000亿"
+          "EN": "600B"
         }
       },
       {
@@ -73,7 +73,7 @@
         },
         "spec": {
           "CN": "3000亿",
-          "EN": "3000亿"
+          "EN": "300B"
         }
       },
       {
@@ -98,7 +98,7 @@
         },
         "spec": {
           "CN": "3000亿",
-          "EN": "3000亿"
+          "EN": "300B"
         }
       },
       {
@@ -123,7 +123,7 @@
         },
         "spec": {
           "CN": "6000亿",
-          "EN": "6000亿"
+          "EN": "600B"
         }
       },
       {
@@ -148,7 +148,7 @@
         },
         "spec": {
           "CN": "3000亿",
-          "EN": "3000亿"
+          "EN": "300B"
         }
       },
       {
@@ -173,7 +173,7 @@
         },
         "spec": {
           "CN": "6000亿",
-          "EN": "6000亿"
+          "EN": "600B"
         }
       },
       {
@@ -198,7 +198,7 @@
         },
         "spec": {
           "CN": "6000亿",
-          "EN": "6000亿"
+          "EN": "600B"
         }
       },
       {
@@ -223,7 +223,7 @@
         },
         "spec": {
           "CN": "6000亿",
-          "EN": "6000亿"
+          "EN": "600B"
         }
       },
       {
@@ -248,7 +248,7 @@
         },
         "spec": {
           "CN": "6000亿",
-          "EN": "6000亿"
+          "EN": "600B"
         }
       },
       {
@@ -273,7 +273,7 @@
         },
         "spec": {
           "CN": "1000亿",
-          "EN": "1000亿"
+          "EN": "100B"
         }
       },
       {
@@ -298,7 +298,107 @@
         },
         "spec": {
           "CN": "3000亿",
-          "EN": "3000亿"
+          "EN": "300B"
+        }
+      },
+      {
+        "code": "BLa36",
+        "base_name": {
+          "CN": "动物双歧杆菌乳亚种",
+          "EN": "Bifidobacterium animalis subsp. lactis"
+        },
+        "latin_html": "",
+        "icon": "",
+        "feature": {
+          "CN": "骨力菌，中国母乳来源",
+          "EN": "Bone strength strain, sourced from Chinese human breast milk"
+        },
+        "clinical": {
+          "CN": "1",
+          "EN": "1"
+        },
+        "patent": {
+          "CN": "8",
+          "EN": "8"
+        },
+        "spec": {
+          "CN": "6000亿",
+          "EN": "600B"
+        }
+      },
+      {
+        "code": "Lp90",
+        "base_name": {
+          "CN": "植物乳植杆菌",
+          "EN": "Lactiplantibacillus plantarum"
+        },
+        "latin_html": "<span class='latin'>Lactiplantibacillus plantarum</span>",
+        "icon": "",
+        "feature": {
+          "CN": "悦卵菌，自然发酵泡菜汁",
+          "EN": "OvaryJoy strain, sourced from naturally fermented kimchi brine"
+        },
+        "clinical": {
+          "CN": "2",
+          "EN": "2"
+        },
+        "patent": {
+          "CN": "11",
+          "EN": "11"
+        },
+        "spec": {
+          "CN": "6000亿",
+          "EN": "600B"
+        }
+      },
+      {
+        "code": "Lp18",
+        "base_name": {
+          "CN": "植物乳植杆菌",
+          "EN": "Lactiplantibacillus plantarum"
+        },
+        "latin_html": "",
+        "icon": "",
+        "feature": {
+          "CN": "顺肠菌，农家酸奶",
+          "EN": "GutFlow strain, sourced from traditional farm-style yogurt"
+        },
+        "clinical": {
+          "CN": "1",
+          "EN": "1"
+        },
+        "patent": {
+          "CN": "2",
+          "EN": "2"
+        },
+        "spec": {
+          "CN": "6000亿",
+          "EN": "600B"
+        }
+      },
+      {
+        "code": "WPC656",
+        "base_name": {
+          "CN": "乳酸片球菌",
+          "EN": "Pediococcus acidilactici"
+        },
+        "latin_html": "",
+        "icon": "",
+        "feature": {
+          "CN": "屏衡菌，三江源",
+          "EN": "BarrierBalance strain, inspired by the Sanjiangyuan (Three-River-Source) plateau region"
+        },
+        "clinical": {
+          "CN": "1",
+          "EN": "1"
+        },
+        "patent": {
+          "CN": "1",
+          "EN": "1"
+        },
+        "spec": {
+          "CN": "6000亿",
+          "EN": "600B"
         }
       }
     ],

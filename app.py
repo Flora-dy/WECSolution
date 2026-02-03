@@ -2867,7 +2867,7 @@ def _render_weclac_page() -> None:
         st.warning("未能从 `WecLac.pptx` 提取到可展示的信息。")
         return
 
-    # 只保留菌株行（去噪），最多 12 个，保持 PPT 顺序
+    # 只保留菌株行（去噪），保持 PPT 顺序（默认最多 16 个，便于 4×4 展示）
     catalog: List[Dict[str, object]] = []
     seen_codes: set[str] = set()
     for item in strains:
@@ -2880,7 +2880,7 @@ def _render_weclac_page() -> None:
         enriched["base_name"] = base_name
         enriched["code"] = code
         catalog.append(enriched)
-        if len(catalog) >= 12:
+        if len(catalog) >= 16:
             break
 
     if not catalog:
@@ -3022,10 +3022,13 @@ def _render_weclac_page() -> None:
                 )
         return
 
-    # 12 个菌株 IP 网格（3 列 × 4 行），信息默认折叠
-    for row_start in range(0, len(catalog), 3):
-        cols = st.columns(3, gap="large")
-        for col, item in zip(cols, catalog[row_start : row_start + 3]):
+    # 菌株 IP 网格（信息默认折叠）
+    # - 默认 16 个：4 列 × 4 行更整齐
+    # - 其他数量：回退 3 列布局
+    cols_n = 4 if len(catalog) >= 16 else 3
+    for row_start in range(0, len(catalog), cols_n):
+        cols = st.columns(cols_n, gap="large")
+        for col, item in zip(cols, catalog[row_start : row_start + cols_n]):
             with col:
                 code = str(item.get("code", "")).strip()
                 name = str(item.get("name", "")).strip()
