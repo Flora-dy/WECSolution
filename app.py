@@ -2110,7 +2110,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             linear-gradient(90deg, rgba(var(--accent1-rgb),0.16), rgba(var(--accent2-rgb),0.16)) border-box;
           box-shadow: 0 14px 40px rgba(2,6,23,0.08);
           margin: 0 0 18px 0;
-          height: 100%;
+          height: auto;
         }
         .ip-card{
           border-radius: 22px;
@@ -2118,7 +2118,6 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           background: rgba(255,255,255,0.56);
           backdrop-filter: blur(12px);
           min-height: 320px;
-          height: 100%;
           display:flex;
           flex-direction:column;
         }
@@ -2155,12 +2154,16 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         .ip-latin{
           font-style: italic;
           font-weight: 900;
-          font-size: 0.86rem;
+          font-size: 0.82rem;
+          line-height: 1.2;
           color: rgba(15,23,42,0.80);
-          max-width: 320px;
-          white-space: nowrap;
+          max-width: 340px;
+          white-space: normal;
           overflow: hidden;
           text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
         }
         .code-pill{
           display:inline-flex;
