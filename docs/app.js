@@ -491,7 +491,19 @@ function init() {
     })
     .catch((e) => {
       console.error(e);
-      el("weclac-grid").innerHTML = `<div class="card">Data load failed</div>`;
+      const isFile = location.protocol === "file:";
+      const hint = isFile
+        ? (lang === "EN"
+            ? `You opened this page via <code>file://</code>. Please run a local server:<br/><code>cd Design/docs && python3 -m http.server 8000</code><br/>Then open: <code>http://localhost:8000</code>`
+            : `你是用 <code>file://</code> 方式直接打开的，浏览器会拦截 <code>fetch</code>，所以数据加载失败。请用本地服务器打开：<br/><code>cd Design/docs && python3 -m http.server 8000</code><br/>再访问：<code>http://localhost:8000</code>`)
+        : (lang === "EN"
+            ? `Data load failed. Please refresh, or open DevTools → Console to see the error.`
+            : `数据加载失败。请刷新页面，或打开开发者工具 → Console 查看报错。`);
+
+      const card = `<div class="card"><div class="section-title">${lang === "EN" ? "Load Error" : "加载失败"}</div><div class="bullets"><div style="line-height:1.6;color:var(--muted)">${hint}</div></div></div>`;
+      el("weclac-grid").innerHTML = card;
+      el("formula-list").innerHTML = card;
+      el("panel-solution").innerHTML = card;
     });
 }
 
