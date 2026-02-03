@@ -3429,11 +3429,12 @@ def main() -> None:
         with col2:
             sub_options = formula_scenarios.get(st.session_state["filter_cat"], [])
             if not sub_options:
-                st.selectbox(t("应用场景", "Use Case"), [""], key="filter_sub")
+                st.selectbox(t("应用场景", "Supported Application Areas"), [""], key="filter_sub")
             else:
                 if st.session_state.get("filter_sub") not in sub_options:
                     st.session_state["filter_sub"] = sub_options[0]
 
+                scenario_idx_en: Dict[str, int] = {}
                 if ui_lang == "EN" and solutions_deck and alias_map and (
                     (solutions_pptx_en and solutions_pptx_en.exists()) or pdf_titles_en
                 ):
@@ -3462,13 +3463,27 @@ def main() -> None:
                             en_title = mk
                         scenario_title_en[scen] = en_title
                         idx = max(1, (slide_no + 1) // 2) if slide_no else 0
+                        if idx:
+                            scenario_idx_en[scen] = idx
                         scenario_label_en[scen] = f"{idx:02d} · {en_title}" if idx else en_title
 
                 def _format_sub(v: object) -> str:
                     s = str(v)
                     return scenario_label_en.get(s, s) if ui_lang == "EN" else s
 
-                st.selectbox(t("应用场景", "Use Case"), sub_options, key="filter_sub", format_func=_format_sub)
+                sub_options_sorted = (
+                    sorted(sub_options, key=lambda x: scenario_idx_en.get(x, 10**9))
+                    if ui_lang == "EN" and scenario_idx_en
+                    else sub_options
+                )
+                if st.session_state.get("filter_sub") not in sub_options_sorted and sub_options_sorted:
+                    st.session_state["filter_sub"] = sub_options_sorted[0]
+                st.selectbox(
+                    t("应用场景", "Supported Application Areas"),
+                    sub_options_sorted,
+                    key="filter_sub",
+                    format_func=_format_sub,
+                )
 
         cat = _clean_ui_key(st.session_state.get("filter_cat", ""))
         sub = str(st.session_state.get("filter_sub", "")).strip() or (sub_options[0] if sub_options else "")

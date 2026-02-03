@@ -57,6 +57,10 @@ def main() -> int:
         final_dir,
         ["43 Solutions解决方案英文版*.pptx", "*Solutions*英文*.pptx", "*英文*Solutions*.pptx", "*English*Solutions*.pptx", "*英文*.pptx"],
     ) or (final_dir / "43 Solutions解决方案英文版20260130.pptx")
+    solutions_pdf_en = _pick_latest(
+        final_dir,
+        ["43 Solutions解决方案英文版*.pdf", "*Solutions*英文*.pdf", "*英文*Solutions*.pdf", "*English*Solutions*.pdf", "*英文*.pdf"],
+    )
 
     if not formula_pptx.exists():
         raise SystemExit(f"Missing: {formula_pptx}")
@@ -64,6 +68,15 @@ def main() -> int:
         raise SystemExit(f"Missing: {solutions_pptx_cn}")
     if not solutions_pptx_en.exists():
         raise SystemExit(f"Missing: {solutions_pptx_en}")
+
+    pdf_titles_en: Dict[int, str] = {}
+    if solutions_pdf_en and solutions_pdf_en.exists():
+        try:
+            pdf_titles_en = _unwrap(app.load_pdf_solution_titles)(
+                str(solutions_pdf_en), float(solutions_pdf_en.stat().st_mtime)
+            )
+        except Exception:
+            pdf_titles_en = {}
 
     # Shared: scenarios + solutions deck
     formula_scenarios: Dict[str, List[str]] = _unwrap(app.load_formula_scenarios)(str(formula_pptx), None)
@@ -141,7 +154,10 @@ def main() -> int:
             cn_title = _safe_str(_unwrap(app._ppt_solution_title_from_lines)(cn_lines)) or mk
 
             en_lines = _unwrap(app.load_pptx_slide_lines)(str(solutions_pptx_en), slide_no, None)
-            en_title = _safe_str(_unwrap(app._ppt_solution_title_from_lines)(en_lines)) or mk
+            en_title = _safe_str(_unwrap(app._ppt_solution_title_from_lines)(en_lines))
+            if (not en_title or en_title == mk) and pdf_titles_en:
+                en_title = _safe_str(pdf_titles_en.get(slide_no, "")) or en_title
+            en_title = en_title or mk
 
             idx = max(1, (slide_no + 1) // 2)
 

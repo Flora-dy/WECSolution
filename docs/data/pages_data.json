@@ -465,8 +465,8 @@
           "EN": "Supports gastrointestinal function and microbiome balance; helps relieve constipation and diarrhea; supports gut motility and intestinal barrier health."
         },
         "core_formula": {
-          "CN": "动物双歧杆菌乳亚种BLa80、鼠李糖乳酪杆菌LRa05",
-          "EN": "<div><span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span> BLa80</div><div><span class='latin'>Lacticaseibacillus rhamnosus</span> LRa05</div>"
+          "CN": "动物双歧杆菌乳亚种BLa80、鼠李糖乳酪杆菌LRa05、WecPro®-GUT99、作为肠道健康基础配方，重建菌群稳态并支持肠道蠕动与屏障功能，帮助维持长期消化舒适与排便规律、乳酸片球菌 PA53, 植物乳植杆菌 Lp18,动物双歧杆菌乳亚种 BLa36, 凝结芽孢杆菌 BC99、WecPro®-DigestBi、高活性益生菌发酵酸奶，支持肠道蠕动与菌群稳态，改善便秘相关不适，打造日常肠道舒适底盘、动物双歧杆菌乳亚种BLa80, 长双歧杆菌长亚种BL21, 短双歧杆菌 BBr60, 青春双歧杆菌 BAC30, 长双歧杆菌婴儿亚种BI45",
+          "EN": "<div><span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span> BLa80</div><div><span class='latin'>Lacticaseibacillus rhamnosus</span> LRa05</div><div>GUT99</div><div><span class='latin'>Pediococcus acidilactici</span> PA53</div><div>Lp18</div><div>BLa36</div><div><span class='latin'>Weizmannia coagulans</span> BC99</div><div><span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span> BLa80</div><div><span class='latin'>Bifidobacterium longum</span> <span class='latin-noi'>subsp.</span> <span class='latin'>longum</span> BL21</div><div><span class='latin'>Bifidobacterium breve</span> BBr60</div><div>BAC30</div><div>BI45</div>"
         }
       },
       {
@@ -557,11 +557,11 @@
             "key": "阴道微生态调节",
             "label": {
               "CN": "阴道微生态调节",
-              "EN": "01 · 阴道微生态调节"
+              "EN": "01 · Vaginal Microecological Modulation"
             },
             "title": {
               "CN": "阴道微生态调节",
-              "EN": "阴道微生态调节"
+              "EN": "Vaginal Microecological Modulation"
             },
             "index": 1,
             "page1": 1,
@@ -736,11 +736,11 @@
             "key": "妊娠期糖代谢调控",
             "label": {
               "CN": "妊娠期糖代谢调控",
-              "EN": "03 · 妊娠期糖代谢调控"
+              "EN": "03 · Regulation of Glucose Metabolism During Pregnancy"
             },
             "title": {
               "CN": "妊娠期糖代谢调控",
-              "EN": "妊娠期糖代谢调控"
+              "EN": "Regulation of Glucose Metabolism During Pregnancy"
             },
             "index": 3,
             "page1": 5,
@@ -930,11 +930,11 @@
             "key": "改善细菌性阴道炎",
             "label": {
               "CN": "改善细菌性阴道炎",
-              "EN": "02 · 改善细菌性阴道炎"
+              "EN": "02 · Improvement of Bacterial Vaginosis"
             },
             "title": {
               "CN": "改善细菌性阴道炎",
-              "EN": "改善细菌性阴道炎"
+              "EN": "Improvement of Bacterial Vaginosis"
             },
             "index": 2,
             "page1": 3,
@@ -3265,11 +3265,11 @@
             "key": "抗衰与机能维护",
             "label": {
               "CN": "抗衰与机能维护",
-              "EN": "16 · 抗衰与机能维护"
+              "EN": "16 · Anti-Aging and Functional Maintenance"
             },
             "title": {
               "CN": "抗衰与机能维护",
-              "EN": "抗衰与机能维护"
+              "EN": "Anti-Aging and Functional Maintenance"
             },
             "index": 16,
             "page1": 31,
@@ -6874,11 +6874,11 @@
             "key": "婴幼儿肠道免疫支持",
             "label": {
               "CN": "婴幼儿肠道免疫支持",
-              "EN": "36 · 婴幼儿肠道免疫支持"
+              "EN": "36 · Gut Immune Support in Infants and Young Children"
             },
             "title": {
               "CN": "婴幼儿肠道免疫支持",
-              "EN": "婴幼儿肠道免疫支持"
+              "EN": "Gut Immune Support in Infants and Young Children"
             },
             "index": 36,
             "page1": 71,

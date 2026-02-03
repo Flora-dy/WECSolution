@@ -29,7 +29,7 @@ function setHero(lang) {
       `<div class="hero-spacer">From proprietary probiotic strains to advanced formulations and end-to-end delivery.</div>`,
     ].join("");
     el("label-cat").textContent = "Health Area";
-    el("label-sub").textContent = "Use Case";
+    el("label-sub").textContent = "Supported Application Areas";
     el("solution-core-title").textContent = "Core Formula";
     el("solution-clinical-title").textContent = "Clinical Studies";
     el("solution-spec-title").textContent = "Specifications";
@@ -288,7 +288,11 @@ function renderSolution(data, lang, view) {
   function fillSubs(catKey) {
     const cat = catOptions.find((x) => x.key === catKey) || catOptions[0];
     setTheme(cat);
-    const scenarios = cat.scenarios || [];
+    const scenarios = (cat.scenarios || []).slice().sort((a, b) => {
+      const ai = Number(a?.index ?? a?.page1 ?? 1e9);
+      const bi = Number(b?.index ?? b?.page1 ?? 1e9);
+      return ai - bi;
+    });
     subSel.innerHTML = scenarios
       .map((s) => {
         const key = safeText(s.key);
@@ -302,7 +306,11 @@ function renderSolution(data, lang, view) {
 
   function render(catKey, scenKey) {
     const cat = catOptions.find((x) => x.key === catKey) || catOptions[0];
-    const scenarios = cat.scenarios || [];
+    const scenarios = (cat.scenarios || []).slice().sort((a, b) => {
+      const ai = Number(a?.index ?? a?.page1 ?? 1e9);
+      const bi = Number(b?.index ?? b?.page1 ?? 1e9);
+      return ai - bi;
+    });
     const scen = scenarios.find((s) => safeText(s.key) === scenKey) || scenarios[0];
 
     const catLabel = getLabel(cat.label, lang) || catKey;
