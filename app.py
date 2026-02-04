@@ -1912,6 +1912,9 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         }
 
         [data-testid="stHeaderActionElements"] { display: none; }
+        /* Remove Streamlit top “notch” header bar */
+        header[data-testid="stHeader"]{ display: none; }
+        [data-testid="stToolbar"]{ display: none; }
         #MainMenu { visibility: hidden; }
         footer { visibility: hidden; }
 
@@ -2767,12 +2770,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
 	              position: absolute;
 	              inset: 0;
 	              pointer-events: none;
-	              opacity: 0.14;
-	              background: linear-gradient(
-	                135deg,
-	                rgba(15, 23, 42, 0.95),
-	                rgba(100, 116, 139, 0.95)
-	              );
+	              opacity: 0.18;
+	              background: linear-gradient(135deg, #475569, #94a3b8);
 	              -webkit-mask-image: url("{logo_mask_src}");
 	              -webkit-mask-repeat: no-repeat;
 	              -webkit-mask-position: right 180px center;
@@ -2789,7 +2788,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
 	                mask-size: 440px auto;
 	                -webkit-mask-position: right 120px center;
 	                mask-position: right 120px center;
-	                opacity: 0.12;
+	                opacity: 0.14;
 	              }}
 	            }}
 	            }}
@@ -2804,12 +2803,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
 	              position: absolute;
 	              inset: 0;
 	              pointer-events: none;
-	              opacity: 0.14;
-	              background: linear-gradient(
-	                135deg,
-	                rgba(15, 23, 42, 0.95),
-	                rgba(100, 116, 139, 0.95)
-	              );
+	              opacity: 0.18;
+	              background: linear-gradient(135deg, #475569, #94a3b8);
 	              -webkit-mask-image: url("{logo_mask_src}");
 	              -webkit-mask-repeat: no-repeat;
 	              -webkit-mask-position: right 180px center;
@@ -2826,7 +2821,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
 		                mask-size: 440px auto;
 		                -webkit-mask-position: right 120px center;
 		                mask-position: right 120px center;
-		                opacity: 0.12;
+		                opacity: 0.14;
 		              }}
 		            }}
 		            }}
