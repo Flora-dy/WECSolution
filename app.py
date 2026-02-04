@@ -1866,6 +1866,32 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           z-index: 0; /* create stacking context for watermark */
         }
 
+        /* WecLac: make entire card clickable without changing URL */
+        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-card-scope){
+          overflow: hidden;
+        }
+        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-card-scope) [data-testid="stButton"]{
+          position: absolute;
+          inset: 0;
+          z-index: 5;
+          margin: 0;
+        }
+        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-card-scope) [data-testid="stButton"] button{
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          padding: 0;
+          border: 0;
+          background: transparent;
+          cursor: pointer;
+        }
+        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-card-scope) .ip-card{
+          box-shadow: none;
+          background: transparent;
+          border: 0;
+          padding: 14px 14px 12px 14px;
+        }
+
         /* Tabs */
         div[data-testid="stTabs"] button[data-baseweb="tab"]{
           border-radius: 999px;
@@ -2906,6 +2932,10 @@ def _show_weclac_strain_dialog(
             unsafe_allow_html=True,
         )
 
+    if st.button(t("关闭", "Close"), type="secondary"):
+        st.session_state.pop("weclac_open", None)
+        st.rerun()
+
 
 def _weclac_placeholder_svg_data_uri(accent1: str, accent2: str) -> str:
     a1 = (accent1 or "#7C3AED").strip()
@@ -3067,8 +3097,11 @@ def _render_weclac_page() -> None:
 
     code_to_item = {str(it.get("code", "")).strip(): it for it in catalog if str(it.get("code", "")).strip()}
 
-    # Clicking a strain opens a dialog (no navigation page).
-    open_code = _get_query_param_first("open_weclac").strip() or _get_query_param_first("strain").strip()
+    def open_weclac(code: str) -> None:
+        st.session_state["weclac_open"] = (code or "").strip()
+
+    # Prefer session state (no URL changes). Keep query-param fallback for old links.
+    open_code = str(st.session_state.pop("weclac_open", "")).strip() or _get_query_param_first("open_weclac").strip() or _get_query_param_first("strain").strip()
     if open_code and open_code in code_to_item:
         item = code_to_item[open_code]
         code = open_code
@@ -3126,23 +3159,26 @@ def _render_weclac_page() -> None:
                     code_line += f"<span class='ip-latin'>{_format_sci_name_html(latin_name)}</span>"
                 if code:
                     code_line += f"<span class='code-pill'>{html.escape(code)}</span>"
-
-                lang_q = "&lang=EN" if ui_lang == "EN" else ""
-                href_base = f"?series=WecLac{lang_q}&open_weclac={quote(code)}"
-                href = html.escape(href_base, quote=True)
                 title_html = f"<div class='ip-name'>{html.escape(title)}</div>" if title else ""
-                tile = (
-                    "<div class='ip-wrap'>"
-                    "<div class='ip-card'>"
-                    f"<a class='ip-link' href='{href}' aria-label='Open details'>"
-                    f"<div class='ip-avatar'><img src='{src}' alt='{html.escape(code)}' /></div>"
-                    "</a>"
-                    f"<div class='ip-code'>{code_line}</div>"
-                    f"{title_html}"
-                    "</div>"
-                    "</div>"
-                )
-                st.markdown(tile, unsafe_allow_html=True)
+                with st.container(border=True):
+                    st.markdown("<span class='weclac-card-scope' aria-hidden='true'></span>", unsafe_allow_html=True)
+                    st.button(
+                        " ",
+                        key=f"weclac_open_{code}",
+                        on_click=open_weclac,
+                        args=(code,),
+                        help=t("点击查看详情", "Click to view details"),
+                    )
+                    st.markdown(
+                        (
+                            "<div class='ip-card'>"
+                            f"<div class='ip-avatar'><img src='{src}' alt='{html.escape(code)}' /></div>"
+                            f"<div class='ip-code'>{code_line}</div>"
+                            f"{title_html}"
+                            "</div>"
+                        ),
+                        unsafe_allow_html=True,
+                    )
 
     if directions:
         with st.container(border=True):
