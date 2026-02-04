@@ -620,7 +620,7 @@
             },
             "core_formula": {
               "CN": "动物双歧杆菌乳亚种BLa80、长双歧杆菌长亚种BL21、短双歧杆菌BBr60、青春双歧杆菌BAC30、长双歧杆菌婴儿亚种BI45",
-              "EN": "<div><span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span> BLa80</div><div><span class='latin'>Bifidobacterium longum</span> <span class='latin-noi'>subsp.</span> <span class='latin'>longum</span> BL21</div><div><span class='latin'>Bifidobacterium breve</span> BBr60</div><div>BAC30</div><div>BI45</div>"
+              "EN": "<div><span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span> BLa80</div><div><span class='latin'>Bifidobacterium longum</span> <span class='latin-noi'>subsp.</span> <span class='latin'>longum</span> BL21</div><div><span class='latin'>Bifidobacterium breve</span> BBr60</div><div><span class='latin'>Bifidobacterium adolescentis</span> BAC30</div><div><span class='latin'>Bifidobacterium longum</span> <span class='latin-noi'>subsp.</span> <span class='latin'>infantis</span> BI45</div>"
             }
           }
         ]

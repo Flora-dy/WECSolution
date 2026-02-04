@@ -295,6 +295,9 @@ _STRAIN_SCI_NAMES: Dict[str, str] = {
     **WECLAC_SCI_NAMES,
     "Lp90": "Lactiplantibacillus plantarum",
     "LS97": "Ligilactobacillus salivarius",
+    # Used in Formula / Solutions decks
+    "BAC30": "Bifidobacterium adolescentis",
+    "BI45": "Bifidobacterium longum subsp. infantis",
 }
 
 # 延后导入重依赖库，避免环境变量未生效
