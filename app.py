@@ -2267,12 +2267,13 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         }
         .ip-card{
           border-radius: 22px;
-          padding: 14px 14px 12px 14px;
+          padding: 12px 12px 10px 12px;
           background: rgba(255,255,255,0.56);
           backdrop-filter: blur(12px);
           box-shadow: 0 14px 40px rgba(2,6,23,0.08);
           border: 0;
-          min-height: 320px;
+          min-height: 280px;
+          margin: 0 0 16px 0;
           display:flex;
           flex-direction:column;
         }
@@ -2306,7 +2307,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           align-items:center;
           gap: 6px;
           text-align:center;
-          min-height: 52px;
+          min-height: 48px;
         }
         .ip-latin{
           font-style: italic;
@@ -2701,9 +2702,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           }
           .v-grid{ grid-template-columns: 1fr; }
 
-          .ip-card{ min-height: 0; }
-          .ip-avatar{ width: 72px; height: 72px; }
-          .ip-avatar{ padding: 7px; }
+          .ip-card{ min-height: 0; margin-bottom: 14px; }
+          .ip-avatar{ width: 70px; height: 70px; padding: 7px; }
           .ip-latin{
             max-width: none;
             white-space: normal;
