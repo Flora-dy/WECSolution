@@ -381,9 +381,9 @@ function renderSolution(data, lang, view) {
       specCard.hidden = true;
     } else {
       specCard.hidden = false;
-      const sep2 = lang === "EN" ? ": " : "：";
       const lClinical = lang === "EN" ? "Clinical Strain Formula" : "临床菌配方";
-      const lFuncExc = lang === "EN" ? "Functional Excipients included" : "配方包含功能性辅料";
+      const lCapsule = lang === "EN" ? "Capsule" : "胶囊";
+      const lFuncExc = lang === "EN" ? "Functional Excipients" : "功能性辅料";
       const note =
         lang === "EN"
           ? "The actual formulation can be customized according to customer requirements."
@@ -395,40 +395,61 @@ function renderSolution(data, lang, view) {
         .filter(Boolean);
       const clinicalUnique = Array.from(new Set(clinicalBases));
 
-      // Collect excipient names (no mg / no total weight)
-      const excList = [];
-      const seen = new Set();
-      for (const s of specs) {
-        const exc = Array.isArray(s.excipients?.[lang] ?? s.excipients)
-          ? s.excipients?.[lang] ?? s.excipients
-          : [];
+      const fillerEn = new Set([
+        "gum arabic",
+        "arabic gum",
+        "potato starch",
+        "starch",
+        "silicon dioxide",
+        "magnesium stearate",
+      ]);
+      const fillerCn = ["阿拉伯胶", "马铃薯淀粉", "二氧化硅", "硬脂酸镁", "淀粉"];
+      const isFiller = (name) => {
+        const n = safeText(name).trim();
+        if (!n) return false;
+        if (lang === "EN") {
+          const key = n.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+          return fillerEn.has(key);
+        }
+        return fillerCn.some((x) => n.includes(x));
+      };
+
+      const cards = specs.slice(0, 3).map((s) => {
+        const titleRaw = safeText(getLabel(s.title, lang) || "");
+        const m = titleRaw.match(/(?:Capsule|胶囊)\s*(\d+\s*B)\b/i);
+        const dose = m ? m[1].replace(/\s+/g, "") : "";
+        const title = dose ? `${lCapsule} <span style="color: var(--accent2);">${escapeHtml(dose)}</span>` : escapeHtml(titleRaw);
+        const exc = Array.isArray(s.excipients?.[lang] ?? s.excipients) ? s.excipients?.[lang] ?? s.excipients : [];
+        const names = [];
+        const seen = new Set();
         for (const raw of exc) {
           const txt = safeText(raw).replace(/^[•\-\s]+/, "").trim();
           if (!txt) continue;
           const name = txt.split(/[:：]/, 1)[0].trim().replace(/\s+/g, " ");
-          if (!name) continue;
+          if (!name || isFiller(name)) continue;
           const key = name.toLowerCase();
           if (seen.has(key)) continue;
           seen.add(key);
-          excList.push(name);
+          names.push(name);
         }
-      }
-      const joined = lang === "EN" ? excList.join(", ") : excList.join("、");
+        const excHtml = names.length ? names.map((n) => `<div>• ${escapeHtml(n)}</div>`).join("") : "<div>—</div>";
+        return `
+          <div class="spec-box">
+            <div class="spec-title">${title}</div>
+            <div class="spec-meta">${escapeHtml(lFuncExc)}</div>
+            <div style="font-size:0.92rem;line-height:1.45">${excHtml}</div>
+          </div>
+        `;
+      });
 
       el("solution-spec").innerHTML = `
-        <div class="spec-box">
-          ${
-            clinicalUnique.length === 1 && clinicalUnique[0]
-              ? `<div class="spec-meta">${lClinical}</div><div style="font-size:0.92rem;line-height:1.45">${safeHtml(clinicalUnique[0])}</div>`
-              : ""
-          }
-          ${
-            joined
-              ? `<div class="spec-meta">${lFuncExc}</div><div style="font-size:0.92rem;line-height:1.45">${escapeHtml(joined)}</div>`
-              : ""
-          }
-          <div class="spec-meta" style="margin-top:10px;opacity:.85">${escapeHtml(note)}</div>
-        </div>
+        ${
+          clinicalUnique.length === 1 && clinicalUnique[0]
+            ? `<div style="margin-bottom:10px"><div class="spec-meta">${escapeHtml(lClinical)}</div><div style="font-size:0.92rem;line-height:1.45">${safeHtml(clinicalUnique[0])}</div></div>`
+            : ""
+        }
+        <div class="spec-grid">${cards.map((c) => `<div>${c}</div>`).join("")}</div>
+        <div class="spec-meta" style="margin-top:10px;opacity:.85">${escapeHtml(note)}</div>
       `;
     }
 

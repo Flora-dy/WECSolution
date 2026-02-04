@@ -1449,6 +1449,26 @@ def _excipient_name_only(item: str) -> str:
     return name
 
 
+def _is_filler_excipient(name: str, lang: str) -> bool:
+    s = (name or "").strip()
+    if not s:
+        return False
+    is_en = (lang or "CN").strip().upper() == "EN"
+    if is_en:
+        key = re.sub(r"[^a-z0-9]+", " ", s.lower()).strip()
+        fillers = {
+            "gum arabic",
+            "arabic gum",
+            "potato starch",
+            "starch",
+            "silicon dioxide",
+            "magnesium stearate",
+        }
+        return key in fillers
+    fillers_cn = ("阿拉伯胶", "马铃薯淀粉", "二氧化硅", "硬脂酸镁", "淀粉")
+    return any(f in s for f in fillers_cn)
+
+
 def _split_capsule_excipients(text: str) -> List[str]:
     s = (text or "").strip()
     if not s:
@@ -3889,6 +3909,8 @@ def main() -> None:
         with st.container(border=True):
             st.subheader(t("规格", "Specifications"))
             clinical_label = t("临床菌配方", "Clinical Strain Formula")
+            excipient_label = t("功能性辅料", "Functional Excipients")
+            capsule_label = t("胶囊", "Capsule")
             sep = "：" if ui_lang == "CN" else ":"
 
             clinical_bases: List[str] = []
@@ -3905,25 +3927,50 @@ def main() -> None:
             if len(base_unique) == 1:
                 st.markdown(f"**{clinical_label}**{sep} `{base_unique[0]}`")
 
-            excipient_names: List[str] = []
-            seen_exc: set[str] = set()
-            for spec in capsule_specs:
+            cards: List[str] = []
+            for _i, spec in enumerate(capsule_specs[:3]):
+                spec_label = str(spec.get("spec", "")).strip()
+
+                m = re.search(r"(?i)(?:Capsule|胶囊)\s*(?P<dose>\d+\s*B)\b", spec_label)
+                if m:
+                    dose = html.escape(m.group("dose").replace(" ", ""))
+                    title_html = (
+                        "<div class='spec-title'>"
+                        + f"{html.escape(capsule_label)} "
+                        + f"<span style='color: var(--accent2);'>{dose}</span>"
+                        + "</div>"
+                    )
+                else:
+                    title_html = f"<div class='spec-title'>{html.escape(spec_label)}</div>"
+
                 exc_items_raw = _split_capsule_excipients(str(spec.get("excipients", "")).strip())
+                exc_names: List[str] = []
+                seen_exc: set[str] = set()
                 for raw_item in exc_items_raw:
                     formatted = _strip_mass_units(_format_capsule_excipient_item(raw_item, ui_lang))
                     name_only = _excipient_name_only(formatted)
-                    if not name_only:
+                    if not name_only or _is_filler_excipient(name_only, ui_lang):
                         continue
                     key = name_only.lower()
                     if key in seen_exc:
                         continue
                     seen_exc.add(key)
-                    excipient_names.append(name_only)
+                    exc_names.append(name_only)
 
-            if excipient_names:
-                label = t("配方包含功能性辅料", "Functional Excipients included")
-                joined = "、".join(excipient_names) if ui_lang == "CN" else ", ".join(excipient_names)
-                st.markdown(f"**{label}**{sep} {joined}")
+                if exc_names:
+                    exc_html = "".join(f"<div>• {html.escape(n)}</div>" for n in exc_names)
+                else:
+                    exc_html = "<div>—</div>"
+
+                body = "<div class='spec-box'>" + title_html
+                body += f"<div class='spec-meta'>{html.escape(excipient_label)}</div>"
+                body += "<div style='font-size:0.92rem; line-height:1.45'>" + exc_html + "</div>"
+                body += "</div>"
+                cards.append(body)
+
+            if cards:
+                grid_html = "<div class='spec-grid'>" + "".join(f"<div>{c}</div>" for c in cards) + "</div>"
+                st.markdown(grid_html, unsafe_allow_html=True)
 
             st.caption(
                 t(
