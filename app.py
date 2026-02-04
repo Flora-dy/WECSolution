@@ -1936,6 +1936,10 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           position: relative;
           z-index: 0; /* create stacking context for watermark */
         }
+        /* WecLac cards: remove outer rectangular outline */
+        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-card-scope){
+          border: 0 !important;
+        }
 
         /* WecLac: click directly on IP image (no Streamlit button) */
         .weclac-open{
