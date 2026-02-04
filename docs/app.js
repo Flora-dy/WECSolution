@@ -22,7 +22,7 @@ function setHero(lang) {
   const title = el("hero-title");
   const lines = el("hero-lines");
   if (lang === "EN") {
-    title.textContent = "WECARE Health & Wellness Solutions";
+    title.textContent = "Human Health & Nutrition Solutions";
     lines.innerHTML = [
       `<div class="hero-strong">Tailored for Global Brands</div>`,
       `<div>Built on scientific rigor, consumer insights, and global expertise.</div>`,
@@ -37,7 +37,7 @@ function setHero(lang) {
     el("viewer-sub").textContent = "Two-page preview";
     el("open-pdf").textContent = "Open PDF";
   } else {
-    title.textContent = "WECARE 健康与营养解决方案";
+    title.textContent = "人类健康与营养解决方案";
     lines.innerHTML = [
       `<div class="hero-strong">服务全球品牌</div>`,
       `<div>以科学为基础，以洞察为导向，以专业能力贯穿全流程</div>`,

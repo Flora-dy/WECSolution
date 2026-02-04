@@ -2843,7 +2843,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             )
         cols = st.columns([9, 2])
         with cols[0]:
-            title = "WECARE 健康与营养解决方案" if ui_lang == "CN" else "WECARE Health & Wellness Solutions"
+            title = "人类健康与营养解决方案" if ui_lang == "CN" else "Human Health & Nutrition Solutions"
             desc_html = ""
             if ui_lang == "EN":
                 desc_html = (
@@ -3553,7 +3553,7 @@ def _render_packaged_quit_button() -> None:
 
 
 def main() -> None:
-    st.set_page_config(page_title="WECARE 产品解决方案", layout="wide")
+    st.set_page_config(page_title="人类健康与营养解决方案", layout="wide")
     _start_packaged_autoshutdown()
     _render_packaged_quit_button()
 
