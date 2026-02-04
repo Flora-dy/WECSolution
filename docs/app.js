@@ -381,27 +381,55 @@ function renderSolution(data, lang, view) {
       specCard.hidden = true;
     } else {
       specCard.hidden = false;
-      el("solution-spec").innerHTML = specs
-        .map((s) => {
-          const title = getLabel(s.title, lang) || "";
-          const clinical = getLabel(s.clinical, lang) || "";
-          const exc = Array.isArray(s.excipients?.[lang] ?? s.excipients) ? (s.excipients?.[lang] ?? s.excipients) : [];
-          const total = getLabel(s.total, lang) || "";
-          const lClinical = lang === "EN" ? "Clinical Strain Formula" : "临床菌配方";
-          const lExc = lang === "EN" ? "Excipients (mg)" : "辅料配方（mg）";
-          const lTotal = lang === "EN" ? "Total Weight" : "总克重";
-          const sep2 = lang === "EN" ? ": " : "：";
-          const excHtml = exc.map((x) => `<div>• ${escapeHtml(x)}</div>`).join("");
-          return `
-            <div class="spec-box">
-              <div class="spec-title">${escapeHtml(title)}</div>
-              ${clinical ? `<div class="spec-meta">${lClinical}</div><div style="font-size:0.92rem;line-height:1.45">${safeHtml(clinical)}</div>` : ""}
-              ${excHtml ? `<div class="spec-meta">${lExc}</div><div style="font-size:0.92rem;line-height:1.45">${excHtml}</div>` : ""}
-              ${total ? `<div class="spec-meta" style="display:flex;gap:8px;align-items:baseline"><span>${lTotal}${sep2}</span><span style="color:var(--text);font-weight:850;font-size:0.92rem">${escapeHtml(total)}</span></div>` : ""}
-            </div>
-          `;
-        })
-        .join("");
+      const sep2 = lang === "EN" ? ": " : "：";
+      const lClinical = lang === "EN" ? "Clinical Strain Formula" : "临床菌配方";
+      const lFuncExc = lang === "EN" ? "Functional Excipients included" : "配方包含功能性辅料";
+      const note =
+        lang === "EN"
+          ? "The actual formulation can be customized according to customer requirements."
+          : "实际配方组合可根据客户需求进行定制化设计。";
+
+      // Show clinical formula once (if consistent)
+      const clinicalBases = specs
+        .map((s) => safeText(getLabel(s.clinical, lang) || ""))
+        .filter(Boolean);
+      const clinicalUnique = Array.from(new Set(clinicalBases));
+
+      // Collect excipient names (no mg / no total weight)
+      const excList = [];
+      const seen = new Set();
+      for (const s of specs) {
+        const exc = Array.isArray(s.excipients?.[lang] ?? s.excipients)
+          ? s.excipients?.[lang] ?? s.excipients
+          : [];
+        for (const raw of exc) {
+          const txt = safeText(raw).replace(/^[•\-\s]+/, "").trim();
+          if (!txt) continue;
+          const name = txt.split(/[:：]/, 1)[0].trim().replace(/\s+/g, " ");
+          if (!name) continue;
+          const key = name.toLowerCase();
+          if (seen.has(key)) continue;
+          seen.add(key);
+          excList.push(name);
+        }
+      }
+      const joined = lang === "EN" ? excList.join(", ") : excList.join("、");
+
+      el("solution-spec").innerHTML = `
+        <div class="spec-box">
+          ${
+            clinicalUnique.length === 1 && clinicalUnique[0]
+              ? `<div class="spec-meta">${lClinical}</div><div style="font-size:0.92rem;line-height:1.45">${safeHtml(clinicalUnique[0])}</div>`
+              : ""
+          }
+          ${
+            joined
+              ? `<div class="spec-meta">${lFuncExc}</div><div style="font-size:0.92rem;line-height:1.45">${escapeHtml(joined)}</div>`
+              : ""
+          }
+          <div class="spec-meta" style="margin-top:10px;opacity:.85">${escapeHtml(note)}</div>
+        </div>
+      `;
     }
 
     // PDF preview images
