@@ -2073,10 +2073,39 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           gap: 14px;
           position: relative;
           overflow: hidden;
+          z-index: 1;
         }
         .hero-head > *{
           position: relative;
           z-index: 1;
+        }
+        /* Header watermark logo (behind text) */
+        .hero-wm-img{
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          z-index: -1;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          padding-right: 180px;
+          opacity: 0.14;
+          filter: grayscale(1) saturate(0) brightness(0.95) blur(0.2px);
+        }
+        .hero-wm-img img{
+          width: 720px;
+          max-width: 92%;
+          height: auto;
+        }
+        @media (max-width: 720px){
+          .hero-wm-img{
+            padding-right: 120px;
+            opacity: 0.12;
+          }
+          .hero-wm-img img{
+            width: 440px;
+            max-width: 100%;
+          }
         }
         .hero-mark{
           width: 44px;
@@ -2756,70 +2785,15 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             wm_cache_buster = None
         logo_mask_src = load_image_data_uri(str(LOGO_ICON_PATH), wm_cache_buster)
 
-    if logo_mask_src:
-        st.markdown(
-            f"""
-	            <style>
-            /* Header watermark 'W' (right-aligned, clipped to header card) */
-            @supports selector(:has(*)){{
-            [data-testid="stVerticalBlockBorderWrapper"]:has(#wecare-hero-marker){{
-              overflow: hidden;
-            }}
-		            [data-testid="stVerticalBlockBorderWrapper"]:has(#wecare-hero-marker)::before{{
-		              content: "";
-		              position: absolute;
-		              inset: 0;
-		              pointer-events: none;
-		              opacity: 0.14;
-		              background-image: url("{logo_mask_src}");
-		              background-repeat: no-repeat;
-		              background-position: right 180px center;
-		              background-size: 720px auto;
-		              filter: grayscale(1) saturate(0) brightness(0.95) blur(0.2px);
-		            }}
-	            @media (max-width: 720px){{
-		              [data-testid="stVerticalBlockBorderWrapper"]:has(#wecare-hero-marker)::before{{
-		                background-size: 440px auto;
-		                background-position: right 120px center;
-		                opacity: 0.12;
-		              }}
-		            }}
-		            }}
-
-            /* Fallback for browsers without :has(): target the first bordered container (header). */
-            @supports not selector(:has(*)){{
-            [data-testid="stVerticalBlockBorderWrapper"]:first-of-type{{
-              overflow: hidden;
-            }}
-		            [data-testid="stVerticalBlockBorderWrapper"]:first-of-type::before{{
-		              content: "";
-		              position: absolute;
-		              inset: 0;
-		              pointer-events: none;
-		              opacity: 0.14;
-		              background-image: url("{logo_mask_src}");
-		              background-repeat: no-repeat;
-		              background-position: right 180px center;
-		              background-size: 720px auto;
-		              filter: grayscale(1) saturate(0) brightness(0.95) blur(0.2px);
-		            }}
-		            @media (max-width: 720px){{
-		              [data-testid="stVerticalBlockBorderWrapper"]:first-of-type::before{{
-		                background-size: 440px auto;
-		                background-position: right 120px center;
-		                opacity: 0.12;
-		              }}
-		            }}
-		            }}
-		            </style>
-	            """,
-	            unsafe_allow_html=True,
-	        )
-
     with st.container(border=True):
         if logo_mask_src:
             st.markdown(
                 "<span id='wecare-hero-marker' style='display:none' aria-hidden='true'></span>",
+                unsafe_allow_html=True,
+            )
+            safe_logo_src = html.escape(logo_mask_src, quote=True)
+            st.markdown(
+                f"<div class='hero-wm-img' aria-hidden='true'><img src='{safe_logo_src}' alt='' /></div>",
                 unsafe_allow_html=True,
             )
         cols = st.columns([9, 2])
