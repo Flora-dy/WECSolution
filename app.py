@@ -3273,6 +3273,8 @@ def _render_weclac_page() -> None:
                 params[str(k)] = [str(x) for x in v if str(x)]
         except Exception:
             params = {}
+        params["lang"] = [ui_lang]
+        params["series"] = ["WecLac"]
         params["open_weclac"] = [code]
         return "?" + urlencode(params, doseq=True)
 
