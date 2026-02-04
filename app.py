@@ -2252,6 +2252,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           display:flex;
           align-items:center;
           justify-content:center;
+          box-sizing: border-box;
+          padding: 8px;
           background:
             linear-gradient(135deg, rgba(255,255,255,0.78), rgba(255,255,255,0.35));
           border: 1px solid rgba(255,255,255,0.65);
@@ -2667,6 +2669,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
 
           .ip-card{ min-height: 0; }
           .ip-avatar{ width: 72px; height: 72px; }
+          .ip-avatar{ padding: 7px; }
           .ip-latin{
             max-width: none;
             white-space: normal;
