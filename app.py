@@ -2788,6 +2788,24 @@ def _get_query_param_first(key: str) -> str:
             return ""
 
 
+def _clear_query_param(key: str) -> None:
+    """Best-effort removal of a single query param without breaking other params."""
+    try:
+        qp = st.query_params  # type: ignore[attr-defined]
+        if key in qp:
+            qp.pop(key, None)
+        return
+    except Exception:
+        pass
+
+    try:
+        qp = st.experimental_get_query_params()
+        qp.pop(key, None)
+        st.experimental_set_query_params(**qp)
+    except Exception:
+        pass
+
+
 def _stat_cache_buster(path: Path) -> int | None:
     """Return a high-resolution cache key for local files."""
     try:
@@ -2796,6 +2814,87 @@ def _stat_cache_buster(path: Path) -> int | None:
         return int(getattr(st, "st_mtime_ns", int(st.st_mtime * 1_000_000_000)))
     except Exception:
         return None
+
+
+@st.dialog("Strain Details")
+def _show_weclac_strain_dialog(
+    *,
+    ui_lang: str,
+    code: str,
+    title: str,
+    latin_name: str,
+    feature: str,
+    clinical: str,
+    patent: str,
+    spec: str,
+    is_core: bool,
+    icon_src: str,
+    directions: List[str],
+) -> None:
+    t = (lambda cn, en: en) if ui_lang == "EN" else (lambda cn, en: cn)
+
+    star = " <span class='detail-star'>★</span>" if is_core else ""
+    title_html = html.escape(title)
+    latin_html = ""
+    if ui_lang == "EN" and latin_name:
+        title_html = _format_sci_name_html(latin_name)
+    elif latin_name:
+        latin_html = f"<div class='detail-sub'>{_format_sci_name_html(latin_name)}</div>"
+
+    feature_display = (
+        feature.replace("，", " · ").replace(",", " · ") if ui_lang == "CN" else feature
+    )
+    feature_html = (
+        f"<div class='detail-sub'>{html.escape(feature_display)}</div>" if feature_display else ""
+    )
+    badges = (
+        f"<span class='tile-badge tile-badge-strong'>{html.escape(code)}</span>"
+        + (
+            f"<span class='tile-badge'>{html.escape(t('核心菌', 'Core strain'))}</span>"
+            if is_core
+            else ""
+        )
+    )
+
+    st.markdown(
+        (
+            "<div class='detail-wrap'>"
+            "<div class='detail-card'>"
+            "<div style='display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap'>"
+            f"<div><div class='detail-title'>{title_html}{star}</div>"
+            + latin_html
+            + feature_html
+            + "</div>"
+            f"<div style='display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end'>{badges}</div>"
+            "</div>"
+            "<div class='detail-grid'>"
+            f"<div class='detail-avatar'><img src='{icon_src}' alt='{html.escape(code)}' /></div>"
+            "<div class='kv-table'>"
+            "<div class='kv-grid'>"
+            f"<div class='kv-k'>{html.escape(t('产品特点', 'Strain Highlights'))}</div>"
+            f"<div class='kv-v'>{html.escape(feature)}</div>"
+            f"<div class='kv-k'>{html.escape(t('临床数量', 'Clinical Studies'))}</div>"
+            f"<div class='kv-v'>{html.escape(clinical)}</div>"
+            f"<div class='kv-k'>{html.escape(t('专利数量', 'Patents'))}</div>"
+            f"<div class='kv-v'>{html.escape(patent)}</div>"
+            f"<div class='kv-k'>{html.escape(t('规格', 'Specification (CFU)'))}</div>"
+            f"<div class='kv-v'>{html.escape(spec)}</div>"
+            "</div>"
+            "</div>"
+            "</div>"
+            "</div>"
+            "</div>"
+        ),
+        unsafe_allow_html=True,
+    )
+
+    if directions:
+        st.markdown(f"**{t('功能方向', 'Supported Application Areas')}**")
+        chip_html = "".join(f"<span class='chip'>{html.escape(d)}</span>" for d in directions)
+        st.markdown(
+            f"<div style='display:flex;gap:10px;flex-wrap:wrap'>{chip_html}</div>",
+            unsafe_allow_html=True,
+        )
 
 
 def _weclac_placeholder_svg_data_uri(accent1: str, accent2: str) -> str:
@@ -2956,13 +3055,13 @@ def _render_weclac_page() -> None:
                 return load_image_data_uri(str(candidate), cb) or placeholder_src
         return placeholder_src
 
-    selected = _get_query_param_first("strain").strip()
     code_to_item = {str(it.get("code", "")).strip(): it for it in catalog if str(it.get("code", "")).strip()}
 
-    # 点击图标进入“菌株详情页”
-    if selected and selected in code_to_item:
-        item = code_to_item[selected]
-        code = selected
+    # Clicking a strain opens a dialog (no navigation page).
+    open_code = _get_query_param_first("open_weclac").strip() or _get_query_param_first("strain").strip()
+    if open_code and open_code in code_to_item:
+        item = code_to_item[open_code]
+        code = open_code
         name = str(item.get("name", "")).strip()
         base_name = str(item.get("base_name", "")).strip()
         feature = str(item.get("feature", "")).strip()
@@ -2974,67 +3073,22 @@ def _render_weclac_page() -> None:
         if not latin_name and re.search(r"[A-Za-z]", base_name) and " " in base_name:
             latin_name = base_name
         src = resolve_icon_src(code)
-
-        lang_q = "&lang=EN" if ui_lang == "EN" else ""
-        st.markdown(
-            f"<a class='back-link' href='?series=WecLac{lang_q}'>← {t('返回', 'Back')}</a>",
-            unsafe_allow_html=True,
-        )
-
         title = base_name or name
-        feature_display = feature.replace("，", " · ").replace(",", " · ") if ui_lang == "CN" else feature
-        star = "<span class='detail-star'>★</span>" if is_core else ""
-        badges = (
-            f"<span class='tile-badge tile-badge-strong'>{html.escape(code)}</span>"
-            + (f"<span class='tile-badge'>{html.escape(t('核心菌', 'Core strain'))}</span>" if is_core else "")
+        _show_weclac_strain_dialog(
+            ui_lang=ui_lang,
+            code=code,
+            title=title,
+            latin_name=latin_name,
+            feature=feature,
+            clinical=clinical,
+            patent=patent,
+            spec=spec,
+            is_core=is_core,
+            icon_src=src,
+            directions=directions,
         )
-        title_html = html.escape(title)
-        latin_html = ""
-        if ui_lang == "EN" and latin_name:
-            title_html = _format_sci_name_html(latin_name)
-        elif latin_name:
-            latin_html = f"<div class='detail-sub'>{_format_sci_name_html(latin_name)}</div>"
-        feature_html = f"<div class='detail-sub'>{html.escape(feature_display)}</div>" if feature_display else ""
-
-        detail = (
-            "<div class='detail-wrap'>"
-            "<div class='detail-card'>"
-            "<div style='display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap'>"
-            f"<div><div class='detail-title'>{title_html}{star}</div>"
-            + latin_html
-            + feature_html
-            + "</div>"
-            f"<div style='display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end'>{badges}</div>"
-            "</div>"
-            "<div class='detail-grid'>"
-            f"<div class='detail-avatar'><img src='{src}' alt='{html.escape(code)}' /></div>"
-            "<div class='kv-table'>"
-            "<div class='kv-grid'>"
-            f"<div class='kv-k'>{html.escape(t('产品特点', 'Strain Highlights'))}</div>"
-            f"<div class='kv-v'>{html.escape(feature)}</div>"
-            f"<div class='kv-k'>{html.escape(t('临床数量', 'Clinical Studies'))}</div>"
-            f"<div class='kv-v'>{html.escape(clinical)}</div>"
-            f"<div class='kv-k'>{html.escape(t('专利数量', 'Patents'))}</div>"
-            f"<div class='kv-v'>{html.escape(patent)}</div>"
-            f"<div class='kv-k'>{html.escape(t('规格', 'Specification (CFU)'))}</div>"
-            f"<div class='kv-v'>{html.escape(spec)}</div>"
-            "</div>"
-            "</div>"
-            "</div>"
-            "</div>"
-            "</div>"
-        )
-        st.markdown(detail, unsafe_allow_html=True)
-
-        if directions:
-            with st.container(border=True):
-                st.markdown(f"**{t('功能方向', 'Supported Application Areas')}**")
-                chip_html = "".join(f"<span class='chip'>{html.escape(d)}</span>" for d in directions)
-                st.markdown(
-                    f"<div style='display:flex;gap:10px;flex-wrap:wrap'>{chip_html}</div>",
-                    unsafe_allow_html=True,
-                )
-        return
+        _clear_query_param("open_weclac")
+        _clear_query_param("strain")
 
     # 菌株 IP 网格（信息默认折叠）
     # - 默认 16 个：4 列 × 4 行更整齐
@@ -3063,37 +3117,18 @@ def _render_weclac_page() -> None:
                 if code:
                     code_line += f"<span class='code-pill'>{html.escape(code)}</span>"
 
-                href_base = f"?series=WecLac&strain={quote(code)}"
-                if ui_lang == "EN":
-                    href_base = f"?series=WecLac&lang=EN&strain={quote(code)}"
+                lang_q = "&lang=EN" if ui_lang == "EN" else ""
+                href_base = f"?series=WecLac{lang_q}&open_weclac={quote(code)}"
                 href = html.escape(href_base, quote=True)
-                summary_label = t("介绍", "Details")
-                k_feature = t("特点", "Highlights")
-                k_clinical = t("临床", "Clinical")
-                k_patent = t("专利", "Patents")
-                k_spec = t("规格", "Specification")
                 title_html = f"<div class='ip-name'>{html.escape(title)}</div>" if title else ""
                 tile = (
                     "<div class='ip-wrap'>"
                     "<div class='ip-card'>"
-                    f"<a class='ip-link' href='{href}'>"
+                    f"<a class='ip-link' href='{href}' aria-label='Open details'>"
                     f"<div class='ip-avatar'><img src='{src}' alt='{html.escape(code)}' /></div>"
                     "</a>"
                     f"<div class='ip-code'>{code_line}</div>"
                     f"{title_html}"
-                    "<details class='ip-details'>"
-                    f"<summary>{html.escape(summary_label)}</summary>"
-                    "<div class='ip-kv'>"
-                    f"<div class='ip-k'>{html.escape(k_feature)}</div>"
-                    f"<div class='ip-v'>{html.escape(feature)}</div>"
-                    f"<div class='ip-k'>{html.escape(k_clinical)}</div>"
-                    f"<div class='ip-v'>{html.escape(clinical)}</div>"
-                    f"<div class='ip-k'>{html.escape(k_patent)}</div>"
-                    f"<div class='ip-v'>{html.escape(patent)}</div>"
-                    f"<div class='ip-k'>{html.escape(k_spec)}</div>"
-                    f"<div class='ip-v'>{html.escape(spec)}</div>"
-                    "</div>"
-                    "</details>"
                     "</div>"
                     "</div>"
                 )
