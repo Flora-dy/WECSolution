@@ -275,6 +275,7 @@ WECLAC_CORE_CODES = {"BLa80", "LRa05", "BL21", "BC99", "Akk11"}
 CLINICAL_DATA_PATH = resource_path("Final/Clinicaldata0201.xlsx")
 WECLAC_SCI_NAMES: Dict[str, str] = {
     "BLa80": "Bifidobacterium animalis subsp. lactis",
+    "BLa36": "Bifidobacterium animalis subsp. lactis",
     "LRa05": "Lacticaseibacillus rhamnosus",
     "BL21": "Bifidobacterium longum subsp. longum",
     "BC99": "Weizmannia coagulans",
@@ -284,6 +285,7 @@ WECLAC_SCI_NAMES: Dict[str, str] = {
     "BBr60": "Bifidobacterium breve",
     "PA53": "Pediococcus acidilactici",
     "Lp05": "Lactiplantibacillus plantarum",
+    "Lp18": "Lactiplantibacillus plantarum",
     "LCr86": "Lactobacillus crispatus",
     "LR08": "Limosilactobacillus reuteri",
 }
