@@ -557,17 +557,73 @@
           "EN": "Gastrointestinal Health"
         },
         "product": {
-          "CN": "WecPro®-GIHealth805",
-          "EN": "WecPro®-GIHealth805"
+          "CN": "3个配方",
+          "EN": "3 Formulas"
         },
         "benefit": {
-          "CN": "调节胃肠健康，改善便秘与腹泻，支持胃肠运动功能与菌群稳态，缓解肠道损伤",
-          "EN": "Supports gastrointestinal function and microbiome balance; helps relieve constipation and diarrhea; supports gut motility and intestinal barrier health."
+          "CN": "高端款 / 基础款 / 高活性益生菌酸奶款",
+          "EN": "Premium / Base / Active Probiotic Yogurt"
         },
         "core_formula": {
-          "CN": "动物双歧杆菌乳亚种BLa80、鼠李糖乳酪杆菌LRa05、WecPro®-GUT99、作为肠道健康基础配方，重建菌群稳态并支持肠道蠕动与屏障功能，帮助维持长期消化舒适与排便规律、乳酸片球菌 PA53, 植物乳植杆菌 Lp18,动物双歧杆菌乳亚种 BLa36, 凝结芽孢杆菌 BC99、WecPro®-DigestBi、高活性益生菌发酵酸奶，支持肠道蠕动与菌群稳态，改善便秘相关不适，打造日常肠道舒适底盘、动物双歧杆菌乳亚种BLa80, 长双歧杆菌长亚种BL21, 短双歧杆菌 BBr60, 青春双歧杆菌 BAC30, 长双歧杆菌婴儿亚种BI45",
-          "EN": "<div><span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span> BLa80</div><div><span class='latin'>Lacticaseibacillus rhamnosus</span> LRa05</div><div>GUT99</div><div><span class='latin'>Pediococcus acidilactici</span> PA53</div><div>Lp18</div><div>BLa36</div><div><span class='latin'>Weizmannia coagulans</span> BC99</div><div><span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span> BLa80</div><div><span class='latin'>Bifidobacterium longum</span> <span class='latin-noi'>subsp.</span> <span class='latin'>longum</span> BL21</div><div><span class='latin'>Bifidobacterium breve</span> BBr60</div><div>BAC30</div><div>BI45</div>"
-        }
+          "CN": "",
+          "EN": ""
+        },
+        "variants": [
+          {
+            "tag": {
+              "CN": "高端款",
+              "EN": "Premium"
+            },
+            "product": {
+              "CN": "WecPro®-GIHealth805",
+              "EN": "WecPro®-GIHealth805"
+            },
+            "benefit": {
+              "CN": "调节胃肠健康，改善便秘与腹泻，支持胃肠运动功能与菌群稳态，缓解肠道损伤",
+              "EN": "Supports gastrointestinal health, helps relieve constipation and diarrhea, supports gut motility and microbiome homeostasis, and helps ease intestinal injury."
+            },
+            "core_formula": {
+              "CN": "动物双歧杆菌乳亚种BLa80、鼠李糖乳酪杆菌LRa05",
+              "EN": "<div><span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span> BLa80</div><div><span class='latin'>Lacticaseibacillus rhamnosus</span> LRa05</div>"
+            }
+          },
+          {
+            "tag": {
+              "CN": "基础款",
+              "EN": "Base"
+            },
+            "product": {
+              "CN": "WecPro®-GUT99",
+              "EN": "WecPro®-GUT99"
+            },
+            "benefit": {
+              "CN": "作为肠道健康基础配方，重建菌群稳态并支持肠道蠕动与屏障功能，帮助维持长期消化舒适与排便规律",
+              "EN": "A foundational gut-health formula to rebuild microbiome homeostasis and support gut motility and barrier function for long-term digestive comfort and regularity."
+            },
+            "core_formula": {
+              "CN": "乳酸片球菌PA53、植物乳植杆菌Lp18、动物双歧杆菌乳亚种BLa36、凝结魏茨曼氏菌BC99",
+              "EN": "<div><span class='latin'>Pediococcus acidilactici</span> PA53</div><div>Lp18</div><div>BLa36</div><div><span class='latin'>Weizmannia coagulans</span> BC99</div>"
+            }
+          },
+          {
+            "tag": {
+              "CN": "高活性益生菌酸奶款",
+              "EN": "Active Probiotic Yogurt"
+            },
+            "product": {
+              "CN": "WecPro®-DigestBi",
+              "EN": "WecPro®-DigestBi"
+            },
+            "benefit": {
+              "CN": "高活性益生菌发酵酸奶，支持肠道蠕动与菌群稳态，改善便秘相关不适，打造日常肠道舒适底盘",
+              "EN": "A high-activity probiotic fermented yogurt concept that supports gut motility and microbiome balance, helping relieve constipation-related discomfort for daily gut comfort."
+            },
+            "core_formula": {
+              "CN": "动物双歧杆菌乳亚种BLa80、长双歧杆菌长亚种BL21、短双歧杆菌BBr60、青春双歧杆菌BAC30、长双歧杆菌婴儿亚种BI45",
+              "EN": "<div><span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span> BLa80</div><div><span class='latin'>Bifidobacterium longum</span> <span class='latin-noi'>subsp.</span> <span class='latin'>longum</span> BL21</div><div><span class='latin'>Bifidobacterium breve</span> BBr60</div><div>BAC30</div><div>BI45</div>"
+            }
+          }
+        ]
       },
       {
         "direction": "免疫健康",

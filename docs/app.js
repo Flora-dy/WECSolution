@@ -219,10 +219,38 @@ function renderFormula(data, lang) {
       const product = getLabel(it.product, lang) || safeText(it.product || "");
       const benefits = getLabel(it.benefit, lang) || safeText(it.benefit || "");
       const coreFormula = getLabel(it.core_formula, lang) || safeText(it.core_formula || "");
+      const variants = Array.isArray(it.variants) ? it.variants : [];
       const detailsLabel = lang === "EN" ? "Details" : "介绍";
       const kBenefit = lang === "EN" ? "Benefits" : "健康功效";
       const kCore = lang === "EN" ? "Core Formula" : "核心配方";
       const badge = product ? `<span class="f-badge">${escapeHtml(product)}</span>` : "";
+
+      const variantsHtml = variants.length
+        ? `<div class="spec-grid" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:8px">
+            ${variants
+              .map((v) => {
+                const vTag = getLabel(v.tag, lang) || "";
+                const vProd = getLabel(v.product, lang) || "";
+                const vBen = getLabel(v.benefit, lang) || "";
+                const vCore = getLabel(v.core_formula, lang) || "";
+                const tagHtml = vTag
+                  ? `<span class="tile-badge" style="background:rgba(255,255,255,0.7)">${escapeHtml(vTag)}</span>`
+                  : "";
+                return `
+                  <div class="spec-box">
+                    <div class="spec-title" style="display:flex;justify-content:space-between;gap:8px;align-items:center">
+                      <span>${escapeHtml(vProd)}</span>${tagHtml}
+                    </div>
+                    <div class="spec-meta">${lang === "EN" ? "Benefits" : "健康功效"}</div>
+                    <div style="font-size:0.92rem;line-height:1.45;color:rgba(15,23,42,0.84)">${escapeHtml(vBen) || "—"}</div>
+                    <div class="spec-meta">${lang === "EN" ? "Core Formula" : "核心配方"}</div>
+                    <div style="font-size:0.92rem;line-height:1.45">${safeHtml(vCore) || "—"}</div>
+                  </div>
+                `;
+              })
+              .join("")}
+          </div>`
+        : "";
       return `
         <details class="f-row-wrap">
           <summary class="f-row" style="list-style:none">
@@ -238,12 +266,14 @@ function renderFormula(data, lang) {
             </div>
           </summary>
           <div class="f-expand">
-            <div class="kv-table">
-              <div class="kv-grid">
-                <div class="kv-k">${kBenefit}</div><div class="kv-v">${escapeHtml(benefits) || "—"}</div>
-                <div class="kv-k">${kCore}</div><div class="kv-v">${safeHtml(coreFormula) || "—"}</div>
+            ${variants.length ? variantsHtml : `
+              <div class="kv-table">
+                <div class="kv-grid">
+                  <div class="kv-k">${kBenefit}</div><div class="kv-v">${escapeHtml(benefits) || "—"}</div>
+                  <div class="kv-k">${kCore}</div><div class="kv-v">${safeHtml(coreFormula) || "—"}</div>
+                </div>
               </div>
-            </div>
+            `}
           </div>
         </details>
       `;

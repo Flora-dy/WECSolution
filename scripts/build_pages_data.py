@@ -393,6 +393,7 @@ def main() -> int:
 
     formula_items: List[Dict[str, Any]] = []
     for direction in order[:7]:
+        variants = getattr(app, "_WECPRO_FORMULA_VARIANTS", {}).get(direction, [])
         it = direction_to_item.get(direction, {})
         product = _safe_str(it.get("product", ""))
         benefit = _safe_str(it.get("benefit", ""))
@@ -416,15 +417,50 @@ def main() -> int:
                     strains_html_en_parts.append(f"<div>{code}</div>")
         strains_html_en = "".join(strains_html_en_parts)
 
-        formula_items.append(
-            {
-                "direction": direction,
-                "direction_label": {"CN": direction, "EN": direction_en},
-                "product": {"CN": product, "EN": product},
-                "benefit": {"CN": benefit, "EN": benefit_en},
-                "core_formula": {"CN": strains_text_cn, "EN": strains_html_en},
-            }
-        )
+        if variants:
+            v_out: List[Dict[str, Any]] = []
+            for v in variants:
+                tag = (v.get("tag", {}) or {})
+                prod = (v.get("product", {}) or {})
+                ben = (v.get("benefit", {}) or {})
+                codes = [str(x).strip() for x in (v.get("codes", []) or []) if str(x).strip()]
+                core_cn = _safe_str(v.get("core_cn", ""))
+                core_en_parts: List[str] = []
+                for code in codes:
+                    sci = _safe_str(app._STRAIN_SCI_NAMES.get(code, ""))
+                    if sci:
+                        core_en_parts.append(f"<div>{_unwrap(app._format_sci_name_html)(sci)} {code}</div>")
+                    else:
+                        core_en_parts.append(f"<div>{code}</div>")
+                v_out.append(
+                    {
+                        "tag": {"CN": _safe_str(tag.get("CN", "")), "EN": _safe_str(tag.get("EN", ""))},
+                        "product": {"CN": _safe_str(prod.get("CN", "")), "EN": _safe_str(prod.get("EN", ""))},
+                        "benefit": {"CN": _safe_str(ben.get("CN", "")), "EN": _safe_str(ben.get("EN", ""))},
+                        "core_formula": {"CN": core_cn, "EN": "".join(core_en_parts)},
+                    }
+                )
+
+            formula_items.append(
+                {
+                    "direction": direction,
+                    "direction_label": {"CN": direction, "EN": direction_en},
+                    "product": {"CN": "3个配方", "EN": "3 Formulas"},
+                    "benefit": {"CN": "高端款 / 基础款 / 高活性益生菌酸奶款", "EN": "Premium / Base / Active Probiotic Yogurt"},
+                    "core_formula": {"CN": "", "EN": ""},
+                    "variants": v_out,
+                }
+            )
+        else:
+            formula_items.append(
+                {
+                    "direction": direction,
+                    "direction_label": {"CN": direction, "EN": direction_en},
+                    "product": {"CN": product, "EN": product},
+                    "benefit": {"CN": benefit, "EN": benefit_en},
+                    "core_formula": {"CN": strains_text_cn, "EN": strains_html_en},
+                }
+            )
 
     out: Dict[str, Any] = {
         "weclac": {

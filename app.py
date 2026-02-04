@@ -1758,6 +1758,41 @@ _WECPRO_FORMULA_BENEFIT_EN: Dict[str, str] = {
     "口腔健康": "Supports oral microbiome balance and local immunity, promotes periodontal health, and helps maintain fresh breath.",
 }
 
+_WECPRO_FORMULA_VARIANTS: Dict[str, List[Dict[str, object]]] = {
+    "胃肠健康": [
+        {
+            "tag": {"CN": "高端款", "EN": "Premium"},
+            "product": {"CN": "WecPro®-GIHealth805", "EN": "WecPro®-GIHealth805"},
+            "benefit": {
+                "CN": "调节胃肠健康，改善便秘与腹泻，支持胃肠运动功能与菌群稳态，缓解肠道损伤",
+                "EN": "Supports gastrointestinal health, helps relieve constipation and diarrhea, supports gut motility and microbiome homeostasis, and helps ease intestinal injury.",
+            },
+            "core_cn": "动物双歧杆菌乳亚种BLa80、鼠李糖乳酪杆菌LRa05",
+            "codes": ["BLa80", "LRa05"],
+        },
+        {
+            "tag": {"CN": "基础款", "EN": "Base"},
+            "product": {"CN": "WecPro®-GUT99", "EN": "WecPro®-GUT99"},
+            "benefit": {
+                "CN": "作为肠道健康基础配方，重建菌群稳态并支持肠道蠕动与屏障功能，帮助维持长期消化舒适与排便规律",
+                "EN": "A foundational gut-health formula to rebuild microbiome homeostasis and support gut motility and barrier function for long-term digestive comfort and regularity.",
+            },
+            "core_cn": "乳酸片球菌PA53、植物乳植杆菌Lp18、动物双歧杆菌乳亚种BLa36、凝结魏茨曼氏菌BC99",
+            "codes": ["PA53", "Lp18", "BLa36", "BC99"],
+        },
+        {
+            "tag": {"CN": "高活性益生菌酸奶款", "EN": "Active Probiotic Yogurt"},
+            "product": {"CN": "WecPro®-DigestBi", "EN": "WecPro®-DigestBi"},
+            "benefit": {
+                "CN": "高活性益生菌发酵酸奶，支持肠道蠕动与菌群稳态，改善便秘相关不适，打造日常肠道舒适底盘",
+                "EN": "A high-activity probiotic fermented yogurt concept that supports gut motility and microbiome balance, helping relieve constipation-related discomfort for daily gut comfort.",
+            },
+            "core_cn": "动物双歧杆菌乳亚种BLa80、长双歧杆菌长亚种BL21、短双歧杆菌BBr60、青春双歧杆菌BAC30、长双歧杆菌婴儿亚种BI45",
+            "codes": ["BLa80", "BL21", "BBr60", "BAC30", "BI45"],
+        },
+    ]
+}
+
 _SERIES_OPTIONS = ["WecLac", "WecPro® Formula", "WecPro® Solution"]
 
 _SERIES_THEME: Dict[str, Dict[str, str]] = {
@@ -1914,6 +1949,53 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           background: rgba(var(--accent1-rgb),0.12);
           border-color: rgba(var(--accent1-rgb),0.28);
           color: var(--text);
+        }
+
+        /* WecPro® Formula: variants grid (e.g., GI has 3 formulas) */
+        .v-grid{
+          display:grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 12px;
+        }
+        .v-box{
+          border-radius: 18px;
+          border: 1px solid rgba(15,23,42,0.10);
+          background: rgba(255,255,255,0.90);
+          padding: 12px 12px 10px;
+        }
+        .v-title{
+          font-weight: 950;
+          letter-spacing: -0.01em;
+          line-height: 1.15;
+          font-size: 0.98rem;
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          gap: 8px;
+        }
+        .v-tag{
+          display:inline-flex;
+          align-items:center;
+          justify-content:center;
+          padding: 4px 8px;
+          border-radius: 999px;
+          border: 1px solid rgba(var(--accent1-rgb),0.22);
+          background: rgba(255,255,255,0.70);
+          color: var(--muted);
+          font-weight: 850;
+          font-size: 0.78rem;
+          white-space: nowrap;
+        }
+        .v-meta{
+          color: var(--muted);
+          font-size: 0.78rem;
+          margin-top: 10px;
+          font-weight: 800;
+        }
+        .v-text{
+          font-size: 0.90rem;
+          line-height: 1.45;
+          color: rgba(15,23,42,0.84);
         }
 
         /* Segmented control (pills) */
@@ -2588,6 +2670,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             white-space: normal;
             max-width: none;
           }
+          .v-grid{ grid-template-columns: 1fr; }
 
           .ip-card{ min-height: 0; }
           .ip-avatar{ width: 72px; height: 72px; }
@@ -3207,6 +3290,48 @@ def _render_weclac_page() -> None:
                 )
 
 
+def _render_formula_variants_html(direction: str, ui_lang: str) -> str:
+    variants = _WECPRO_FORMULA_VARIANTS.get(direction, [])
+    if not variants:
+        return ""
+
+    t = (lambda cn, en: en) if ui_lang == "EN" else (lambda cn, en: cn)
+    cards: List[str] = []
+
+    for v in variants:
+        product = str((v.get("product", {}) or {}).get(ui_lang, "") or "").strip()
+        tag = str((v.get("tag", {}) or {}).get(ui_lang, "") or "").strip()
+        benefit = str((v.get("benefit", {}) or {}).get(ui_lang, "") or "").strip()
+        core_cn = str(v.get("core_cn", "") or "").strip()
+        codes = [str(x).strip() for x in (v.get("codes", []) or []) if str(x).strip()]
+
+        core_html = "—"
+        if ui_lang == "EN" and codes:
+            parts: List[str] = []
+            for code in codes:
+                sci = _STRAIN_SCI_NAMES.get(code, "")
+                if sci:
+                    parts.append(f"<div>{_format_sci_name_html(sci)} {html.escape(code)}</div>")
+                else:
+                    parts.append(f"<div>{html.escape(code)}</div>")
+            core_html = "".join(parts) if parts else "—"
+        elif ui_lang != "EN" and core_cn:
+            core_html = html.escape(core_cn)
+
+        tag_html = f"<span class='v-tag'>{html.escape(tag)}</span>" if tag else ""
+        cards.append(
+            "<div class='v-box'>"
+            f"<div class='v-title'>{html.escape(product)}{tag_html}</div>"
+            f"<div class='v-meta'>{html.escape(t('健康功效', 'Benefits'))}</div>"
+            f"<div class='v-text'>{html.escape(benefit) if benefit else '—'}</div>"
+            f"<div class='v-meta'>{html.escape(t('核心配方', 'Core Formula'))}</div>"
+            f"<div class='v-text'>{core_html}</div>"
+            "</div>"
+        )
+
+    return "<div class='v-grid'>" + "".join(cards) + "</div>"
+
+
 def _render_wecpro_formula_page() -> None:
     ui_lang = str(st.session_state.get("ui_lang", "CN")).strip().upper() or "CN"
     t = (lambda cn, en: en) if ui_lang == "EN" else (lambda cn, en: cn)
@@ -3256,8 +3381,15 @@ def _render_wecpro_formula_page() -> None:
         row1 = _rgba(a1, 0.16)
         row2 = _rgba(a2, 0.16)
 
-        product_badge = f"<span class='f-badge'>{html.escape(product)}</span>" if product else ""
-        benefit_html = html.escape(benefit_text) if benefit_text else "—"
+        variants = _WECPRO_FORMULA_VARIANTS.get(direction, [])
+        if variants:
+            product_badge = f"<span class='f-badge'>{html.escape('3个配方' if ui_lang=='CN' else '3 Formulas')}</span>"
+            benefit_html = html.escape(
+                "高端款 / 基础款 / 高活性益生菌酸奶款" if ui_lang == "CN" else "Premium / Base / Active Probiotic Yogurt"
+            )
+        else:
+            product_badge = f"<span class='f-badge'>{html.escape(product)}</span>" if product else ""
+            benefit_html = html.escape(benefit_text) if benefit_text else "—"
 
         strains_html = "—"
         if strains:
@@ -3277,6 +3409,21 @@ def _render_wecpro_formula_page() -> None:
                 strains_text = "、".join([s for s in strains if s])
                 strains_html = html.escape(strains_text) if strains_text else "—"
 
+        expand_html = (
+            _render_formula_variants_html(direction, ui_lang)
+            if variants
+            else (
+                "<div class='kv-table'>"
+                "<div class='kv-grid'>"
+                f"<div class='kv-k'>{html.escape(t('健康功效', 'Benefits'))}</div>"
+                f"<div class='kv-v'>{benefit_html}</div>"
+                f"<div class='kv-k'>{html.escape(t('核心配方', 'Core Formula'))}</div>"
+                f"<div class='kv-v'>{strains_html}</div>"
+                "</div>"
+                "</div>"
+            )
+        )
+
         block = (
             f"<details class='f-row-wrap f-details' style='--row1:{row1};--row2:{row2};--dot1:{a1};--dot2:{a2};'>"
             "<summary class='f-summary'>"
@@ -3293,15 +3440,8 @@ def _render_wecpro_formula_page() -> None:
             "</div>"
             "</summary>"
             "<div class='f-expand'>"
-            "<div class='kv-table'>"
-            "<div class='kv-grid'>"
-            f"<div class='kv-k'>{html.escape(t('健康功效', 'Benefits'))}</div>"
-            f"<div class='kv-v'>{benefit_html}</div>"
-            f"<div class='kv-k'>{html.escape(t('核心配方', 'Core Formula'))}</div>"
-            f"<div class='kv-v'>{strains_html}</div>"
-            "</div>"
-            "</div>"
-            "</div>"
+            + expand_html
+            + "</div>"
             "</details>"
         )
         st.markdown(block, unsafe_allow_html=True)
