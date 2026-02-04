@@ -1915,6 +1915,32 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           margin: 0 !important;
           padding: 0 !important;
         }
+        /* Primary selector (stable in most Streamlit builds): the button right after the marker */
+        [data-testid="stMarkdown"]:has(.weclac-click-marker) + [data-testid="stButton"]{
+          position: absolute !important;
+          top: 14px !important;
+          left: 50% !important;
+          transform: translateX(-50%) !important;
+          width: 78px !important;
+          height: 78px !important;
+          z-index: 6 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          background: transparent !important;
+          border: 0 !important;
+          box-shadow: none !important;
+        }
+        [data-testid="stMarkdown"]:has(.weclac-click-marker) + [data-testid="stButton"] button{
+          width: 100% !important;
+          height: 100% !important;
+          opacity: 0 !important;
+          padding: 0 !important;
+          border: 0 !important;
+          background: transparent !important;
+          box-shadow: none !important;
+          outline: none !important;
+          cursor: pointer !important;
+        }
         /* Make the open-dialog button fully invisible (some layouts insert wrappers so avoid relying on `+`) */
         [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-click-marker) [data-testid="stButton"]{
           position: absolute !important;
