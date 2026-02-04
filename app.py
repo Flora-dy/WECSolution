@@ -2762,107 +2762,78 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             [data-testid="stVerticalBlockBorderWrapper"]:has(#wecare-hero-marker){{
               overflow: hidden;
             }}
-            [data-testid="stVerticalBlockBorderWrapper"]:has(#wecare-hero-marker)::before{{
-              content: "";
-              position: absolute;
-              inset: 0;
-              pointer-events: none;
-              opacity: 0.22;
-              background: linear-gradient(
-                135deg,
-                rgba(15, 23, 42, 0.95),
-                rgba(100, 116, 139, 0.95)
-              );
-              -webkit-mask-image: url("{logo_mask_src}");
-              -webkit-mask-repeat: no-repeat;
-              -webkit-mask-position: right 12px center;
-              -webkit-mask-size: 520px auto;
-              mask-image: url("{logo_mask_src}");
-              mask-repeat: no-repeat;
-              mask-position: right 12px center;
-              mask-size: 520px auto;
-              filter: blur(0.2px);
-            }}
-            @media (max-width: 720px){{
-              [data-testid="stVerticalBlockBorderWrapper"]:has(#wecare-hero-marker)::before{{
-                -webkit-mask-size: 360px auto;
-                mask-size: 360px auto;
-                -webkit-mask-position: right 8px center;
-                mask-position: right 8px center;
-                opacity: 0.18;
-              }}
-            }}
-            }}
+	            [data-testid="stVerticalBlockBorderWrapper"]:has(#wecare-hero-marker)::before{{
+	              content: "";
+	              position: absolute;
+	              inset: 0;
+	              pointer-events: none;
+	              opacity: 0.14;
+	              background: linear-gradient(
+	                135deg,
+	                rgba(15, 23, 42, 0.95),
+	                rgba(100, 116, 139, 0.95)
+	              );
+	              -webkit-mask-image: url("{logo_mask_src}");
+	              -webkit-mask-repeat: no-repeat;
+	              -webkit-mask-position: right 180px center;
+	              -webkit-mask-size: 720px auto;
+	              mask-image: url("{logo_mask_src}");
+	              mask-repeat: no-repeat;
+	              mask-position: right 180px center;
+	              mask-size: 720px auto;
+	              filter: blur(0.2px);
+	            }}
+	            @media (max-width: 720px){{
+	              [data-testid="stVerticalBlockBorderWrapper"]:has(#wecare-hero-marker)::before{{
+	                -webkit-mask-size: 440px auto;
+	                mask-size: 440px auto;
+	                -webkit-mask-position: right 120px center;
+	                mask-position: right 120px center;
+	                opacity: 0.12;
+	              }}
+	            }}
+	            }}
 
             /* Fallback for browsers without :has(): target the first bordered container (header). */
             @supports not selector(:has(*)){{
             [data-testid="stVerticalBlockBorderWrapper"]:first-of-type{{
               overflow: hidden;
             }}
-            [data-testid="stVerticalBlockBorderWrapper"]:first-of-type::before{{
-              content: "";
-              position: absolute;
-              inset: 0;
-              pointer-events: none;
-              opacity: 0.22;
-              background: linear-gradient(
-                135deg,
-                rgba(15, 23, 42, 0.95),
-                rgba(100, 116, 139, 0.95)
-              );
-              -webkit-mask-image: url("{logo_mask_src}");
-              -webkit-mask-repeat: no-repeat;
-              -webkit-mask-position: right 12px center;
-              -webkit-mask-size: 520px auto;
-              mask-image: url("{logo_mask_src}");
-              mask-repeat: no-repeat;
-              mask-position: right 12px center;
-              mask-size: 520px auto;
-              filter: blur(0.2px);
-            }}
-	            @media (max-width: 720px){{
-	              [data-testid="stVerticalBlockBorderWrapper"]:first-of-type::before{{
-	                -webkit-mask-size: 360px auto;
-	                mask-size: 360px auto;
-	                -webkit-mask-position: right 8px center;
-	                mask-position: right 8px center;
-	                opacity: 0.18;
-	              }}
-	            }}
-	            }}
-
-	            /* Visible corner logo (top-right, deep gray) */
-	            .hero-corner-logo-wrap{{
-	              display:flex;
-	              justify-content:flex-end;
-	              margin: 2px 0 10px 0;
-	            }}
-	            .hero-corner-logo{{
-	              width: 96px;
-	              height: 42px;
-	              background: linear-gradient(135deg, rgba(30,41,59,0.92), rgba(71,85,105,0.92));
-	              opacity: 0.95;
+	            [data-testid="stVerticalBlockBorderWrapper"]:first-of-type::before{{
+	              content: "";
+	              position: absolute;
+	              inset: 0;
+	              pointer-events: none;
+	              opacity: 0.14;
+	              background: linear-gradient(
+	                135deg,
+	                rgba(15, 23, 42, 0.95),
+	                rgba(100, 116, 139, 0.95)
+	              );
 	              -webkit-mask-image: url("{logo_mask_src}");
 	              -webkit-mask-repeat: no-repeat;
-	              -webkit-mask-position: center;
-	              -webkit-mask-size: contain;
+	              -webkit-mask-position: right 180px center;
+	              -webkit-mask-size: 720px auto;
 	              mask-image: url("{logo_mask_src}");
 	              mask-repeat: no-repeat;
-	              mask-position: center;
-	              mask-size: contain;
-	              filter: drop-shadow(0 10px 20px rgba(2,6,23,0.10));
+	              mask-position: right 180px center;
+	              mask-size: 720px auto;
+	              filter: blur(0.2px);
 	            }}
-	            @media (max-width: 720px){{
-	              .hero-corner-logo{{
-	                width: 84px;
-	                height: 36px;
-	                opacity: 0.90;
-	              }}
-	            }}
-	            </style>
-            """,
-            unsafe_allow_html=True,
-        )
+		            @media (max-width: 720px){{
+		              [data-testid="stVerticalBlockBorderWrapper"]:first-of-type::before{{
+		                -webkit-mask-size: 440px auto;
+		                mask-size: 440px auto;
+		                -webkit-mask-position: right 120px center;
+		                mask-position: right 120px center;
+		                opacity: 0.12;
+		              }}
+		            }}
+		            }}
+		            </style>
+	            """,
+	            unsafe_allow_html=True,
+	        )
 
     with st.container(border=True):
         if logo_mask_src:
@@ -2911,13 +2882,6 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
                 width="content",
             )
         with cols[1]:
-            if logo_mask_src:
-                st.markdown(
-                    "<div class='hero-corner-logo-wrap' aria-hidden='true'>"
-                    "<div class='hero-corner-logo' aria-hidden='true'></div>"
-                    "</div>",
-                    unsafe_allow_html=True,
-                )
             st.segmented_control(
                 "语言",
                 ["CN", "EN"],

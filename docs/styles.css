@@ -63,35 +63,20 @@ body{
   pointer-events: none;
   position: absolute;
   inset: 0;
-  opacity: 0.22;
+  opacity: 0.14;
   background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(100,116,139,0.95));
   -webkit-mask-image: url("./assets/logo.svg");
   -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: right 10px center;
-  -webkit-mask-size: 520px auto;
+  -webkit-mask-position: right 180px center;
+  -webkit-mask-size: 720px auto;
   mask-image: url("./assets/logo.svg");
   mask-repeat: no-repeat;
-  mask-position: right 10px center;
-  mask-size: 520px auto;
+  mask-position: right 180px center;
+  mask-size: 720px auto;
   filter: blur(0.2px);
 }
 .hero-text{ position: relative; z-index: 1; max-width: 780px; }
-.hero-actions{ position: relative; z-index: 1; display:flex; flex-direction: column; align-items:flex-end; gap: 10px; }
-.hero-corner-logo{
-  width: 96px;
-  height: 42px;
-  opacity: 0.95;
-  background: linear-gradient(135deg, rgba(30,41,59,0.92), rgba(71,85,105,0.92));
-  -webkit-mask-image: url("./assets/logo.svg");
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
-  mask-image: url("./assets/logo.svg");
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  filter: drop-shadow(0 10px 20px rgba(2,6,23,0.10));
-}
+.hero-actions{ position: relative; z-index: 1; display:flex; align-items:flex-start; }
 .hero-series{ margin-top: 12px; }
 .hero-title{
   margin: 0;
@@ -561,16 +546,11 @@ a.tile-badge.tile-badge-link:hover{
   .filters{ grid-template-columns: 1fr; }
   .hero-inner{ flex-direction: column; }
   .hero-wm{
-    -webkit-mask-size: 360px auto;
-    mask-size: 360px auto;
-    -webkit-mask-position: right 8px center;
-    mask-position: right 8px center;
-    opacity: 0.18;
-  }
-  .hero-corner-logo{
-    width: 84px;
-    height: 36px;
-    opacity: 0.90;
+    -webkit-mask-size: 440px auto;
+    mask-size: 440px auto;
+    -webkit-mask-position: right 120px center;
+    mask-position: right 120px center;
+    opacity: 0.12;
   }
   .viewer{ grid-template-columns: 1fr; }
   .grid-3{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
