@@ -2765,63 +2765,49 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             [data-testid="stVerticalBlockBorderWrapper"]:has(#wecare-hero-marker){{
               overflow: hidden;
             }}
-	            [data-testid="stVerticalBlockBorderWrapper"]:has(#wecare-hero-marker)::before{{
-	              content: "";
-	              position: absolute;
-	              inset: 0;
-	              pointer-events: none;
-	              opacity: 0.18;
-	              background: linear-gradient(135deg, #475569, #94a3b8);
-	              -webkit-mask-image: url("{logo_mask_src}");
-	              -webkit-mask-repeat: no-repeat;
-	              -webkit-mask-position: right 180px center;
-	              -webkit-mask-size: 720px auto;
-	              mask-image: url("{logo_mask_src}");
-	              mask-repeat: no-repeat;
-	              mask-position: right 180px center;
-	              mask-size: 720px auto;
-	              filter: blur(0.2px);
-	            }}
+		            [data-testid="stVerticalBlockBorderWrapper"]:has(#wecare-hero-marker)::before{{
+		              content: "";
+		              position: absolute;
+		              inset: 0;
+		              pointer-events: none;
+		              opacity: 0.14;
+		              background-image: url("{logo_mask_src}");
+		              background-repeat: no-repeat;
+		              background-position: right 180px center;
+		              background-size: 720px auto;
+		              filter: grayscale(1) saturate(0) brightness(0.95) blur(0.2px);
+		            }}
 	            @media (max-width: 720px){{
-	              [data-testid="stVerticalBlockBorderWrapper"]:has(#wecare-hero-marker)::before{{
-	                -webkit-mask-size: 440px auto;
-	                mask-size: 440px auto;
-	                -webkit-mask-position: right 120px center;
-	                mask-position: right 120px center;
-	                opacity: 0.14;
-	              }}
-	            }}
-	            }}
+		              [data-testid="stVerticalBlockBorderWrapper"]:has(#wecare-hero-marker)::before{{
+		                background-size: 440px auto;
+		                background-position: right 120px center;
+		                opacity: 0.12;
+		              }}
+		            }}
+		            }}
 
             /* Fallback for browsers without :has(): target the first bordered container (header). */
             @supports not selector(:has(*)){{
             [data-testid="stVerticalBlockBorderWrapper"]:first-of-type{{
               overflow: hidden;
             }}
-	            [data-testid="stVerticalBlockBorderWrapper"]:first-of-type::before{{
-	              content: "";
-	              position: absolute;
-	              inset: 0;
-	              pointer-events: none;
-	              opacity: 0.18;
-	              background: linear-gradient(135deg, #475569, #94a3b8);
-	              -webkit-mask-image: url("{logo_mask_src}");
-	              -webkit-mask-repeat: no-repeat;
-	              -webkit-mask-position: right 180px center;
-	              -webkit-mask-size: 720px auto;
-	              mask-image: url("{logo_mask_src}");
-	              mask-repeat: no-repeat;
-	              mask-position: right 180px center;
-	              mask-size: 720px auto;
-	              filter: blur(0.2px);
-	            }}
+		            [data-testid="stVerticalBlockBorderWrapper"]:first-of-type::before{{
+		              content: "";
+		              position: absolute;
+		              inset: 0;
+		              pointer-events: none;
+		              opacity: 0.14;
+		              background-image: url("{logo_mask_src}");
+		              background-repeat: no-repeat;
+		              background-position: right 180px center;
+		              background-size: 720px auto;
+		              filter: grayscale(1) saturate(0) brightness(0.95) blur(0.2px);
+		            }}
 		            @media (max-width: 720px){{
 		              [data-testid="stVerticalBlockBorderWrapper"]:first-of-type::before{{
-		                -webkit-mask-size: 440px auto;
-		                mask-size: 440px auto;
-		                -webkit-mask-position: right 120px center;
-		                mask-position: right 120px center;
-		                opacity: 0.14;
+		                background-size: 440px auto;
+		                background-position: right 120px center;
+		                opacity: 0.12;
 		              }}
 		            }}
 		            }}
@@ -3555,15 +3541,18 @@ def main() -> None:
     # Debug / emergency: force-clear Streamlit caches via URL
     # Example: https://...streamlit.app/?clear_cache=1
     if _get_query_param_first("clear_cache").strip() in {"1", "true", "yes"}:
-        try:
-            st.cache_data.clear()
-        except Exception:
-            pass
-        try:
-            st.cache_resource.clear()
-        except Exception:
-            pass
-        st.warning("Cache cleared. Please refresh once.")
+        if not bool(st.session_state.get("_did_clear_cache")):
+            st.session_state["_did_clear_cache"] = True
+            try:
+                st.cache_data.clear()
+            except Exception:
+                pass
+            try:
+                st.cache_resource.clear()
+            except Exception:
+                pass
+        _clear_query_param("clear_cache")
+        st.rerun()
 
     # UI 语言：CN / EN（可通过 ?lang=EN 直达）
     lang_from_url = _get_query_param_first("lang").strip().upper()

@@ -63,17 +63,12 @@ body{
   pointer-events: none;
   position: absolute;
   inset: 0;
-  opacity: 0.18;
-  background: linear-gradient(135deg, #475569, #94a3b8);
-  -webkit-mask-image: url("./assets/logo.svg");
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: right 180px center;
-  -webkit-mask-size: 720px auto;
-  mask-image: url("./assets/logo.svg");
-  mask-repeat: no-repeat;
-  mask-position: right 180px center;
-  mask-size: 720px auto;
-  filter: blur(0.2px);
+  opacity: 0.14;
+  background-image: url("./assets/logo.svg");
+  background-repeat: no-repeat;
+  background-position: right 180px center;
+  background-size: 720px auto;
+  filter: grayscale(1) saturate(0) brightness(0.95) blur(0.2px);
 }
 .hero-text{ position: relative; z-index: 1; max-width: 780px; }
 .hero-actions{ position: relative; z-index: 1; display:flex; align-items:flex-start; }
@@ -546,11 +541,9 @@ a.tile-badge.tile-badge-link:hover{
   .filters{ grid-template-columns: 1fr; }
   .hero-inner{ flex-direction: column; }
   .hero-wm{
-    -webkit-mask-size: 440px auto;
-    mask-size: 440px auto;
-    -webkit-mask-position: right 120px center;
-    mask-position: right 120px center;
-    opacity: 0.14;
+    background-size: 440px auto;
+    background-position: right 120px center;
+    opacity: 0.12;
   }
   .viewer{ grid-template-columns: 1fr; }
   .grid-3{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
