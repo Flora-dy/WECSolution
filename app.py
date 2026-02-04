@@ -1866,23 +1866,33 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           z-index: 0; /* create stacking context for watermark */
         }
 
-        /* WecLac: make entire card clickable without changing URL */
+        /* WecLac: click only on IP icon (no URL changes, no visible button) */
         [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-card-scope){
           overflow: hidden;
         }
-        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-card-scope) [data-testid="stButton"]{
-          position: absolute;
-          inset: 0;
-          z-index: 5;
-          margin: 0;
+        [data-testid="stMarkdown"]:has(.weclac-click-marker){
+          height: 0 !important;
+          margin: 0 !important;
+          padding: 0 !important;
         }
-        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-card-scope) [data-testid="stButton"] button{
+        [data-testid="stMarkdown"]:has(.weclac-click-marker) + [data-testid="stButton"]{
+          position: absolute;
+          top: 14px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 78px;
+          height: 78px;
+          z-index: 6;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+        [data-testid="stMarkdown"]:has(.weclac-click-marker) + [data-testid="stButton"] button{
           width: 100%;
           height: 100%;
           opacity: 0;
-          padding: 0;
-          border: 0;
-          background: transparent;
+          padding: 0 !important;
+          border: 0 !important;
+          background: transparent !important;
           cursor: pointer;
         }
         [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-card-scope) .ip-card{
@@ -2924,14 +2934,6 @@ def _show_weclac_strain_dialog(
         unsafe_allow_html=True,
     )
 
-    if directions:
-        st.markdown(f"**{t('功能方向', 'Supported Application Areas')}**")
-        chip_html = "".join(f"<span class='chip'>{html.escape(d)}</span>" for d in directions)
-        st.markdown(
-            f"<div style='display:flex;gap:10px;flex-wrap:wrap'>{chip_html}</div>",
-            unsafe_allow_html=True,
-        )
-
     if st.button(t("关闭", "Close"), type="secondary"):
         st.session_state.pop("weclac_open", None)
         st.rerun()
@@ -3162,13 +3164,8 @@ def _render_weclac_page() -> None:
                 title_html = f"<div class='ip-name'>{html.escape(title)}</div>" if title else ""
                 with st.container(border=True):
                     st.markdown("<span class='weclac-card-scope' aria-hidden='true'></span>", unsafe_allow_html=True)
-                    st.button(
-                        " ",
-                        key=f"weclac_open_{code}",
-                        on_click=open_weclac,
-                        args=(code,),
-                        help=t("点击查看详情", "Click to view details"),
-                    )
+                    st.markdown("<span class='weclac-click-marker' aria-hidden='true'></span>", unsafe_allow_html=True)
+                    st.button(" ", key=f"weclac_open_{code}", on_click=open_weclac, args=(code,))
                     st.markdown(
                         (
                             "<div class='ip-card'>"
