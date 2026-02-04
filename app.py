@@ -1846,6 +1846,16 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
 
         .block-container { padding-top: 1.1rem; padding-bottom: 2.5rem; max-width: 1180px; }
 
+        /* Streamlit dialogs (make larger & more client-friendly) */
+        div[role="dialog"]{
+          width: min(1080px, 96vw) !important;
+          max-width: min(1080px, 96vw) !important;
+        }
+        div[role="dialog"] [data-testid="stMarkdownContainer"]{
+          font-size: 0.95rem;
+          line-height: 1.55;
+        }
+
         /* Card-like containers (st.container(border=True)) */
         [data-testid="stVerticalBlockBorderWrapper"]{
           background: var(--card);
