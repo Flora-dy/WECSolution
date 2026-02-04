@@ -1915,25 +1915,36 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           margin: 0 !important;
           padding: 0 !important;
         }
-        [data-testid="stMarkdown"]:has(.weclac-click-marker) + [data-testid="stButton"]{
-          position: absolute;
-          top: 14px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 78px;
-          height: 78px;
-          z-index: 6;
+        /* Make the open-dialog button fully invisible (some layouts insert wrappers so avoid relying on `+`) */
+        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-click-marker) [data-testid="stButton"]{
+          position: absolute !important;
+          top: 14px !important;
+          left: 50% !important;
+          transform: translateX(-50%) !important;
+          width: 78px !important;
+          height: 78px !important;
+          z-index: 6 !important;
           margin: 0 !important;
           padding: 0 !important;
+          background: transparent !important;
+          border: 0 !important;
+          box-shadow: none !important;
         }
-        [data-testid="stMarkdown"]:has(.weclac-click-marker) + [data-testid="stButton"] button{
-          width: 100%;
-          height: 100%;
-          opacity: 0;
+        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-click-marker) [data-testid="stButton"] button{
+          width: 100% !important;
+          height: 100% !important;
+          opacity: 0 !important;
           padding: 0 !important;
           border: 0 !important;
           background: transparent !important;
-          cursor: pointer;
+          box-shadow: none !important;
+          outline: none !important;
+          cursor: pointer !important;
+        }
+        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-click-marker) [data-testid="stButton"] button:focus,
+        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-click-marker) [data-testid="stButton"] button:focus-visible{
+          outline: none !important;
+          box-shadow: none !important;
         }
         [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-card-scope) .ip-card{
           box-shadow: none;
