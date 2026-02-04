@@ -1936,10 +1936,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           position: relative;
           z-index: 0; /* create stacking context for watermark */
         }
-        /* WecLac cards: remove outer rectangular outline */
-        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-card-scope){
-          border: 0 !important;
-        }
+        /* WecLac cards are rendered via HTML (no border=True container). */
 
         /* WecLac: click directly on IP image (no Streamlit button) */
         .weclac-open{
@@ -2273,6 +2270,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           padding: 14px 14px 12px 14px;
           background: rgba(255,255,255,0.56);
           backdrop-filter: blur(12px);
+          box-shadow: 0 14px 40px rgba(2,6,23,0.08);
+          border: 0;
           min-height: 320px;
           display:flex;
           flex-direction:column;
@@ -3304,19 +3303,17 @@ def _render_weclac_page() -> None:
                 if code:
                     code_line += f"<span class='code-pill'>{html.escape(code)}</span>"
                 title_html = f"<div class='ip-name'>{html.escape(title)}</div>" if title else ""
-                with st.container(border=True):
-                    st.markdown("<span class='weclac-card-scope' aria-hidden='true'></span>", unsafe_allow_html=True)
-                    href = html.escape(build_open_href(code), quote=True)
-                    st.markdown(
-                        (
-                            "<div class='ip-card'>"
-                            f"<div class='ip-avatar'><a class='weclac-open' href='{href}' target='_self' aria-label='Open {html.escape(code)}'><img src='{src}' alt='{html.escape(code)}' /></a></div>"
-                            f"<div class='ip-code'>{code_line}</div>"
-                            f"{title_html}"
-                            "</div>"
-                        ),
-                        unsafe_allow_html=True,
-                    )
+                href = html.escape(build_open_href(code), quote=True)
+                st.markdown(
+                    (
+                        "<div class='ip-card'>"
+                        f"<div class='ip-avatar'><a class='weclac-open' href='{href}' target='_self' aria-label='Open {html.escape(code)}'><img src='{src}' alt='{html.escape(code)}' /></a></div>"
+                        f"<div class='ip-code'>{code_line}</div>"
+                        f"{title_html}"
+                        "</div>"
+                    ),
+                    unsafe_allow_html=True,
+                )
 
     if directions:
         with st.container(border=True):
