@@ -15,7 +15,7 @@ import threading
 import time
 import traceback
 import urllib.request
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 import zipfile
 from pathlib import Path
 from typing import Dict, List, Tuple
@@ -1906,71 +1906,22 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           z-index: 0; /* create stacking context for watermark */
         }
 
-        /* WecLac: click only on IP icon (no URL changes, no visible button) */
-        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-card-scope){
+        /* WecLac: click directly on IP image (no Streamlit button) */
+        .weclac-open{
+          display: inline-block;
+          line-height: 0;
+          border-radius: 16px;
           overflow: hidden;
+          cursor: pointer;
+          text-decoration: none;
         }
-        [data-testid="stMarkdown"]:has(.weclac-click-marker){
-          height: 0 !important;
-          margin: 0 !important;
-          padding: 0 !important;
+        .weclac-open:focus,
+        .weclac-open:focus-visible{
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(var(--accent1-rgb),0.25);
         }
-        /* Primary selector (stable in most Streamlit builds): the button right after the marker */
-        [data-testid="stMarkdown"]:has(.weclac-click-marker) + [data-testid="stButton"]{
-          position: absolute !important;
-          top: 14px !important;
-          left: 50% !important;
-          transform: translateX(-50%) !important;
-          width: 78px !important;
-          height: 78px !important;
-          z-index: 6 !important;
-          margin: 0 !important;
-          padding: 0 !important;
-          background: transparent !important;
-          border: 0 !important;
-          box-shadow: none !important;
-        }
-        [data-testid="stMarkdown"]:has(.weclac-click-marker) + [data-testid="stButton"] button{
-          width: 100% !important;
-          height: 100% !important;
-          opacity: 0 !important;
-          padding: 0 !important;
-          border: 0 !important;
-          background: transparent !important;
-          box-shadow: none !important;
-          outline: none !important;
-          cursor: pointer !important;
-        }
-        /* Make the open-dialog button fully invisible (some layouts insert wrappers so avoid relying on `+`) */
-        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-click-marker) [data-testid="stButton"]{
-          position: absolute !important;
-          top: 14px !important;
-          left: 50% !important;
-          transform: translateX(-50%) !important;
-          width: 78px !important;
-          height: 78px !important;
-          z-index: 6 !important;
-          margin: 0 !important;
-          padding: 0 !important;
-          background: transparent !important;
-          border: 0 !important;
-          box-shadow: none !important;
-        }
-        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-click-marker) [data-testid="stButton"] button{
-          width: 100% !important;
-          height: 100% !important;
-          opacity: 0 !important;
-          padding: 0 !important;
-          border: 0 !important;
-          background: transparent !important;
-          box-shadow: none !important;
-          outline: none !important;
-          cursor: pointer !important;
-        }
-        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-click-marker) [data-testid="stButton"] button:focus,
-        [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-click-marker) [data-testid="stButton"] button:focus-visible{
-          outline: none !important;
-          box-shadow: none !important;
+        .weclac-open img{
+          display: block;
         }
         [data-testid="stVerticalBlockBorderWrapper"]:has(.weclac-card-scope) .ip-card{
           box-shadow: none;
@@ -3227,8 +3178,24 @@ def _render_weclac_page() -> None:
     def open_weclac(code: str) -> None:
         st.session_state["weclac_open"] = (code or "").strip()
 
-    # Prefer session state (no URL changes). Keep query-param fallback for old links.
-    open_code = str(st.session_state.pop("weclac_open", "")).strip() or _get_query_param_first("open_weclac").strip() or _get_query_param_first("strain").strip()
+    # Clicking the IP image uses query params; immediately transfer to session_state and clear
+    # to avoid the feeling of “opening another page”.
+    qp_open_code = _get_query_param_first("open_weclac").strip() or _get_query_param_first("strain").strip()
+    if qp_open_code and qp_open_code in code_to_item:
+        last_qp = str(st.session_state.get("weclac_last_qp", "")).strip()
+        if last_qp != qp_open_code:
+            st.session_state["weclac_last_qp"] = qp_open_code
+            open_weclac(qp_open_code)
+            _clear_query_param("open_weclac")
+            _clear_query_param("strain")
+            st.rerun()
+
+    # Prefer session state (no visible widgets). Keep query-param fallback for very old links.
+    open_code = (
+        str(st.session_state.pop("weclac_open", "")).strip()
+        or _get_query_param_first("open_weclac").strip()
+        or _get_query_param_first("strain").strip()
+    )
     if open_code and open_code in code_to_item:
         item = code_to_item[open_code]
         code = open_code
@@ -3260,6 +3227,18 @@ def _render_weclac_page() -> None:
         _clear_query_param("open_weclac")
         _clear_query_param("strain")
 
+    def build_open_href(code: str) -> str:
+        # Preserve existing query params (series/lang) while adding open_weclac.
+        params: Dict[str, List[str]] = {}
+        try:
+            for k in st.query_params.keys():
+                v = st.query_params.get_all(k)
+                params[str(k)] = [str(x) for x in v if str(x)]
+        except Exception:
+            params = {}
+        params["open_weclac"] = [code]
+        return "?" + urlencode(params, doseq=True)
+
     # 菌株 IP 网格（信息默认折叠）
     # - 默认 16 个：4 列 × 4 行更整齐
     # - 其他数量：回退 3 列布局
@@ -3289,12 +3268,11 @@ def _render_weclac_page() -> None:
                 title_html = f"<div class='ip-name'>{html.escape(title)}</div>" if title else ""
                 with st.container(border=True):
                     st.markdown("<span class='weclac-card-scope' aria-hidden='true'></span>", unsafe_allow_html=True)
-                    st.markdown("<span class='weclac-click-marker' aria-hidden='true'></span>", unsafe_allow_html=True)
-                    st.button(" ", key=f"weclac_open_{code}", on_click=open_weclac, args=(code,))
+                    href = html.escape(build_open_href(code), quote=True)
                     st.markdown(
                         (
                             "<div class='ip-card'>"
-                            f"<div class='ip-avatar'><img src='{src}' alt='{html.escape(code)}' /></div>"
+                            f"<div class='ip-avatar'><a class='weclac-open' href='{href}' target='_self' aria-label='Open {html.escape(code)}'><img src='{src}' alt='{html.escape(code)}' /></a></div>"
                             f"<div class='ip-code'>{code_line}</div>"
                             f"{title_html}"
                             "</div>"
