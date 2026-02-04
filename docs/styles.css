@@ -76,7 +76,22 @@ body{
   filter: blur(0.2px);
 }
 .hero-text{ position: relative; z-index: 1; max-width: 780px; }
-.hero-actions{ position: relative; z-index: 1; display:flex; align-items:flex-start; }
+.hero-actions{ position: relative; z-index: 1; display:flex; flex-direction: column; align-items:flex-end; gap: 10px; }
+.hero-corner-logo{
+  width: 96px;
+  height: 42px;
+  opacity: 0.95;
+  background: linear-gradient(135deg, rgba(30,41,59,0.92), rgba(71,85,105,0.92));
+  -webkit-mask-image: url("./assets/logo.svg");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-image: url("./assets/logo.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  filter: drop-shadow(0 10px 20px rgba(2,6,23,0.10));
+}
 .hero-series{ margin-top: 12px; }
 .hero-title{
   margin: 0;
@@ -551,6 +566,11 @@ a.tile-badge.tile-badge-link:hover{
     -webkit-mask-position: right 8px center;
     mask-position: right 8px center;
     opacity: 0.18;
+  }
+  .hero-corner-logo{
+    width: 84px;
+    height: 36px;
+    opacity: 0.90;
   }
   .viewer{ grid-template-columns: 1fr; }
   .grid-3{ grid-template-columns: repeat(2, minmax(0, 1fr)); }

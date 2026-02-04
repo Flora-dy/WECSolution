@@ -2756,7 +2756,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
     if logo_mask_src:
         st.markdown(
             f"""
-            <style>
+	            <style>
             /* Header watermark 'W' (right-aligned, clipped to header card) */
             @supports selector(:has(*)){{
             [data-testid="stVerticalBlockBorderWrapper"]:has(#wecare-hero-marker){{
@@ -2820,17 +2820,46 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
               mask-size: 520px auto;
               filter: blur(0.2px);
             }}
-            @media (max-width: 720px){{
-              [data-testid="stVerticalBlockBorderWrapper"]:first-of-type::before{{
-                -webkit-mask-size: 360px auto;
-                mask-size: 360px auto;
-                -webkit-mask-position: right 8px center;
-                mask-position: right 8px center;
-                opacity: 0.18;
-              }}
-            }}
-            }}
-            </style>
+	            @media (max-width: 720px){{
+	              [data-testid="stVerticalBlockBorderWrapper"]:first-of-type::before{{
+	                -webkit-mask-size: 360px auto;
+	                mask-size: 360px auto;
+	                -webkit-mask-position: right 8px center;
+	                mask-position: right 8px center;
+	                opacity: 0.18;
+	              }}
+	            }}
+	            }}
+
+	            /* Visible corner logo (top-right, deep gray) */
+	            .hero-corner-logo-wrap{{
+	              display:flex;
+	              justify-content:flex-end;
+	              margin: 2px 0 10px 0;
+	            }}
+	            .hero-corner-logo{{
+	              width: 96px;
+	              height: 42px;
+	              background: linear-gradient(135deg, rgba(30,41,59,0.92), rgba(71,85,105,0.92));
+	              opacity: 0.95;
+	              -webkit-mask-image: url("{logo_mask_src}");
+	              -webkit-mask-repeat: no-repeat;
+	              -webkit-mask-position: center;
+	              -webkit-mask-size: contain;
+	              mask-image: url("{logo_mask_src}");
+	              mask-repeat: no-repeat;
+	              mask-position: center;
+	              mask-size: contain;
+	              filter: drop-shadow(0 10px 20px rgba(2,6,23,0.10));
+	            }}
+	            @media (max-width: 720px){{
+	              .hero-corner-logo{{
+	                width: 84px;
+	                height: 36px;
+	                opacity: 0.90;
+	              }}
+	            }}
+	            </style>
             """,
             unsafe_allow_html=True,
         )
@@ -2882,6 +2911,13 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
                 width="content",
             )
         with cols[1]:
+            if logo_mask_src:
+                st.markdown(
+                    "<div class='hero-corner-logo-wrap' aria-hidden='true'>"
+                    "<div class='hero-corner-logo' aria-hidden='true'></div>"
+                    "</div>",
+                    unsafe_allow_html=True,
+                )
             st.segmented_control(
                 "语言",
                 ["CN", "EN"],
