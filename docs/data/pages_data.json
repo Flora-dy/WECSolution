@@ -308,7 +308,7 @@
           "EN": "Bifidobacterium animalis subsp. lactis"
         },
         "latin_html": "<span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span>",
-        "icon": "",
+        "icon": "./assets/strains/BLa36.png",
         "feature": {
           "CN": "骨力菌，中国母乳来源",
           "EN": "Bone strength strain, sourced from Chinese human breast milk"
@@ -333,7 +333,7 @@
           "EN": "Lactiplantibacillus plantarum"
         },
         "latin_html": "<span class='latin'>Lactiplantibacillus plantarum</span>",
-        "icon": "",
+        "icon": "./assets/strains/Lp90.png",
         "feature": {
           "CN": "XX菌，自然发酵泡菜汁",
           "EN": "OvaryJoy strain, sourced from naturally fermented kimchi brine"
@@ -358,7 +358,7 @@
           "EN": "Lactiplantibacillus plantarum"
         },
         "latin_html": "<span class='latin'>Lactiplantibacillus plantarum</span>",
-        "icon": "",
+        "icon": "./assets/strains/Lp18.png",
         "feature": {
           "CN": "顺肠菌，农家酸奶",
           "EN": "GutFlow strain, sourced from traditional farm-style yogurt"
@@ -383,7 +383,7 @@
           "EN": "Pediococcus acidilactici"
         },
         "latin_html": "<span class='latin'>Pediococcus acidilactici</span>",
-        "icon": "",
+        "icon": "./assets/strains/WPC656.png",
         "feature": {
           "CN": "屏衡菌，三江源",
           "EN": "BarrierBalance strain, inspired by the Sanjiangyuan (Three-River-Source) plateau region"
