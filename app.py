@@ -1806,16 +1806,16 @@ _WECPRO_FORMULA_VARIANTS: Dict[str, List[Dict[str, object]]] = {
             "core_cn": "动物双歧杆菌乳亚种BLa80、鼠李糖乳酪杆菌LRa05",
             "codes": ["BLa80", "LRa05"],
         },
-        {
-            "tag": {"CN": "基础款", "EN": "Base"},
-            "product": {"CN": "WecPro®-GUT99", "EN": "WecPro®-GUT99"},
-            "benefit": {
-                "CN": "作为肠道健康基础配方，重建菌群稳态并支持肠道蠕动与屏障功能，帮助维持长期消化舒适与排便规律",
-                "EN": "A foundational gut-health formula to rebuild microbiome homeostasis and support gut motility and barrier function for long-term digestive comfort and regularity.",
-            },
-            "core_cn": "乳酸片球菌PA53、植物乳植杆菌Lp18、动物双歧杆菌乳亚种BLa36、凝结魏茨曼氏菌BC99",
-            "codes": ["PA53", "Lp18", "BLa36", "BC99"],
-        },
+	        {
+	            "tag": {"CN": "基础款", "EN": "Base"},
+	            "product": {"CN": "WecPro®-GUT99", "EN": "WecPro®-GUT99"},
+	            "benefit": {
+	                "CN": "作为肠道健康基础配方，重建菌群稳态并支持肠道蠕动与屏障功能，帮助维持长期消化舒适与排便规律",
+	                "EN": "A foundational gut-health formula to rebuild microbiome homeostasis and support gut motility and barrier function for long-term digestive comfort and regularity.",
+	            },
+	            "core_cn": "动物双歧杆菌乳亚种BLa36、乳酸片球菌PA53、植物乳植杆菌Lp18、凝结魏茨曼氏菌BC99",
+	            "codes": ["BLa36", "PA53", "Lp18", "BC99"],
+	        },
         {
             "tag": {"CN": "高活性益生菌酸奶款", "EN": "Active Probiotic Yogurt"},
             "product": {"CN": "WecPro®-DigestBi", "EN": "WecPro®-DigestBi"},
