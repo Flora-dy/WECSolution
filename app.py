@@ -2113,8 +2113,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         }
         .hero-art-wm{
           position: absolute;
-          right: -34px;
-          bottom: -44px;
+          right: -18px;
+          bottom: -72px;
           width: 420px;
           height: auto;
           opacity: 0.26;
@@ -2137,8 +2137,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           }
           .hero-art-wm{
             width: 320px;
-            right: -26px;
-            bottom: -34px;
+            right: -12px;
+            bottom: -56px;
             opacity: 0.24;
           }
         }
