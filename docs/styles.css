@@ -63,12 +63,12 @@ body{
   pointer-events: none;
   position: absolute;
   inset: 0;
-  opacity: 0.14;
+  opacity: 0.18;
   background-image: url("./assets/logo.svg");
   background-repeat: no-repeat;
-  background-position: right 180px center;
-  background-size: 720px auto;
-  filter: grayscale(1) saturate(0) brightness(0.95) blur(0.2px);
+  background-position: right -60px center;
+  background-size: 820px auto;
+  filter: grayscale(1) saturate(0) brightness(0.78) contrast(1.08);
 }
 .hero-text{ position: relative; z-index: 1; max-width: 780px; }
 .hero-actions{ position: relative; z-index: 1; display:flex; align-items:flex-start; }
@@ -542,8 +542,8 @@ a.tile-badge.tile-badge-link:hover{
   .hero-inner{ flex-direction: column; }
   .hero-wm{
     background-size: 440px auto;
-    background-position: right 120px center;
-    opacity: 0.12;
+    background-position: right -40px center;
+    opacity: 0.14;
   }
   .viewer{ grid-template-columns: 1fr; }
   .grid-3{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
