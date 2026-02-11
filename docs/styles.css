@@ -64,7 +64,7 @@ body{
   position: absolute;
   inset: 0;
   opacity: 0.18;
-  background-image: url("./assets/logo.svg");
+  background-image: url("./assets/logo.svg?v=2");
   background-repeat: no-repeat;
   background-position: right -60px center;
   background-size: 820px auto;

@@ -2072,11 +2072,6 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           align-items:flex-start;
           gap: 14px;
           position: relative;
-          overflow: hidden;
-          z-index: 1;
-        }
-        .hero-head > :not(.hero-wm-img){
-          position: relative;
           z-index: 1;
         }
         /* Header watermark logo (behind text) */
@@ -2088,7 +2083,6 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           display: flex;
           align-items: center;
           justify-content: flex-end;
-          padding-right: 0;
           opacity: 0.18;
           filter: grayscale(1) saturate(0) brightness(0.78) contrast(1.08);
         }
@@ -2096,7 +2090,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           width: 820px;
           max-width: 92%;
           height: auto;
-          transform: translateX(10%);
+          transform: translateX(12%);
         }
         @media (max-width: 720px){
           .hero-wm-img{
@@ -2107,6 +2101,16 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             max-width: 100%;
             transform: translateX(8%);
           }
+        }
+
+        /* Make watermark span the whole hero container (not only the left column) */
+        [data-testid="stContainer"]:has(#wecare-hero-marker){
+          position: relative;
+          overflow: hidden;
+        }
+        [data-testid="stContainer"]:has(#wecare-hero-marker) [data-testid="stHorizontalBlock"]{
+          position: relative;
+          z-index: 1;
         }
         .hero-mark{
           width: 44px;
@@ -2787,14 +2791,16 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         logo_mask_src = load_image_data_uri(str(LOGO_ICON_PATH), wm_cache_buster)
 
     with st.container(border=True):
-        wm_html = ""
         if logo_mask_src:
             st.markdown(
                 "<span id='wecare-hero-marker' style='display:none' aria-hidden='true'></span>",
                 unsafe_allow_html=True,
             )
             safe_logo_src = html.escape(logo_mask_src, quote=True)
-            wm_html = f"<div class='hero-wm-img' aria-hidden='true'><img src='{safe_logo_src}' alt='' /></div>"
+            st.markdown(
+                f"<div class='hero-wm-img' aria-hidden='true'><img src='{safe_logo_src}' alt='' /></div>",
+                unsafe_allow_html=True,
+            )
         cols = st.columns([9, 2])
         with cols[0]:
             title = "人类健康与营养解决方案" if ui_lang == "CN" else "Human Health & Nutrition Solutions"
@@ -2816,7 +2822,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
                     "</div>"
                 )
             st.markdown(
-                f"<div class='hero-head'>{wm_html}<div>"
+                "<div class='hero-head'><div>"
                 f"<div class='hero-title'>{html.escape(title)}</div>{desc_html}"
                 "</div></div>",
                 unsafe_allow_html=True,
