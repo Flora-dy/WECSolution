@@ -2083,10 +2083,10 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           height: 100%;
           border-radius: 16px;
           overflow: hidden;
-          border: 1px solid rgba(15,23,42,0.10);
-          box-shadow: 0 18px 60px rgba(2,6,23,0.14);
+          border: 1px solid rgba(15,23,42,0.08);
+          box-shadow: 0 20px 64px rgba(2,6,23,0.14);
           position: relative;
-          background: rgba(255,255,255,0.55);
+          background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.38));
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
         }
@@ -2098,6 +2098,18 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           object-fit: cover;
           display: block;
           transform: scale(1.02);
+          filter: saturate(0.92) contrast(1.04) brightness(0.98);
+        }
+        .hero-art::before{
+          content:"";
+          position:absolute;
+          inset:0;
+          background:
+            radial-gradient(700px 420px at 78% 18%, rgba(var(--accent2-rgb),0.16), transparent 60%),
+            radial-gradient(760px 520px at 88% 88%, rgba(var(--accent1-rgb),0.14), transparent 60%);
+          mix-blend-mode: soft-light;
+          opacity: 0.92;
+          pointer-events:none;
         }
         .hero-art-wm{
           position: absolute;
@@ -2105,16 +2117,18 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           bottom: -44px;
           width: 420px;
           height: auto;
-          opacity: 0.34;
-          filter: none;
-          mix-blend-mode: normal;
+          opacity: 0.26;
+          mix-blend-mode: soft-light;
+          filter: drop-shadow(0 18px 55px rgba(2,6,23,0.16));
+          -webkit-mask-image: radial-gradient(circle at 72% 78%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 58%, rgba(0,0,0,0) 100%);
+          mask-image: radial-gradient(circle at 72% 78%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 58%, rgba(0,0,0,0) 100%);
           pointer-events: none;
         }
         .hero-art::after{
           content:"";
           position:absolute;
           inset:0;
-          background: linear-gradient(90deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.25) 35%, rgba(255,255,255,0) 62%);
+          background: linear-gradient(90deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.30) 38%, rgba(255,255,255,0) 66%);
           pointer-events:none;
         }
         @media (max-width: 720px){
@@ -2125,7 +2139,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             width: 320px;
             right: -26px;
             bottom: -34px;
-            opacity: 0.30;
+            opacity: 0.24;
           }
         }
         .hero-mark{
