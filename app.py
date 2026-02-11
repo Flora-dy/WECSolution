@@ -2105,9 +2105,9 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           bottom: -44px;
           width: 420px;
           height: auto;
-          opacity: 0.40;
-          filter: grayscale(1) saturate(0) brightness(0.55) contrast(1.10);
-          mix-blend-mode: multiply;
+          opacity: 0.34;
+          filter: none;
+          mix-blend-mode: normal;
           pointer-events: none;
         }
         .hero-art::after{
@@ -2125,7 +2125,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             width: 320px;
             right: -26px;
             bottom: -34px;
-            opacity: 0.36;
+            opacity: 0.30;
           }
         }
         .hero-mark{

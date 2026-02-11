@@ -90,9 +90,9 @@ body{
   bottom: -44px;
   width: 420px;
   height: auto;
-  opacity: 0.40;
-  filter: grayscale(1) saturate(0) brightness(0.55) contrast(1.10);
-  mix-blend-mode: multiply;
+  opacity: 0.34;
+  filter: none;
+  mix-blend-mode: normal;
   pointer-events: none;
 }
 .hero-art::after{
@@ -578,7 +578,7 @@ a.tile-badge.tile-badge-link:hover{
     width: 320px;
     right: -26px;
     bottom: -34px;
-    opacity: 0.36;
+    opacity: 0.30;
   }
   .viewer{ grid-template-columns: 1fr; }
   .grid-3{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
