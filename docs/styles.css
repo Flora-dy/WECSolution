@@ -75,12 +75,25 @@ body{
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
-.hero-art img{
+.hero-art-photo{
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display:block;
   transform: scale(1.02);
+}
+.hero-art-wm{
+  position: absolute;
+  right: -34px;
+  bottom: -44px;
+  width: 420px;
+  height: auto;
+  opacity: 0.40;
+  filter: grayscale(1) saturate(0) brightness(0.55) contrast(1.10);
+  mix-blend-mode: multiply;
+  pointer-events: none;
 }
 .hero-art::after{
   content:"";
@@ -560,6 +573,12 @@ a.tile-badge.tile-badge-link:hover{
     width: 100%;
     min-width: 0;
     min-height: 160px;
+  }
+  .hero-art-wm{
+    width: 320px;
+    right: -26px;
+    bottom: -34px;
+    opacity: 0.36;
   }
   .viewer{ grid-template-columns: 1fr; }
   .grid-3{ grid-template-columns: repeat(2, minmax(0, 1fr)); }

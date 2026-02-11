@@ -2090,12 +2090,25 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
         }
-        .hero-art img{
+        .hero-art-photo{
+          position: absolute;
+          inset: 0;
           width: 100%;
           height: 100%;
           object-fit: cover;
           display: block;
           transform: scale(1.02);
+        }
+        .hero-art-wm{
+          position: absolute;
+          right: -34px;
+          bottom: -44px;
+          width: 420px;
+          height: auto;
+          opacity: 0.40;
+          filter: grayscale(1) saturate(0) brightness(0.55) contrast(1.10);
+          mix-blend-mode: multiply;
+          pointer-events: none;
         }
         .hero-art::after{
           content:"";
@@ -2107,6 +2120,12 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         @media (max-width: 720px){
           .hero-art{
             min-height: 160px;
+          }
+          .hero-art-wm{
+            width: 320px;
+            right: -26px;
+            bottom: -34px;
+            opacity: 0.36;
           }
         }
         .hero-mark{
@@ -2846,8 +2865,12 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         with cols[1]:
             if hero_art_src:
                 safe_art_src = html.escape(hero_art_src, quote=True)
+                wm_img = ""
+                if logo_mask_src:
+                    safe_wm_src = html.escape(logo_mask_src, quote=True)
+                    wm_img = f"<img class='hero-art-wm' src='{safe_wm_src}' alt='' />"
                 st.markdown(
-                    f"<div class='hero-art' aria-hidden='true'><img src='{safe_art_src}' alt='' /></div>",
+                    f"<div class='hero-art' aria-hidden='true'><img class='hero-art-photo' src='{safe_art_src}' alt='' />{wm_img}</div>",
                     unsafe_allow_html=True,
                 )
             else:
