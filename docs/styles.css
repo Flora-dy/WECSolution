@@ -556,7 +556,11 @@ a.tile-badge.tile-badge-link:hover{
 @media (max-width: 860px){
   .filters{ grid-template-columns: 1fr; }
   .hero-inner{ flex-direction: column; }
-  .hero-art{ display: none; }
+  .hero-art{
+    width: 100%;
+    min-width: 0;
+    min-height: 160px;
+  }
   .viewer{ grid-template-columns: 1fr; }
   .grid-3{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .spec-grid{ grid-template-columns: 1fr; }

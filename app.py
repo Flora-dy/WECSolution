@@ -2105,7 +2105,9 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           pointer-events:none;
         }
         @media (max-width: 720px){
-          .hero-art{ display: none; }
+          .hero-art{
+            min-height: 160px;
+          }
         }
         .hero-mark{
           width: 44px;
@@ -2787,12 +2789,19 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
 
     with st.container(border=True):
         hero_art_src = ""
-        if HERO_ART_PATH.exists():
-            try:
-                hero_art_cache_buster = HERO_ART_PATH.stat().st_mtime
-            except Exception:
-                hero_art_cache_buster = None
-            hero_art_src = load_image_data_uri(str(HERO_ART_PATH), hero_art_cache_buster)
+        hero_art_candidates = [
+            HERO_ART_PATH,
+            resource_path("docs/assets/hero.png"),
+        ]
+        for candidate in hero_art_candidates:
+            if candidate.exists():
+                try:
+                    hero_art_cache_buster = candidate.stat().st_mtime
+                except Exception:
+                    hero_art_cache_buster = None
+                hero_art_src = load_image_data_uri(str(candidate), hero_art_cache_buster)
+                if hero_art_src:
+                    break
 
         cols = st.columns([8, 4, 2])
         with cols[0]:
