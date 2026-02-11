@@ -59,20 +59,36 @@ body{
   justify-content: space-between;
   overflow: hidden;
 }
-.hero-wm{
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  opacity: 0.18;
-  background-image: url("./assets/logo.svg?v=2");
-  background-repeat: no-repeat;
-  background-position: right -60px center;
-  background-size: 820px auto;
-  filter: grayscale(1) saturate(0) brightness(0.78) contrast(1.08);
-}
 .hero-text{ position: relative; z-index: 1; max-width: 780px; }
 .hero-actions{ position: relative; z-index: 1; display:flex; align-items:flex-start; }
 .hero-series{ margin-top: 12px; }
+.hero-art{
+  width: 420px;
+  min-width: 360px;
+  min-height: 184px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(15,23,42,0.10);
+  box-shadow: 0 18px 60px rgba(2,6,23,0.14);
+  position: relative;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.hero-art img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display:block;
+  transform: scale(1.02);
+}
+.hero-art::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(90deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.25) 35%, rgba(255,255,255,0) 62%);
+  pointer-events:none;
+}
 .hero-title{
   margin: 0;
   font-size: 1.85rem;
@@ -540,11 +556,7 @@ a.tile-badge.tile-badge-link:hover{
 @media (max-width: 860px){
   .filters{ grid-template-columns: 1fr; }
   .hero-inner{ flex-direction: column; }
-  .hero-wm{
-    background-size: 440px auto;
-    background-position: right -40px center;
-    opacity: 0.14;
-  }
+  .hero-art{ display: none; }
   .viewer{ grid-template-columns: 1fr; }
   .grid-3{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .spec-grid{ grid-template-columns: 1fr; }

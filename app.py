@@ -262,6 +262,7 @@ DOCS_DIR = resource_path("功能说明")
 LOGO_PATH = resource_path("wecare_logo.png")
 LOGO_ICON_PATH = resource_path("wecare_logo_icon_1024.png")
 LOGO_SVG_PATH = resource_path("Final/logo.svg")
+HERO_ART_PATH = resource_path("Final/logo.png")
 PPT_SOLUTIONS_PATH = resource_path("Final/43 Solutions解决方案中文版20260130.pptx")
 PPT_SOLUTIONS_EN_PATH = resource_path("Final/43 Solutions解决方案英文版20260130.pptx")
 PPT_FORMULA_PATH = resource_path("Final/Formula&Solution.pptx")
@@ -2073,39 +2074,38 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           gap: 14px;
           position: relative;
           z-index: 1;
-          overflow: visible;
         }
-        /* Header watermark logo (behind text) */
-        .hero-wm-img{
-          position: absolute;
-          top: -24px;
-          right: -260px;
-          bottom: -24px;
-          left: auto;
-          pointer-events: none;
-          z-index: 0;
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          opacity: 0.18;
-          filter: grayscale(1) saturate(0) brightness(0.78) contrast(1.08);
+
+        /* Hero right image (background) */
+        .hero-art{
+          width: 100%;
+          min-height: 184px;
+          height: 100%;
+          border-radius: 16px;
+          overflow: hidden;
+          border: 1px solid rgba(15,23,42,0.10);
+          box-shadow: 0 18px 60px rgba(2,6,23,0.14);
+          position: relative;
+          background: rgba(255,255,255,0.55);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
         }
-        .hero-wm-img img{
-          width: 820px;
-          max-width: 92%;
-          height: auto;
-          transform: none;
+        .hero-art img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transform: scale(1.02);
+        }
+        .hero-art::after{
+          content:"";
+          position:absolute;
+          inset:0;
+          background: linear-gradient(90deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.25) 35%, rgba(255,255,255,0) 62%);
+          pointer-events:none;
         }
         @media (max-width: 720px){
-          .hero-wm-img{
-            opacity: 0.14;
-            right: -160px;
-          }
-          .hero-wm-img img{
-            width: 440px;
-            max-width: 100%;
-            transform: none;
-          }
+          .hero-art{ display: none; }
         }
         .hero-mark{
           width: 44px;
@@ -2786,7 +2786,15 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         logo_mask_src = load_image_data_uri(str(LOGO_ICON_PATH), wm_cache_buster)
 
     with st.container(border=True):
-        cols = st.columns([9, 2])
+        hero_art_src = ""
+        if HERO_ART_PATH.exists():
+            try:
+                hero_art_cache_buster = HERO_ART_PATH.stat().st_mtime
+            except Exception:
+                hero_art_cache_buster = None
+            hero_art_src = load_image_data_uri(str(HERO_ART_PATH), hero_art_cache_buster)
+
+        cols = st.columns([8, 4, 2])
         with cols[0]:
             title = "人类健康与营养解决方案" if ui_lang == "CN" else "Human Health & Nutrition Solutions"
             desc_html = ""
@@ -2806,12 +2814,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
                     "<div style='margin-top:10px'>从自有益生菌菌株到配方开发与商业化落地</div>"
                     "</div>"
                 )
-            wm_html = ""
-            if logo_mask_src:
-                safe_logo_src = html.escape(logo_mask_src, quote=True)
-                wm_html = f"<div class='hero-wm-img' aria-hidden='true'><img src='{safe_logo_src}' alt='' /></div>"
             st.markdown(
-                f"<div class='hero-head'>{wm_html}<div>"
+                "<div class='hero-head'><div>"
                 f"<div class='hero-title'>{html.escape(title)}</div>{desc_html}"
                 "</div></div>",
                 unsafe_allow_html=True,
@@ -2831,6 +2835,15 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
                 width="content",
             )
         with cols[1]:
+            if hero_art_src:
+                safe_art_src = html.escape(hero_art_src, quote=True)
+                st.markdown(
+                    f"<div class='hero-art' aria-hidden='true'><img src='{safe_art_src}' alt='' /></div>",
+                    unsafe_allow_html=True,
+                )
+            else:
+                st.markdown("<div style='height:184px'></div>", unsafe_allow_html=True)
+        with cols[2]:
             st.segmented_control(
                 "语言",
                 ["CN", "EN"],
