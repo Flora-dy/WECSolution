@@ -2073,11 +2073,15 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           gap: 14px;
           position: relative;
           z-index: 1;
+          overflow: visible;
         }
         /* Header watermark logo (behind text) */
         .hero-wm-img{
           position: absolute;
-          inset: 0;
+          top: -24px;
+          right: -260px;
+          bottom: -24px;
+          left: auto;
           pointer-events: none;
           z-index: 0;
           display: flex;
@@ -2090,27 +2094,18 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           width: 820px;
           max-width: 92%;
           height: auto;
-          transform: translateX(12%);
+          transform: none;
         }
         @media (max-width: 720px){
           .hero-wm-img{
             opacity: 0.14;
+            right: -160px;
           }
           .hero-wm-img img{
             width: 440px;
             max-width: 100%;
-            transform: translateX(8%);
+            transform: none;
           }
-        }
-
-        /* Make watermark span the whole hero container (not only the left column) */
-        [data-testid="stContainer"]:has(#wecare-hero-marker){
-          position: relative;
-          overflow: hidden;
-        }
-        [data-testid="stContainer"]:has(#wecare-hero-marker) [data-testid="stHorizontalBlock"]{
-          position: relative;
-          z-index: 1;
         }
         .hero-mark{
           width: 44px;
@@ -2791,16 +2786,6 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         logo_mask_src = load_image_data_uri(str(LOGO_ICON_PATH), wm_cache_buster)
 
     with st.container(border=True):
-        if logo_mask_src:
-            st.markdown(
-                "<span id='wecare-hero-marker' style='display:none' aria-hidden='true'></span>",
-                unsafe_allow_html=True,
-            )
-            safe_logo_src = html.escape(logo_mask_src, quote=True)
-            st.markdown(
-                f"<div class='hero-wm-img' aria-hidden='true'><img src='{safe_logo_src}' alt='' /></div>",
-                unsafe_allow_html=True,
-            )
         cols = st.columns([9, 2])
         with cols[0]:
             title = "人类健康与营养解决方案" if ui_lang == "CN" else "Human Health & Nutrition Solutions"
@@ -2821,8 +2806,12 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
                     "<div style='margin-top:10px'>从自有益生菌菌株到配方开发与商业化落地</div>"
                     "</div>"
                 )
+            wm_html = ""
+            if logo_mask_src:
+                safe_logo_src = html.escape(logo_mask_src, quote=True)
+                wm_html = f"<div class='hero-wm-img' aria-hidden='true'><img src='{safe_logo_src}' alt='' /></div>"
             st.markdown(
-                "<div class='hero-head'><div>"
+                f"<div class='hero-head'>{wm_html}<div>"
                 f"<div class='hero-title'>{html.escape(title)}</div>{desc_html}"
                 "</div></div>",
                 unsafe_allow_html=True,
