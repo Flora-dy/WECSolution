@@ -2378,6 +2378,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           width: 100%;
           height: 100%;
           object-fit: contain;
+          transform: scale(1.16);
+          transform-origin: center center;
         }
         .ip-code{
           margin-top: 10px;
