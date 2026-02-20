@@ -335,7 +335,7 @@
         "latin_html": "<span class='latin'>Lactiplantibacillus plantarum</span>",
         "icon": "./assets/strains/Lp90.png",
         "feature": {
-          "CN": "XX菌，自然发酵泡菜汁",
+          "CN": "女王菌，自然发酵泡菜汁",
           "EN": "OvaryJoy strain, sourced from naturally fermented kimchi brine"
         },
         "clinical": {
@@ -377,16 +377,16 @@
         }
       },
       {
-        "code": "WPC656",
+        "code": "BC179",
         "base_name": {
-          "CN": "乳酸片球菌",
-          "EN": "Pediococcus acidilactici"
+          "CN": "凝结魏茨曼氏菌",
+          "EN": "Weizmannia coagulans"
         },
-        "latin_html": "<span class='latin'>Pediococcus acidilactici</span>",
-        "icon": "./assets/strains/WPC656.png",
+        "latin_html": "<span class='latin'>Weizmannia coagulans</span>",
+        "icon": "./assets/strains/BC179.png",
         "feature": {
-          "CN": "屏衡菌，三江源",
-          "EN": "BarrierBalance strain, inspired by the Sanjiangyuan (Three-River-Source) plateau region"
+          "CN": "护肝菌，健康婴儿肠道来源",
+          "EN": "Liver-protective strain, isolated from the gut of healthy infants"
         },
         "clinical": {
           "CN": "1",
@@ -397,7 +397,7 @@
           "EN": "1"
         },
         "spec": {
-          "CN": "6000亿",
+          "CN": "3000亿",
           "EN": "600B"
         }
       }

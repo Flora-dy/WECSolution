@@ -287,6 +287,7 @@ WECLAC_SCI_NAMES: Dict[str, str] = {
     "PA53": "Pediococcus acidilactici",
     "Lp05": "Lactiplantibacillus plantarum",
     "Lp18": "Lactiplantibacillus plantarum",
+    "BC179": "Weizmannia coagulans",
     "LCr86": "Lactobacillus crispatus",
     "LR08": "Limosilactobacillus reuteri",
 }
