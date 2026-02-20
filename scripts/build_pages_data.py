@@ -312,7 +312,14 @@ def main() -> int:
             sci = _safe_str(en_it.get("base_name", ""))  # e.g. "Bifidobacterium ... subsp. ..."
         latin_html = _unwrap(app._format_sci_name_html)(sci) if sci else ""
         icon_path = repo / "docs" / "assets" / "strains" / f"{code}.png"
-        icon = f"./assets/strains/{code}.png" if icon_path.exists() else ""
+        if icon_path.exists():
+            try:
+                icon_ver = int(icon_path.stat().st_mtime)
+            except Exception:
+                icon_ver = 0
+            icon = f"./assets/strains/{code}.png?v={icon_ver}"
+        else:
+            icon = ""
         weclac_items.append(
             {
                 "code": code,

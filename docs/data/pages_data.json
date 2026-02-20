@@ -8,7 +8,7 @@
           "EN": "Bifidobacterium animalis subsp. lactis"
         },
         "latin_html": "<span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span>",
-        "icon": "./assets/strains/BLa80.png",
+        "icon": "./assets/strains/BLa80.png?v=1769960003",
         "feature": {
           "CN": "宝宝菌、中国母乳来源",
           "EN": "Infant strain, sourced from Chinese human breast milk"
@@ -33,7 +33,7 @@
           "EN": "Lactobacillus rhamnosus"
         },
         "latin_html": "<span class='latin'>Lacticaseibacillus rhamnosus</span>",
-        "icon": "./assets/strains/LRa05.png",
+        "icon": "./assets/strains/LRa05.png?v=1769960003",
         "feature": {
           "CN": "女王菌、健康婴儿肠道来源",
           "EN": "Premium strain, sourced from healthy infant gut"
@@ -58,7 +58,7 @@
           "EN": "Weizmannia coagulans"
         },
         "latin_html": "<span class='latin'>Weizmannia coagulans</span>",
-        "icon": "./assets/strains/BC99.png",
+        "icon": "./assets/strains/BC99.png?v=1769960003",
         "feature": {
           "CN": "耐热菌、健康婴儿肠道来源",
           "EN": "Heat‑resistant strain, sourced from healthy infant gut"
@@ -83,7 +83,7 @@
           "EN": "Bifidobacterium longum subsp. longum"
         },
         "latin_html": "<span class='latin'>Bifidobacterium longum</span> <span class='latin-noi'>subsp.</span> <span class='latin'>longum</span>",
-        "icon": "./assets/strains/BL21.png",
+        "icon": "./assets/strains/BL21.png?v=1769960003",
         "feature": {
           "CN": "长寿菌、健康婴儿肠道来源",
           "EN": "Longevity strain, sourced from healthy infant gut"
@@ -108,7 +108,7 @@
           "EN": "Akkermansia muciniphila"
         },
         "latin_html": "<span class='latin'>Akkermansia muciniphila</span>",
-        "icon": "./assets/strains/Akk11.png",
+        "icon": "./assets/strains/Akk11.png?v=1769960003",
         "feature": {
           "CN": "瘦子菌、健康婴儿肠道来源",
           "EN": "Metabolic health strain, sourced from healthy infant gut"
@@ -133,7 +133,7 @@
           "EN": "Lactobacillus acidophilus"
         },
         "latin_html": "<span class='latin'>Lactobacillus acidophilus</span>",
-        "icon": "./assets/strains/LA85.png",
+        "icon": "./assets/strains/LA85.png?v=1769960003",
         "feature": {
           "CN": "免疫菌、泡菜来源",
           "EN": "Immune-support strain, kimchi-derived"
@@ -158,7 +158,7 @@
           "EN": "Lactobacillus paracasei"
         },
         "latin_html": "<span class='latin'>Lacticaseibacillus paracasei</span>",
-        "icon": "./assets/strains/LC86.png",
+        "icon": "./assets/strains/LC86.png?v=1769960003",
         "feature": {
           "CN": "骨骼菌、老酸奶来源",
           "EN": "Bone health strain, traditional yogurt-derived"
@@ -183,7 +183,7 @@
           "EN": "Bifidobacterium breve"
         },
         "latin_html": "<span class='latin'>Bifidobacterium breve</span>",
-        "icon": "./assets/strains/BBr60.png",
+        "icon": "./assets/strains/BBr60.png?v=1769960003",
         "feature": {
           "CN": "舒压菌、健康婴儿肠道来源",
           "EN": "Stress‑relief strain, healthy infant gut source"
@@ -208,7 +208,7 @@
           "EN": "Pediococcus acidilactici"
         },
         "latin_html": "<span class='latin'>Pediococcus acidilactici</span>",
-        "icon": "./assets/strains/PA53.png",
+        "icon": "./assets/strains/PA53.png?v=1769960003",
         "feature": {
           "CN": "润肠菌、奶豆腐来源",
           "EN": "Bowel‑regulating strain, fermented dairy source"
@@ -233,7 +233,7 @@
           "EN": "Lactiplantibacillus plantarum"
         },
         "latin_html": "<span class='latin'>Lactiplantibacillus plantarum</span>",
-        "icon": "./assets/strains/Lp05.png",
+        "icon": "./assets/strains/Lp05.png?v=1770012703",
         "feature": {
           "CN": "护胃菌、泡菜来源",
           "EN": "Gastric‑protective strain, kimchi-derived"
@@ -258,7 +258,7 @@
           "EN": "Lactobacillus curvatus"
         },
         "latin_html": "<span class='latin'>Lactobacillus crispatus</span>",
-        "icon": "./assets/strains/LCr86.png",
+        "icon": "./assets/strains/LCr86.png?v=1770013709",
         "feature": {
           "CN": "密护菌，奶酪来源",
           "EN": "Intimate care strain, cheese-derived"
@@ -283,7 +283,7 @@
           "EN": "Limosilactobacillus reuteri"
         },
         "latin_html": "<span class='latin'>Limosilactobacillus reuteri</span>",
-        "icon": "./assets/strains/LR08.png",
+        "icon": "./assets/strains/LR08.png?v=1770012703",
         "feature": {
           "CN": "轻享菌，奶豆腐来源",
           "EN": "Light wellness strain, fermented dairy source"
@@ -308,7 +308,7 @@
           "EN": "Bifidobacterium animalis subsp. lactis"
         },
         "latin_html": "<span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span>",
-        "icon": "./assets/strains/BLa36.png",
+        "icon": "./assets/strains/BLa36.png?v=1771594345",
         "feature": {
           "CN": "骨力菌，中国母乳来源",
           "EN": "Bone strength strain, sourced from Chinese human breast milk"
@@ -333,7 +333,7 @@
           "EN": "Lactiplantibacillus plantarum"
         },
         "latin_html": "<span class='latin'>Lactiplantibacillus plantarum</span>",
-        "icon": "./assets/strains/Lp90.png",
+        "icon": "./assets/strains/Lp90.png?v=1770559756",
         "feature": {
           "CN": "女王菌，自然发酵泡菜汁",
           "EN": "OvaryJoy strain, sourced from naturally fermented kimchi brine"
@@ -358,7 +358,7 @@
           "EN": "Lactiplantibacillus plantarum"
         },
         "latin_html": "<span class='latin'>Lactiplantibacillus plantarum</span>",
-        "icon": "./assets/strains/Lp18.png",
+        "icon": "./assets/strains/Lp18.png?v=1771594804",
         "feature": {
           "CN": "顺肠菌，农家酸奶",
           "EN": "GutFlow strain, sourced from traditional farm-style yogurt"
@@ -383,7 +383,7 @@
           "EN": "Weizmannia coagulans"
         },
         "latin_html": "<span class='latin'>Weizmannia coagulans</span>",
-        "icon": "./assets/strains/BC179.png",
+        "icon": "./assets/strains/BC179.png?v=1771584260",
         "feature": {
           "CN": "护肝菌，健康婴儿肠道来源",
           "EN": "Liver-protective strain, isolated from the gut of healthy infants"
