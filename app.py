@@ -952,6 +952,18 @@ def load_weclac_catalog(
         )
         core_flag = False
 
+    # Explicit field fixes for known source typos in WecLac deck.
+    # Key: (LANG, code) -> corrected spec text
+    spec_overrides: Dict[Tuple[str, str], str] = {
+        ("EN", "BC179"): "300B",
+    }
+    for row in strains:
+        name = str(row.get("name", "")).strip()
+        _, code = _extract_strain_code(name)
+        override_spec = spec_overrides.get((lang_norm, code))
+        if override_spec:
+            row["spec"] = override_spec
+
     return {"product": product, "product_type": product_type, "strains": strains}
 
 
