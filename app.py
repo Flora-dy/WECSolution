@@ -621,13 +621,30 @@ def _pptx_slide_paths(z: zipfile.ZipFile) -> Dict[int, str]:
 
 
 def _ppt_solution_title_from_lines(lines: List[str]) -> str:
-    try:
-        idx = lines.index("Solution")
-    except ValueError:
+    if not lines:
         return ""
-    if idx + 1 >= len(lines):
-        return ""
-    return lines[idx + 1].strip()
+
+    # Pattern 1: "Solution | Title" / "Solution ｜ Title"
+    for raw in lines:
+        line = str(raw or "").strip()
+        if not line:
+            continue
+        if re.search(r"\bSolution\b", line, flags=re.IGNORECASE) and ("|" in line or "｜" in line):
+            parts = re.split(r"[|｜]", line)
+            if len(parts) >= 2:
+                cand = parts[-1].strip()
+                if cand:
+                    return cand
+
+    # Pattern 2: standalone "Solution" then next line is title
+    for i, raw in enumerate(lines[:-1]):
+        line = str(raw or "").strip()
+        if re.fullmatch(r"solution", line, flags=re.IGNORECASE):
+            cand = str(lines[i + 1] or "").strip()
+            if cand and not re.fullmatch(r"solutions?", cand, flags=re.IGNORECASE):
+                return cand
+
+    return ""
 
 
 def _pdf_solution_title_from_text(text: str) -> str:
@@ -677,6 +694,29 @@ def load_pdf_solution_titles(
     finally:
         doc.close()
     return titles
+
+
+@st.cache_data
+def load_pdf_solution_start_pages(
+    pdf_path: str, _cache_buster: float | None = None
+) -> List[Tuple[int, str]]:
+    """Extract ordered solution start pages as [(page_no, title), ...] from PDF."""
+    titles = load_pdf_solution_titles(pdf_path, _cache_buster)
+    if not titles:
+        return []
+
+    starts: List[Tuple[int, str]] = []
+    prev_norm = ""
+    for page_no in sorted(titles.keys()):
+        title = str(titles.get(page_no, "") or "").strip()
+        if not title:
+            continue
+        norm = _normalize_match_key(title).lower()
+        if norm and norm == prev_norm:
+            continue
+        starts.append((page_no, title))
+        prev_norm = norm
+    return starts
 
 
 def _normalize_match_key(text: str) -> str:
@@ -744,6 +784,47 @@ def load_ppt_solution_deck(
             slide_no += 2
 
         return solutions
+
+
+@st.cache_data
+def load_ppt_solution_start_slides(
+    pptx_path: str, _cache_buster: float | None = None
+) -> List[Tuple[int, str]]:
+    """Extract ordered solution start slides as [(slide_no, title), ...].
+
+    This scanner reads all slides and keeps the first title of each consecutive
+    duplicate pair, so it works even when EN decks include intro/summary pages
+    and page numbering does not align with CN decks.
+    """
+    p = Path(pptx_path)
+    if not p.exists():
+        return []
+
+    all_hits: List[Tuple[int, str]] = []
+    with zipfile.ZipFile(p) as z:
+        slide_map = _pptx_slide_paths(z)
+        for slide_no in sorted(slide_map.keys()):
+            try:
+                lines = _pptx_extract_paragraph_lines(z.read(slide_map[slide_no]))
+            except Exception:
+                continue
+            title = _ppt_solution_title_from_lines(lines)
+            if title:
+                all_hits.append((slide_no, title.strip()))
+
+    if not all_hits:
+        return []
+
+    starts: List[Tuple[int, str]] = []
+    prev_norm = ""
+    for slide_no, title in all_hits:
+        norm = _normalize_match_key(title).lower()
+        if norm and norm == prev_norm:
+            continue
+        starts.append((slide_no, title))
+        prev_norm = norm
+
+    return starts
 
 
 _FORMULA_SLIDE_TO_DIRECTION = {
@@ -1013,20 +1094,18 @@ def build_scenario_to_solution_title(
         )
     ]
 
+    # 全局一一匹配：避免“某个大类条数变化”导致后续全部串位。
     alias: Dict[str, str] = {}
-    cursor = 0
+    remaining = list(solution_titles_ordered)
     for slide_no in sorted(_FORMULA_SLIDE_TO_DIRECTION.keys()):
         direction = _FORMULA_SLIDE_TO_DIRECTION[slide_no]
         scenarios = direction_to_scenarios.get(direction, [])
         if not scenarios:
             continue
-
-        chunk = solution_titles_ordered[cursor : cursor + len(scenarios)]
-        cursor += len(scenarios)
-        remaining = list(chunk)
-
         for scen in scenarios:
             picked = _best_title_match(scen, remaining)
+            if not picked:
+                picked = _best_title_match(scen, solution_titles_ordered)
             if picked:
                 alias[scen] = picked
                 try:
@@ -3811,10 +3890,47 @@ def main() -> None:
                     except Exception:
                         pass
             solutions_deck = load_ppt_solution_deck(str(solutions_pptx_cn), ppt_cache_buster)
-            alias_map = build_scenario_to_solution_title(formula_pptx, str(solutions_pptx_cn), ppt_cache_buster)
+            alias_map = build_scenario_to_solution_title(
+                formula_pptx,
+                str(solutions_pptx_cn),
+                (ppt_cache_buster, "map-20260222"),
+            )
     except Exception:
         solutions_deck = {}
         alias_map = {}
+
+    # EN deck may have extra intro/summary pages; build bridge from CN solution order
+    # (01-43) to EN start slides.
+    en_slide_by_cn: Dict[int, int] = {}
+    en_title_by_cn: Dict[int, str] = {}
+    cn_ordered: List[Tuple[int, str]] = sorted(
+        [
+            (int(v.get("slide_no", 0)), str(k))
+            for k, v in solutions_deck.items()
+            if int(v.get("slide_no", 0)) > 0
+        ],
+        key=lambda x: x[0],
+    )
+    en_starts: List[Tuple[int, str]] = []
+    if ui_lang == "EN" and solutions_pptx_en and solutions_pptx_en.exists():
+        try:
+            en_cache_buster = solutions_pptx_en.stat().st_mtime
+        except Exception:
+            en_cache_buster = None
+        try:
+            en_starts = load_ppt_solution_start_slides(
+                str(solutions_pptx_en), (en_cache_buster, "starts-20260222")
+            )
+            for (cn_slide_no, _cn_title), (en_slide_no, en_title) in zip(cn_ordered, en_starts):
+                en_slide_by_cn[cn_slide_no] = en_slide_no
+                if en_title:
+                    en_title_by_cn[cn_slide_no] = str(en_title).strip()
+        except Exception:
+            en_slide_by_cn = {}
+            en_title_by_cn = {}
+            en_starts = []
+
+    scenario_bridge: Dict[Tuple[str, str], Dict[str, object]] = {}
 
     # Header (color matches the selected 功能方向)
     current_cat = _clean_ui_key(st.session_state.get("filter_cat", ""))
@@ -3824,13 +3940,65 @@ def main() -> None:
     scenario_title_en: Dict[str, str] = {}
     scenario_label_en: Dict[str, str] = {}
     pdf_titles_en: Dict[int, str] = {}
+    pdf_starts_en: List[Tuple[int, str]] = []
     if ui_lang == "EN" and solutions_pdf_en and solutions_pdf_en.exists():
         try:
-            pdf_titles_en = load_pdf_solution_titles(
-                str(solutions_pdf_en), solutions_pdf_en.stat().st_mtime
-            )
+            pdf_cache_key_en = solutions_pdf_en.stat().st_mtime
+        except Exception:
+            pdf_cache_key_en = None
+        try:
+            pdf_titles_en = load_pdf_solution_titles(str(solutions_pdf_en), pdf_cache_key_en)
+            pdf_starts_en = load_pdf_solution_start_pages(str(solutions_pdf_en), pdf_cache_key_en)
         except Exception:
             pdf_titles_en = {}
+            pdf_starts_en = []
+
+    # EN fallback: if EN PPT mapping is unavailable, derive 43 start pages from EN PDF.
+    if ui_lang == "EN" and not en_starts and pdf_starts_en and cn_ordered:
+        en_starts = list(pdf_starts_en)
+        en_slide_by_cn = {}
+        en_title_by_cn = {}
+        for (cn_slide_no, _cn_title), (en_slide_no, en_title) in zip(cn_ordered, en_starts):
+            en_slide_by_cn[cn_slide_no] = en_slide_no
+            if en_title:
+                en_title_by_cn[cn_slide_no] = str(en_title).strip()
+
+    # Canonical bridge keyed by (category_cn, scenario_cn), using Formula order as 01-43.
+    ordered_cat_list = [d for _, d in sorted(_FORMULA_SLIDE_TO_DIRECTION.items())]
+    ordered_formula_pairs: List[Tuple[str, str]] = []
+    for cat_name in ordered_cat_list:
+        for scen_name in formula_scenarios.get(cat_name, []) or []:
+            scen_clean = str(scen_name).strip()
+            if scen_clean:
+                ordered_formula_pairs.append((cat_name, scen_clean))
+
+    for idx, (cat_name, scen_name) in enumerate(ordered_formula_pairs, start=1):
+        row: Dict[str, object] = {"seq": idx}
+
+        # CN mapping still uses explicit title matching, preserving real scenario-to-solution linkage.
+        mk = alias_map.get(scen_name) or alias_map.get(_normalize_match_key(scen_name)) or ""
+        if mk and mk in solutions_deck:
+            cn_slide_no = int(solutions_deck[mk].get("slide_no", 0))
+            if cn_slide_no:
+                row["cn_slide_no"] = cn_slide_no
+                row["cn_title"] = mk
+        elif idx - 1 < len(cn_ordered):
+            cn_slide_no, cn_title = cn_ordered[idx - 1]
+            row["cn_slide_no"] = cn_slide_no
+            row["cn_title"] = cn_title
+
+        cn_slide_no = int(row.get("cn_slide_no", 0) or 0)
+        if cn_slide_no:
+            en_slide_no = en_slide_by_cn.get(cn_slide_no, 0)
+            if en_slide_no:
+                row["en_slide_no"] = en_slide_no
+                row["en_title"] = str(en_title_by_cn.get(cn_slide_no, "") or "").strip()
+            elif idx - 1 < len(en_starts):
+                es_no, es_title = en_starts[idx - 1]
+                row["en_slide_no"] = es_no
+                row["en_title"] = str(es_title or "").strip()
+
+        scenario_bridge[(cat_name, scen_name)] = row
 
     def _format_cat(v: object) -> str:
         s = _clean_ui_key(v)
@@ -3855,34 +4023,28 @@ def main() -> None:
                     st.session_state["filter_sub"] = sub_options[0]
 
                 scenario_idx_en: Dict[str, int] = {}
-                if ui_lang == "EN" and solutions_deck and alias_map and (
-                    (solutions_pptx_en and solutions_pptx_en.exists()) or pdf_titles_en
-                ):
-                    try:
-                        en_cache_buster = (
-                            solutions_pptx_en.stat().st_mtime
-                            if solutions_pptx_en and solutions_pptx_en.exists()
-                            else None
-                        )
-                    except Exception:
-                        en_cache_buster = None
+                if ui_lang == "EN" and solutions_deck and alias_map:
+                    current_cat_for_sub = _clean_ui_key(st.session_state.get("filter_cat", ""))
                     for scen in sub_options:
+                        bridge = scenario_bridge.get((current_cat_for_sub, str(scen).strip()), {})
                         mk = alias_map.get(scen) or alias_map.get(_normalize_match_key(scen)) or scen
                         sol = solutions_deck.get(mk)
-                        slide_no = int(sol.get("slide_no", 0)) if sol else 0
-                        en_title = ""
-                        if slide_no:
-                            if solutions_pptx_en and solutions_pptx_en.exists():
-                                en_lines = load_pptx_slide_lines(
-                                    str(solutions_pptx_en), slide_no, en_cache_buster
-                                )
-                                en_title = _ppt_solution_title_from_lines(en_lines).strip()
-                            if not en_title and pdf_titles_en:
-                                en_title = str(pdf_titles_en.get(slide_no, "")).strip()
+                        cn_slide_no = int(bridge.get("cn_slide_no", 0) or 0)
+                        if not cn_slide_no and sol:
+                            cn_slide_no = int(sol.get("slide_no", 0))
+
+                        en_title = str(bridge.get("en_title", "") or "").strip()
+                        if not en_title and cn_slide_no:
+                            en_title = en_title_by_cn.get(cn_slide_no, "").strip()
+                        if not en_title and cn_slide_no and pdf_titles_en:
+                            en_slide_no = en_slide_by_cn.get(cn_slide_no, cn_slide_no)
+                            en_title = str(pdf_titles_en.get(en_slide_no, "")).strip()
                         if not en_title:
                             en_title = mk
                         scenario_title_en[scen] = en_title
-                        idx = max(1, (slide_no + 1) // 2) if slide_no else 0
+                        idx = int(bridge.get("seq", 0) or 0)
+                        if not idx and cn_slide_no:
+                            idx = max(1, (cn_slide_no + 1) // 2)
                         if idx:
                             scenario_idx_en[scen] = idx
                         scenario_label_en[scen] = f"{idx:02d} · {en_title}" if idx else en_title
@@ -3914,19 +4076,32 @@ def main() -> None:
             unsafe_allow_html=True,
         )
 
-    match_key = alias_map.get(sub) or alias_map.get(_normalize_match_key(sub)) or sub
+    selected_bridge = scenario_bridge.get((cat, sub), {})
+    match_key = (
+        str(selected_bridge.get("cn_title", "")).strip()
+        or alias_map.get(sub)
+        or alias_map.get(_normalize_match_key(sub))
+        or sub
+    )
     ppt_solution = solutions_deck.get(match_key)
+    selected_cn_slide_no = int(selected_bridge.get("cn_slide_no", 0) or 0)
+    selected_en_slide_no = int(selected_bridge.get("en_slide_no", 0) or 0)
+    selected_seq_no = int(selected_bridge.get("seq", 0) or 0)
+    if not selected_cn_slide_no and ppt_solution:
+        selected_cn_slide_no = int(ppt_solution.get("slide_no", 0))  # type: ignore[arg-type]
+    if not selected_en_slide_no and selected_cn_slide_no:
+        selected_en_slide_no = en_slide_by_cn.get(selected_cn_slide_no, selected_cn_slide_no)
     overview_block: Dict[str, object] = {}
     if ppt_solution:
         try:
             overview_lines = list(ppt_solution.get("overview_lines", []))  # type: ignore[arg-type]
             if ui_lang == "EN" and solutions_pptx_en and solutions_pptx_en.exists():
-                slide_no = int(ppt_solution.get("slide_no", 1))  # type: ignore[arg-type]
+                en_slide_no = selected_en_slide_no or int(ppt_solution.get("slide_no", 1))  # type: ignore[arg-type]
                 try:
                     en_cache_buster = solutions_pptx_en.stat().st_mtime
                 except Exception:
                     en_cache_buster = None
-                en_lines = load_pptx_slide_lines(str(solutions_pptx_en), slide_no, en_cache_buster)
+                en_lines = load_pptx_slide_lines(str(solutions_pptx_en), en_slide_no, en_cache_buster)
                 if en_lines:
                     overview_lines = en_lines
             overview_block = _parse_ppt_overview(overview_lines)
@@ -4143,7 +4318,10 @@ def main() -> None:
                 except Exception:
                     pdf_cache_buster = None
 
-                slide_no = int(ppt_solution.get("slide_no", 1))  # type: ignore[arg-type]
+                cn_slide_no = selected_cn_slide_no or int(ppt_solution.get("slide_no", 1))  # type: ignore[arg-type]
+                render_slide_no = cn_slide_no
+                if ui_lang == "EN":
+                    render_slide_no = selected_en_slide_no or en_slide_by_cn.get(cn_slide_no, cn_slide_no)
 
                 render_scale = 2.0
                 tool1, tool2, tool3 = st.columns([4, 1, 2])
@@ -4165,8 +4343,8 @@ def main() -> None:
                             step=0.5,
                         )
 
-                page1 = max(1, slide_no)
-                page2 = max(1, slide_no + 1)
+                page1 = max(1, render_slide_no)
+                page2 = max(1, render_slide_no + 1)
 
                 # 下载：始终提供当前 2 页的 PDF
                 solution_title = str(match_key or sub)
@@ -4177,7 +4355,7 @@ def main() -> None:
                         or solution_title
                     )
                 safe_title = _safe_filename_component(solution_title)
-                solution_index = max(1, (slide_no + 1) // 2)
+                solution_index = selected_seq_no or max(1, (cn_slide_no + 1) // 2)
                 solution_filename = f"{solution_index:02d}-{safe_title}.pdf"
                 solution_pdf_bytes = build_solution_pdf_bytes(
                     str(pdf_path),
