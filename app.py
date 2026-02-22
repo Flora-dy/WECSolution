@@ -264,10 +264,10 @@ LOGO_ICON_PATH = resource_path("wecare_logo_icon_1024.png")
 LOGO_SVG_PATH = resource_path("Final/logo.svg")
 HERO_ART_PATH = resource_path("Final/hero.jpg")
 PPT_SOLUTIONS_PATH = resource_path("Final/43 Solutions解决方案中文版20260130.pptx")
-PPT_SOLUTIONS_EN_PATH = resource_path("Final/43 Solutions解决方案英文版20260130.pptx")
+PPT_SOLUTIONS_EN_PATH = resource_path("Final/43 Solutions解决方案英文版20260203.pptx")
 PPT_FORMULA_PATH = resource_path("Final/Formula&Solution.pptx")
 PDF_SOLUTIONS_PATH = resource_path("Final/43 Solutions解决方案中文版20260130.pdf")
-PDF_SOLUTIONS_EN_PATH = resource_path("Final/43 Solutions解决方案英文版20260130.pdf")
+PDF_SOLUTIONS_EN_PATH = resource_path("Final/43 Solutions解决方案英文版20260203.pdf")
 CAPSULE_DETAILS_PATH = resource_path("Final/Capsule配方详情.xlsx")
 PPT_WECLAC_PATH = resource_path("Final/WecLac.pptx")
 PPT_WECPRO_FORMULA_PATH = resource_path("Final/Formula.pptx")
@@ -3953,9 +3953,13 @@ def main() -> None:
             pdf_titles_en = {}
             pdf_starts_en = []
 
-    # EN fallback: if EN PPT mapping is unavailable, derive 43 start pages from EN PDF.
-    if ui_lang == "EN" and not en_starts and pdf_starts_en and cn_ordered:
+    # EN authoritative order: always use EN PDF starts when available.
+    # This guarantees top content and Full Solution follow the same file order.
+    if ui_lang == "EN" and pdf_starts_en:
         en_starts = list(pdf_starts_en)
+
+    # Build CN->EN bridge from the final EN ordered starts (PDF-first, PPT fallback).
+    if ui_lang == "EN" and en_starts and cn_ordered:
         en_slide_by_cn = {}
         en_title_by_cn = {}
         for (cn_slide_no, _cn_title), (en_slide_no, en_title) in zip(cn_ordered, en_starts):
@@ -3975,17 +3979,24 @@ def main() -> None:
     for idx, (cat_name, scen_name) in enumerate(ordered_formula_pairs, start=1):
         row: Dict[str, object] = {"seq": idx}
 
-        # CN mapping still uses explicit title matching, preserving real scenario-to-solution linkage.
-        mk = alias_map.get(scen_name) or alias_map.get(_normalize_match_key(scen_name)) or ""
-        if mk and mk in solutions_deck:
-            cn_slide_no = int(solutions_deck[mk].get("slide_no", 0))
-            if cn_slide_no:
-                row["cn_slide_no"] = cn_slide_no
-                row["cn_title"] = mk
-        elif idx - 1 < len(cn_ordered):
+        # CN anchor:
+        # - EN mode: keep strict sequence anchor to align all blocks with EN PDF order.
+        # - CN mode: preserve semantic matching by scenario title.
+        if ui_lang == "EN" and idx - 1 < len(cn_ordered):
             cn_slide_no, cn_title = cn_ordered[idx - 1]
             row["cn_slide_no"] = cn_slide_no
             row["cn_title"] = cn_title
+        else:
+            mk = alias_map.get(scen_name) or alias_map.get(_normalize_match_key(scen_name)) or ""
+            if mk and mk in solutions_deck:
+                cn_slide_no = int(solutions_deck[mk].get("slide_no", 0))
+                if cn_slide_no:
+                    row["cn_slide_no"] = cn_slide_no
+                    row["cn_title"] = mk
+            elif idx - 1 < len(cn_ordered):
+                cn_slide_no, cn_title = cn_ordered[idx - 1]
+                row["cn_slide_no"] = cn_slide_no
+                row["cn_title"] = cn_title
 
         # EN uses strict ordered mapping by scenario sequence, aligned to EN PDF/PPT starts.
         if idx - 1 < len(en_starts):
@@ -4196,7 +4207,10 @@ def main() -> None:
             capsule_details = {}
 
         cap_candidates = list(capsule_details.get(cat, {}).keys())
-        cap_key = _pick_capsule_scenario(sub, cap_candidates)
+        cap_query = sub
+        if ui_lang == "EN":
+            cap_query = str(selected_bridge.get("cn_title", "")).strip() or cap_query
+        cap_key = _pick_capsule_scenario(cap_query, cap_candidates)
         cap_record = capsule_details.get(cat, {}).get(cap_key) if cap_key else None
         capsule_specs = list(cap_record.get("specs", [])) if isinstance(cap_record, dict) else []
 
