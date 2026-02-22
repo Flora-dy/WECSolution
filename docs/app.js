@@ -60,6 +60,26 @@ function getLabel(obj, lang) {
   return safeText(obj[lang] ?? obj.CN ?? obj.EN ?? "");
 }
 
+function formatFormulaPartHtml(part) {
+  const escaped = escapeHtml(part);
+  // Convert markdown italic (*...*) generated from data builder into HTML.
+  return escaped.replace(/\*([^*]+)\*/g, "<span class='latin'>$1</span>");
+}
+
+function colorizeCoreFormulaHtml(rawText, lang) {
+  const text = safeText(rawText);
+  if (!text) return "";
+  const parts = text
+    .split(/[、，,;；]+/)
+    .map((x) => safeText(x))
+    .filter(Boolean);
+  const items = (parts.length ? parts : [text]).map((part) => formatFormulaPartHtml(part));
+  const sep = lang === "EN" ? ", " : "、";
+  return items
+    .map((item, i) => `<span class="formula-strain formula-strain-${(i % 6) + 1}">${item}</span>`)
+    .join(`<span class="formula-sep">${escapeHtml(sep)}</span>`);
+}
+
 async function loadData() {
   const resp = await fetch("./data/pages_data.json", { cache: "no-store" });
   if (!resp.ok) throw new Error("Failed to load pages_data.json");
@@ -349,9 +369,12 @@ function renderSolution(data, lang, view) {
 
     // Core formula section
     const coreName = getLabel(cat.core?.name, lang);
-    const coreFormula = getLabel(cat.core?.formula, lang);
+    const coreFormulaRaw = getLabel(cat.core?.formula, lang);
+    const coreFormula = colorizeCoreFormulaHtml(coreFormulaRaw, lang);
     const sep = lang === "EN" ? ": " : "：";
-    const coreLine = coreName && coreFormula ? `<strong>${escapeHtml(coreName)}</strong>${sep}${safeHtml(coreFormula)}` : safeHtml(coreFormula || coreName || "");
+    const coreLine = coreName && coreFormula
+      ? `<div class="core-formula-line"><span class="core-formula-name">${escapeHtml(coreName)}</span><span class="core-formula-sep">${escapeHtml(sep)}</span>${coreFormula}</div>`
+      : (coreFormula ? `<div class="core-formula-line">${coreFormula}</div>` : escapeHtml(coreName || ""));
     el("solution-core").innerHTML = coreLine || (lang === "EN" ? "—" : "—");
 
     const highlights = Array.isArray(scen.highlights?.[lang] ?? scen.highlights) ? (scen.highlights?.[lang] ?? scen.highlights) : [];

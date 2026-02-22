@@ -1653,6 +1653,68 @@ def _to_english_formula(text: str) -> str:
     return ", ".join(parts)
 
 
+_FORMULA_ITEM_SPLIT_RE = re.compile(r"[、，,;；]+")
+
+
+def _split_formula_items(text: str) -> List[str]:
+    s = (text or "").strip()
+    if not s:
+        return []
+    return [p.strip() for p in _FORMULA_ITEM_SPLIT_RE.split(s) if p.strip()]
+
+
+def _to_english_formula_html_items(text: str) -> List[str]:
+    """Return EN core-formula items as HTML fragments (with italic scientific names)."""
+    codes = _extract_strain_codes(text)
+    if not codes:
+        return [_italicize_microbe_tokens_html(x) for x in _split_formula_items(text)]
+
+    out: List[str] = []
+    for code in codes:
+        lookup = code
+        prefix = ""
+        display_code = code
+        if code.startswith("pAkk") and code[1:] in _STRAIN_SCI_NAMES:
+            prefix = "pasteurized "
+            lookup = code[1:]
+            display_code = code[1:]
+
+        sci = _STRAIN_SCI_NAMES.get(lookup)
+        if sci:
+            out.append(
+                f"{html.escape(prefix)}{_format_sci_name_html(sci)} "
+                f"<span class='formula-code'>{html.escape(display_code)}</span>"
+            )
+        else:
+            out.append(f"<span class='formula-code'>{html.escape(display_code)}</span>")
+    return out
+
+
+def _colorize_solution_formula_html(formula_text: str, ui_lang: str) -> str:
+    """Render Core Formula with colorful strain text for client-facing readability."""
+    s = (formula_text or "").strip()
+    if not s:
+        return ""
+
+    lang_norm = (ui_lang or "CN").strip().upper()
+    if lang_norm == "EN":
+        items_html = _to_english_formula_html_items(s)
+        sep = ", "
+    else:
+        items_html = [_italicize_microbe_tokens_html(x) for x in _split_formula_items(s)]
+        sep = "、"
+
+    if not items_html:
+        return _italicize_microbe_tokens_html(s)
+
+    sep_html = f"<span class='formula-sep'>{html.escape(sep)}</span>"
+    colored = [
+        f"<span class='formula-strain formula-strain-{(i % 6) + 1}'>{item}</span>"
+        for i, item in enumerate(items_html)
+    ]
+    return sep_html.join(colored)
+
+
 def _parse_trial_entries(trial_lines: List[str]) -> List[Tuple[str, List[str]]]:
     """把 PPT 中的临床研究段落解析成 [(菌株/组合, [NCT/ChiCTR...]), ...]。"""
     out: List[Tuple[str, List[str]]] = []
@@ -2202,6 +2264,36 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           border: 1px solid var(--border);
           background: rgba(255,255,255,0.75);
           font-weight: 600;
+        }
+        .core-formula-line{
+          font-size: 1.02rem;
+          line-height: 1.72;
+          color: var(--text);
+        }
+        .core-formula-name{
+          font-weight: 920;
+          color: var(--text);
+        }
+        .core-formula-sep{
+          color: rgba(15,23,42,0.68);
+        }
+        .formula-strain{
+          font-weight: 820;
+          letter-spacing: 0.01em;
+        }
+        .formula-strain-1{ color: var(--accent1); }
+        .formula-strain-2{ color: var(--accent2); }
+        .formula-strain-3{ color: #0EA5E9; }
+        .formula-strain-4{ color: #16A34A; }
+        .formula-strain-5{ color: #D97706; }
+        .formula-strain-6{ color: #7C3AED; }
+        .formula-sep{
+          color: rgba(15,23,42,0.45);
+          padding: 0 2px;
+        }
+        .formula-code{
+          color: rgba(15,23,42,0.92);
+          font-weight: 900;
         }
 
         .hero-badge{
@@ -3848,12 +3940,19 @@ def main() -> None:
     with st.container(border=True):
         st.subheader(t("核心配方", "Core Formula"))
         display_name = _ensure_wecpro_registered(overview_name)
-        display_formula = overview_formula if ui_lang == "CN" else _to_english_formula(overview_formula)
+        formula_html = _colorize_solution_formula_html(overview_formula, ui_lang)
         if overview_name and overview_formula:
             sep = "：" if ui_lang == "CN" else ":"
-            st.markdown(f"**{display_name}**{sep} {display_formula}")
+            st.markdown(
+                "<div class='core-formula-line'>"
+                f"<span class='core-formula-name'>{html.escape(display_name)}</span>"
+                f"<span class='core-formula-sep'>{html.escape(sep)} </span>"
+                f"{formula_html}"
+                "</div>",
+                unsafe_allow_html=True,
+            )
         elif overview_formula:
-            st.markdown(display_formula)
+            st.markdown(f"<div class='core-formula-line'>{formula_html}</div>", unsafe_allow_html=True)
         elif overview_name:
             st.markdown(f"**{display_name}**")
         else:
