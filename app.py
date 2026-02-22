@@ -4022,7 +4022,6 @@ def main() -> None:
                 if st.session_state.get("filter_sub") not in sub_options:
                     st.session_state["filter_sub"] = sub_options[0]
 
-                scenario_idx_en: Dict[str, int] = {}
                 if ui_lang == "EN" and solutions_deck and alias_map:
                     current_cat_for_sub = _clean_ui_key(st.session_state.get("filter_cat", ""))
                     for scen in sub_options:
@@ -4042,22 +4041,15 @@ def main() -> None:
                         if not en_title:
                             en_title = mk
                         scenario_title_en[scen] = en_title
-                        idx = int(bridge.get("seq", 0) or 0)
-                        if not idx and cn_slide_no:
-                            idx = max(1, (cn_slide_no + 1) // 2)
-                        if idx:
-                            scenario_idx_en[scen] = idx
-                        scenario_label_en[scen] = f"{idx:02d} · {en_title}" if idx else en_title
+                        # EN 与 CN 一致：不展示 01-43 编号，仅展示场景标题
+                        scenario_label_en[scen] = en_title
 
                 def _format_sub(v: object) -> str:
                     s = str(v)
                     return scenario_label_en.get(s, s) if ui_lang == "EN" else s
 
-                sub_options_sorted = (
-                    sorted(sub_options, key=lambda x: scenario_idx_en.get(x, 10**9))
-                    if ui_lang == "EN" and scenario_idx_en
-                    else sub_options
-                )
+                # Keep original order from Formula&Solution for both CN and EN.
+                sub_options_sorted = sub_options
                 if st.session_state.get("filter_sub") not in sub_options_sorted and sub_options_sorted:
                     st.session_state["filter_sub"] = sub_options_sorted[0]
                 st.selectbox(
