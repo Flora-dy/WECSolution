@@ -2360,6 +2360,11 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           font-weight: 820;
           letter-spacing: 0.01em;
         }
+        .formula-strain .latin,
+        .formula-strain .latin-noi,
+        .formula-strain .formula-code{
+          color: inherit !important;
+        }
         .formula-strain-1{ color: var(--accent1); }
         .formula-strain-2{ color: var(--accent2); }
         .formula-strain-3{ color: #0EA5E9; }
