@@ -3987,16 +3987,18 @@ def main() -> None:
             row["cn_slide_no"] = cn_slide_no
             row["cn_title"] = cn_title
 
-        cn_slide_no = int(row.get("cn_slide_no", 0) or 0)
-        if cn_slide_no:
-            en_slide_no = en_slide_by_cn.get(cn_slide_no, 0)
-            if en_slide_no:
-                row["en_slide_no"] = en_slide_no
-                row["en_title"] = str(en_title_by_cn.get(cn_slide_no, "") or "").strip()
-            elif idx - 1 < len(en_starts):
-                es_no, es_title = en_starts[idx - 1]
-                row["en_slide_no"] = es_no
-                row["en_title"] = str(es_title or "").strip()
+        # EN uses strict ordered mapping by scenario sequence, aligned to EN PDF/PPT starts.
+        if idx - 1 < len(en_starts):
+            es_no, es_title = en_starts[idx - 1]
+            row["en_slide_no"] = es_no
+            row["en_title"] = str(es_title or "").strip()
+        else:
+            cn_slide_no = int(row.get("cn_slide_no", 0) or 0)
+            if cn_slide_no:
+                en_slide_no = en_slide_by_cn.get(cn_slide_no, 0)
+                if en_slide_no:
+                    row["en_slide_no"] = en_slide_no
+                    row["en_title"] = str(en_title_by_cn.get(cn_slide_no, "") or "").strip()
 
         scenario_bridge[(cat_name, scen_name)] = row
 
@@ -4022,17 +4024,13 @@ def main() -> None:
                 if st.session_state.get("filter_sub") not in sub_options:
                     st.session_state["filter_sub"] = sub_options[0]
 
-                if ui_lang == "EN" and solutions_deck and alias_map:
+                if ui_lang == "EN":
                     current_cat_for_sub = _clean_ui_key(st.session_state.get("filter_cat", ""))
                     for scen in sub_options:
                         bridge = scenario_bridge.get((current_cat_for_sub, str(scen).strip()), {})
                         mk = alias_map.get(scen) or alias_map.get(_normalize_match_key(scen)) or scen
-                        sol = solutions_deck.get(mk)
-                        cn_slide_no = int(bridge.get("cn_slide_no", 0) or 0)
-                        if not cn_slide_no and sol:
-                            cn_slide_no = int(sol.get("slide_no", 0))
-
                         en_title = str(bridge.get("en_title", "") or "").strip()
+                        cn_slide_no = int(bridge.get("cn_slide_no", 0) or 0)
                         if not en_title and cn_slide_no:
                             en_title = en_title_by_cn.get(cn_slide_no, "").strip()
                         if not en_title and cn_slide_no and pdf_titles_en:
@@ -4084,18 +4082,20 @@ def main() -> None:
     if not selected_en_slide_no and selected_cn_slide_no:
         selected_en_slide_no = en_slide_by_cn.get(selected_cn_slide_no, selected_cn_slide_no)
     overview_block: Dict[str, object] = {}
-    if ppt_solution:
+    if ui_lang == "EN" and selected_en_slide_no and solutions_pptx_en and solutions_pptx_en.exists():
+        try:
+            try:
+                en_cache_buster = solutions_pptx_en.stat().st_mtime
+            except Exception:
+                en_cache_buster = None
+            en_lines = load_pptx_slide_lines(str(solutions_pptx_en), selected_en_slide_no, en_cache_buster)
+            if en_lines:
+                overview_block = _parse_ppt_overview(en_lines)
+        except Exception:
+            overview_block = {}
+    elif ppt_solution:
         try:
             overview_lines = list(ppt_solution.get("overview_lines", []))  # type: ignore[arg-type]
-            if ui_lang == "EN" and solutions_pptx_en and solutions_pptx_en.exists():
-                en_slide_no = selected_en_slide_no or int(ppt_solution.get("slide_no", 1))  # type: ignore[arg-type]
-                try:
-                    en_cache_buster = solutions_pptx_en.stat().st_mtime
-                except Exception:
-                    en_cache_buster = None
-                en_lines = load_pptx_slide_lines(str(solutions_pptx_en), en_slide_no, en_cache_buster)
-                if en_lines:
-                    overview_lines = en_lines
             overview_block = _parse_ppt_overview(overview_lines)
         except Exception:
             overview_block = {}
@@ -4276,7 +4276,7 @@ def main() -> None:
 
     with st.container(border=True):
         st.markdown(f"### {t('完整解决方案', 'Full Solution')}")
-        if not solutions_pptx_cn or not solutions_pptx_cn.exists():
+        if ui_lang != "EN" and (not solutions_pptx_cn or not solutions_pptx_cn.exists()):
             st.info(
                 t(
                     "未找到解决方案 PPT：\n"
@@ -4287,7 +4287,7 @@ def main() -> None:
                     "- Or set env var `DESIGN_SOLUTIONS_PPTX` to a local path",
                 )
             )
-        elif not ppt_solution:
+        elif ui_lang != "EN" and not ppt_solution:
             st.warning(
                 t(
                     "该应用场景未匹配到 PPT 解决方案内容（请确认名称一致或更新映射）。",
@@ -4310,10 +4310,23 @@ def main() -> None:
                 except Exception:
                     pdf_cache_buster = None
 
-                cn_slide_no = selected_cn_slide_no or int(ppt_solution.get("slide_no", 1))  # type: ignore[arg-type]
-                render_slide_no = cn_slide_no
                 if ui_lang == "EN":
-                    render_slide_no = selected_en_slide_no or en_slide_by_cn.get(cn_slide_no, cn_slide_no)
+                    cn_slide_no = selected_cn_slide_no or (
+                        int(ppt_solution.get("slide_no", 0)) if ppt_solution else 0  # type: ignore[arg-type]
+                    )
+                    render_slide_no = selected_en_slide_no
+                    if not render_slide_no and selected_seq_no and len(pdf_starts_en) >= selected_seq_no:
+                        render_slide_no = int(pdf_starts_en[selected_seq_no - 1][0])
+                    if not render_slide_no and cn_slide_no:
+                        render_slide_no = en_slide_by_cn.get(cn_slide_no, cn_slide_no)
+                    if not render_slide_no:
+                        st.warning(
+                            "No matching English solution page was found for this scenario in the PDF."
+                        )
+                        return
+                else:
+                    cn_slide_no = selected_cn_slide_no or int(ppt_solution.get("slide_no", 1))  # type: ignore[arg-type]
+                    render_slide_no = cn_slide_no
 
                 render_scale = 2.0
                 tool1, tool2, tool3 = st.columns([4, 1, 2])
