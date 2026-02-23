@@ -2326,59 +2326,52 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
         }
-        /* ── Logo lockup: brand circle mark + European wordmark ── */
+        /* ── Logo lockup: free-standing W monogram + wordmark ── */
         .hero-logo{
           display: inline-flex;
           align-items: center;
-          gap: 14px;
-          margin-bottom: 20px;
+          gap: 0;
+          margin-bottom: 22px;
           line-height: 1;
         }
-        /* Actual brand circle: red disc with cursive W */
-        .hero-logo-icon{
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 48px;
-          height: 48px;
-          border-radius: 50%;
-          background: var(--brand);
-          box-shadow: 0 4px 18px rgba(209,0,37,0.30);
-          flex: 0 0 auto;
-        }
-        .hero-logo-icon svg{
-          width: 28px;
-          height: 16px;
+        /* The W SVG path rendered large, no container */
+        .hero-logo-w-svg{
           display: block;
+          width: 52px;
+          height: auto;
+          flex: 0 0 auto;
+          /* Subtle drop shadow for depth */
+          filter: drop-shadow(0 2px 8px rgba(209,0,37,0.22));
         }
         /* Thin vertical hairline divider */
         .hero-logo-divider{
           width: 1px;
-          height: 36px;
-          background: rgba(15,23,42,0.15);
+          height: 32px;
+          background: rgba(15,23,42,0.14);
           flex: 0 0 auto;
+          margin: 0 16px;
         }
         /* Wordmark: stacked two-line */
         .hero-logo-text{
           display: flex;
           flex-direction: column;
-          gap: 4px;
+          gap: 5px;
           line-height: 1;
         }
         .hero-logo-name{
-          font-size: 1.05rem;
+          font-size: 0.95rem;
           font-weight: 800;
-          letter-spacing: 0.18em;
+          letter-spacing: 0.22em;
           text-transform: uppercase;
           color: var(--text);
           line-height: 1;
         }
         .hero-logo-sub{
-          font-size: 0.55rem;
+          font-size: 0.52rem;
           font-weight: 500;
-          letter-spacing: 0.28em;
+          letter-spacing: 0.30em;
           text-transform: uppercase;
-          color: rgba(15,23,42,0.36);
+          color: rgba(15,23,42,0.34);
           line-height: 1;
         }
         /* ── Title with brand-red accent ── */
@@ -3264,16 +3257,11 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
 
     with st.container(border=True):
         _W_PATH = "M241.763 12.967C231.238 15.523 204.444 32.744 189.131 53.148C173.817 73.557 164.889 91.103 138.42 109.275C138.42 109.275 125.677 118.88 116.428 118.867C107.161 118.848 102.295 107.564 105.529 100.772C105.529 100.772 107.486 93.98 111.626 86.945C115.765 79.929 125.741 66.651 121.551 63.888C121.551 63.888 120.956 60.49 108.003 75.483C95.05 90.472 64.116 121.73 35.415 136.069C33.645 136.952 31.98 137.679 30.416 138.26C23.125 140.963 18.011 140.51 14.549 138.26C6.709 133.169 7.317 118.871 10.222 111.201C14.7 99.395 32.552 67.817 71.782 35.928C71.782 35.928 81.534 29.396 78.09 23.573C74.645 17.737 60.8 23.528 60.8 23.528C60.8 23.528 32.552 38.16 17.563 54.736C11.836 61.075 6.668 62.786 3.443 60.878C-0.66 58.454 -1.611 50.18 3.443 38.146C4.815 34.88 6.631 31.335 8.946 27.553V27.566C8.946 27.566 25.146 8.013 58.751 1.866C66.101 0.516 74.28 -0.188 83.309 0.095C83.309 0.095 87.736 0.095 92.337 1.866C95.818 3.201 99.395 5.552 101.229 9.682C105.478 19.256 96.326 28.184 96.326 28.184C96.326 28.184 47.266 74.998 32.73 106.979C32.73 106.979 29.853 114.306 36.142 111.64C42.431 108.969 79.105 88.871 108.438 59.232C108.438 59.232 122.15 43.594 131.079 50.61C140.002 57.631 125.338 76.773 125.338 76.773C125.338 76.773 108.762 95.274 117.366 103.571C125.969 111.85 149.447 84.119 176.612 33.714C187.219 14.069 199.747 5.278 211.086 1.866C221.583 -1.295 231.06 0.155 237.057 1.866C241.205 3.05 243.689 4.363 243.689 4.363C243.689 4.363 252.292 10.428 241.763 12.967Z"
-        _logo_icon = (
-            "<div class='hero-logo-icon'>"
-            f"<svg viewBox='0 0 247 141' fill='none' xmlns='http://www.w3.org/2000/svg'>"
-            f"<path d='{_W_PATH}' fill='white'/>"
-            "</svg>"
-            "</div>"
-        )
         _logo_html = (
             "<div class='hero-logo'>"
-            f"{_logo_icon}"
+            f"<svg class='hero-logo-w-svg' viewBox='0 0 247 141' fill='none' xmlns='http://www.w3.org/2000/svg'>"
+            f"<path d='{_W_PATH}' fill='#D10025'/>"
+            "</svg>"
             "<div class='hero-logo-divider'></div>"
             "<div class='hero-logo-text'>"
             "<span class='hero-logo-name'>WECARE</span>"
