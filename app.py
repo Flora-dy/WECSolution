@@ -2050,6 +2050,10 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           --accent1-rgb: 29,78,216;
           --accent2-rgb: 14,165,233;
           --accent3-rgb: 16,185,129;
+          /* Fixed brand identity — never overridden by series theme */
+          --brand: #D10025;
+          --brand-rgb: 209,0,37;
+          --brand-dark: #a8001e;
         }
 
         html, body, [class*="css"]  {
@@ -2215,12 +2219,67 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         }
         [data-testid="stDownloadButton"] button p{ color: #fff; font-weight: 600; }
 
+        /* ── Brand header bar ── */
+        .hero-brand-bar{
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 10px;
+        }
+        .hero-brand-logo{
+          height: 32px;
+          width: auto;
+          display: block;
+          flex: 0 0 auto;
+        }
+        .hero-brand-divider{
+          width: 1px;
+          height: 22px;
+          background: rgba(15,23,42,0.18);
+          flex: 0 0 auto;
+        }
+        .hero-brand-badge{
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 4px 10px 4px 6px;
+          border-radius: 999px;
+          background: var(--brand);
+          color: #fff;
+          font-size: 0.72rem;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          box-shadow: 0 4px 14px rgba(209,0,37,0.30);
+          flex: 0 0 auto;
+        }
+        .hero-brand-badge-dot{
+          width: 6px;
+          height: 6px;
+          border-radius: 999px;
+          background: rgba(255,255,255,0.65);
+          flex: 0 0 auto;
+        }
+        /* ── Title with brand-red accent ── */
         .hero-title{
           font-size: 1.85rem;
           font-weight: 800;
           letter-spacing: -0.02em;
           line-height: 1.15;
           margin: 0;
+          position: relative;
+          padding-left: 14px;
+        }
+        .hero-title::before{
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0.1em;
+          bottom: 0.1em;
+          width: 4px;
+          border-radius: 999px;
+          background: var(--brand);
         }
         .hero-head{
           display:flex;
@@ -2228,6 +2287,11 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           gap: 14px;
           position: relative;
           z-index: 1;
+        }
+        /* ── Hero card: brand-red left accent strip ── */
+        [data-testid="stVerticalBlockBorderWrapper"]:first-of-type{
+          border-left: 3px solid var(--brand) !important;
+          border-radius: 18px !important;
         }
 
         /* Hero right image (background) */
@@ -2267,13 +2331,13 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         }
         .hero-art-wm{
           position: absolute;
-          right: -18px;
-          bottom: -72px;
-          width: 420px;
+          right: -14px;
+          bottom: -60px;
+          width: 360px;
           height: auto;
-          opacity: 0.26;
-          mix-blend-mode: soft-light;
-          filter: drop-shadow(0 18px 55px rgba(2,6,23,0.16));
+          opacity: 0.18;
+          mix-blend-mode: multiply;
+          filter: drop-shadow(0 18px 55px rgba(209,0,37,0.18));
           -webkit-mask-image: radial-gradient(circle at 72% 78%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 58%, rgba(0,0,0,0) 100%);
           mask-image: radial-gradient(circle at 72% 78%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 58%, rgba(0,0,0,0) 100%);
           pointer-events: none;
@@ -2284,6 +2348,17 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           inset:0;
           background: linear-gradient(90deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.30) 38%, rgba(255,255,255,0) 66%);
           pointer-events:none;
+        }
+        /* Brand-red bottom strip on hero image */
+        .hero-art-brand-strip{
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: var(--brand);
+          pointer-events: none;
+          z-index: 2;
         }
         @media (max-width: 720px){
           .hero-art{
@@ -2323,7 +2398,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           line-height: 1.5;
         }
         .hero-desc strong{
-          color: var(--text);
+          color: var(--brand);
           font-weight: 750;
         }
         .hero-series-label{
@@ -2968,6 +3043,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
 
           .hero-title{ font-size: 1.55rem; }
           .hero-desc{ font-size: 0.95rem; }
+          .hero-brand-logo{ height: 24px; }
+          .hero-brand-badge{ font-size: 0.65rem; padding: 3px 8px 3px 5px; }
 
           .spec-grid{ grid-template-columns: 1fr; }
           .tile-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -3046,6 +3123,16 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             wm_cache_buster = None
         logo_mask_src = load_image_data_uri(str(LOGO_ICON_PATH), wm_cache_buster)
 
+    # Load company logo (公司 logo.png) for brand bar
+    company_logo_path = resource_path("Final/公司 logo.png")
+    company_logo_src = ""
+    if company_logo_path.exists():
+        try:
+            cl_cache_buster = company_logo_path.stat().st_mtime
+        except Exception:
+            cl_cache_buster = None
+        company_logo_src = load_image_data_uri(str(company_logo_path), cl_cache_buster)
+
     with st.container(border=True):
         hero_art_src = ""
         hero_art_candidates = [
@@ -3062,9 +3149,27 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
                 if hero_art_src:
                     break
 
-        cols = st.columns([8, 4, 2])
+        cols = st.columns([6, 4, 1])
         with cols[0]:
             title = "人类健康与营养解决方案" if ui_lang == "CN" else "Human Health & Nutrition Solutions"
+            badge_label = "微康益生菌" if ui_lang == "CN" else "WECARE-PROBIOTICS"
+
+            # Brand bar: company logo + divider + red badge
+            brand_bar_parts = []
+            if company_logo_src:
+                safe_cl_src = html.escape(company_logo_src, quote=True)
+                brand_bar_parts.append(
+                    f"<img class='hero-brand-logo' src='{safe_cl_src}' alt='WECARE-PROBIOTICS' />"
+                )
+                brand_bar_parts.append("<div class='hero-brand-divider'></div>")
+            brand_bar_parts.append(
+                "<span class='hero-brand-badge'>"
+                "<span class='hero-brand-badge-dot'></span>"
+                f"{html.escape(badge_label)}"
+                "</span>"
+            )
+            brand_bar_html = "<div class='hero-brand-bar'>" + "".join(brand_bar_parts) + "</div>"
+
             desc_html = ""
             if ui_lang == "EN":
                 desc_html = (
@@ -3083,6 +3188,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
                     "</div>"
                 )
             st.markdown(
+                f"{brand_bar_html}"
                 "<div class='hero-head'><div>"
                 f"<div class='hero-title'>{html.escape(title)}</div>{desc_html}"
                 "</div></div>",
@@ -3110,7 +3216,11 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
                     safe_wm_src = html.escape(logo_mask_src, quote=True)
                     wm_img = f"<img class='hero-art-wm' src='{safe_wm_src}' alt='' />"
                 st.markdown(
-                    f"<div class='hero-art' aria-hidden='true'><img class='hero-art-photo' src='{safe_art_src}' alt='' />{wm_img}</div>",
+                    f"<div class='hero-art' aria-hidden='true'>"
+                    f"<img class='hero-art-photo' src='{safe_art_src}' alt='' />"
+                    f"{wm_img}"
+                    "<div class='hero-art-brand-strip'></div>"
+                    "</div>",
                     unsafe_allow_html=True,
                 )
             else:
