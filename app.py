@@ -2248,10 +2248,10 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           border-radius: 22px;
           min-height: 0;
           display: grid;
-          grid-template-columns: 1fr;
-          gap: 0;
+          grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+          gap: 14px;
           align-items: stretch;
-          padding: 16px 18px 16px 12px;
+          padding: 14px 16px 14px 4px;
           background:
             radial-gradient(760px 360px at 16% 10%, rgba(var(--accent1-rgb),0.07), transparent 62%),
             linear-gradient(145deg, rgba(255,255,255,0.88), rgba(255,255,255,0.78));
@@ -2259,7 +2259,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         .hero-content{
           position: relative;
           z-index: 1;
-          padding: 4px 6px 2px 2px;
+          padding: 2px 4px 2px 0;
+          margin-left: -8px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -2267,10 +2268,23 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         }
         /* ── Right visual panel: 5-factory infographic ── */
         .hero-visual{
-          display: none;
+          position: relative;
+          border-radius: 16px;
+          overflow: hidden;
+          border: 1px solid rgba(15,23,42,0.10);
+          box-shadow: 0 10px 26px rgba(2,6,23,0.09);
+          min-height: 186px;
+          background: linear-gradient(135deg, rgba(15,23,42,0.05), rgba(15,23,42,0.02));
         }
         .hero-photo{
-          display: none;
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center center;
+          filter: saturate(0.95) contrast(1.02) brightness(0.99);
+          display: block;
         }
         .hero-visual-wm{
           display: none;
@@ -2287,6 +2301,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           align-items: center;
           gap: 0;
           margin-bottom: 14px;
+          margin-left: -10px;
           line-height: 1;
         }
         /* The W SVG path rendered large, no container */
@@ -2303,7 +2318,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           height: 32px;
           background: rgba(15,23,42,0.14);
           flex: 0 0 auto;
-          margin: 0 12px;
+          margin: 0 10px;
         }
         /* Wordmark: stacked two-line */
         .hero-logo-text{
@@ -2368,9 +2383,19 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         .hero-art-wm{ display: none; }
         @media (max-width: 720px){
           .hero-wrap{
+            grid-template-columns: 1fr;
             min-height: 0;
             padding: 14px;
             gap: 12px;
+          }
+          .hero-content{
+            margin-left: 0;
+          }
+          .hero-logo{
+            margin-left: 0;
+          }
+          .hero-visual{
+            min-height: 164px;
           }
         }
         .hero-mark{
@@ -3123,12 +3148,12 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             wm_cache_buster = None
         logo_mask_src = load_image_data_uri(str(LOGO_ICON_PATH), wm_cache_buster)
 
-    # Load hero visual: prefer latest design mock first
+    # Load hero visual: use clean hero first, then fallback assets
     hero_art_src = ""
     for candidate in [
+        HERO_ART_PATH,
         resource_path("Final/示范.png"),
         resource_path("Final/logo 1.png"),
-        HERO_ART_PATH,
         resource_path("docs/assets/hero.png"),
     ]:
         if candidate.exists():
@@ -3193,8 +3218,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             "<svg class='hero-logo-wordmark' viewBox='0 0 148 28' fill='none' "
             "xmlns='http://www.w3.org/2000/svg' height='28'>"
             "<text x='0' y='22' "
-            "font-family=\"'Arial Black','Helvetica Neue',Arial,sans-serif\" "
-            "font-size='24' font-weight='900' letter-spacing='3' fill='#0f172a'>WECARE</text>"
+            "font-family=\"'Avenir Next','Montserrat','Helvetica Neue','Segoe UI',sans-serif\" "
+            "font-size='23' font-weight='800' letter-spacing='2.2' fill='#0f172a'>WECARE</text>"
             "</svg>"
         )
         _logo_html = (
