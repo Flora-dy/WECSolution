@@ -2324,6 +2324,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           display: flex;
           flex-direction: column;
           gap: 4px;
+          margin-left: -4px;
           line-height: 1;
         }
         /* Wordmark SVG */
