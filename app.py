@@ -3402,10 +3402,7 @@ def _render_weclac_page() -> None:
         for ext in (".png", ".jpg", ".jpeg", ".svg"):
             candidate = icon_dir / f"{code}{ext}"
             if candidate.exists():
-                try:
-                    cb = candidate.stat().st_mtime
-                except Exception:
-                    cb = None
+                cb = _stat_cache_buster(candidate)
                 return load_image_data_uri(str(candidate), cb) or placeholder_src
         return placeholder_src
 
