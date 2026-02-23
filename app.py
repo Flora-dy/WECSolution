@@ -2185,13 +2185,12 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           color: rgba(15,23,42,0.84);
         }
 
-        /* ── Segmented controls: dark-track tech style ── */
+        /* ── Segmented controls: base style ── */
         [data-testid="stSegmentedControl"]{
-          background: rgba(15,23,42,0.06);
+          background: rgba(15,23,42,0.05);
           border: 1px solid rgba(15,23,42,0.10);
           border-radius: 8px;
           padding: 3px;
-          gap: 2px;
           backdrop-filter: none;
         }
         [data-testid="stSegmentedControl"] button{
@@ -2203,28 +2202,89 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           letter-spacing: 0.04em !important;
           border: 0 !important;
           background: transparent !important;
-          color: rgba(15,23,42,0.46) !important;
+          color: rgba(15,23,42,0.45) !important;
           box-shadow: none !important;
-          transition: color .15s ease, background .15s ease;
         }
         [data-testid="stSegmentedControl"] button[aria-selected="true"],
         [data-testid="stSegmentedControl"] button[aria-pressed="true"]{
           background: #fff !important;
           border: 1px solid rgba(15,23,42,0.10) !important;
-          color: var(--text) !important;
-          box-shadow: 0 1px 6px rgba(2,6,23,0.10), 0 0 0 1px rgba(15,23,42,0.06) !important;
+          color: #0f172a !important;
+          box-shadow: 0 1px 6px rgba(2,6,23,0.12) !important;
         }
-        /* Hero nav row: series selector gets brand-red active */
-        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] [data-testid="stSegmentedControl"]{
+        /* Hide Streamlit nav row — replaced by custom .hero-nav-bar */
+        .hero-nav-anchor + div[data-testid="stHorizontalBlock"]{
+          visibility: hidden;
+          height: 0 !important;
+          overflow: hidden !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          min-height: 0 !important;
+        }
+        /* ── Custom premium nav bar ── */
+        .hero-nav-bar{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          padding: 10px 8px 4px 8px;
+        }
+        .hero-nav-pills{
+          display: inline-flex;
+          align-items: center;
+          gap: 3px;
           background: rgba(15,23,42,0.055);
-          border-color: rgba(15,23,42,0.09);
+          border: 1px solid rgba(15,23,42,0.09);
+          border-radius: 10px;
+          padding: 4px;
         }
-        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] [data-testid="stSegmentedControl"] button[aria-selected="true"],
-        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] [data-testid="stSegmentedControl"] button[aria-pressed="true"]{
-          background: var(--brand) !important;
-          border-color: transparent !important;
-          color: #fff !important;
-          box-shadow: 0 2px 10px rgba(209,0,37,0.28) !important;
+        .hero-nav-pill{
+          display: inline-flex;
+          align-items: center;
+          padding: 7px 18px;
+          border-radius: 7px;
+          font-size: 0.76rem;
+          font-weight: 700;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          color: rgba(15,23,42,0.45);
+          cursor: default;
+          white-space: nowrap;
+          border: 1px solid transparent;
+          transition: all .15s;
+        }
+        .hero-nav-pill.active{
+          background: #D10025;
+          color: #fff;
+          border-color: transparent;
+          box-shadow: 0 2px 12px rgba(209,0,37,0.30);
+        }
+        .hero-nav-lang{
+          display: inline-flex;
+          align-items: center;
+          gap: 2px;
+          background: rgba(15,23,42,0.055);
+          border: 1px solid rgba(15,23,42,0.09);
+          border-radius: 8px;
+          padding: 4px;
+        }
+        .hero-nav-lang-btn{
+          display: inline-flex;
+          align-items: center;
+          padding: 6px 14px;
+          border-radius: 5px;
+          font-size: 0.72rem;
+          font-weight: 800;
+          letter-spacing: 0.10em;
+          color: rgba(15,23,42,0.40);
+          cursor: default;
+          border: 1px solid transparent;
+        }
+        .hero-nav-lang-btn.active{
+          background: #fff;
+          color: #0f172a;
+          border-color: rgba(15,23,42,0.10);
+          box-shadow: 0 1px 4px rgba(2,6,23,0.10);
         }
 
         /* Download button */
@@ -2372,26 +2432,10 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           gap: 6px;
           line-height: 1;
         }
-        /* WEC in brand red, ARE in dark — split-color kinetic wordmark */
-        .hero-logo-name{
-          font-size: 1.0rem;
-          font-weight: 900;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          line-height: 1;
-          /* gradient: brand red → near-black, left to right */
-          background: linear-gradient(90deg, var(--brand) 0%, var(--brand) 38%, #0f172a 38%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-        /* Thin red rule under wordmark — kinetic underline */
-        .hero-logo-rule{
+        /* Wordmark SVG */
+        .hero-logo-wordmark{
           display: block;
-          width: 100%;
-          height: 1.5px;
-          background: linear-gradient(90deg, var(--brand) 0%, rgba(209,0,37,0.0) 100%);
-          border-radius: 999px;
+          flex: 0 0 auto;
         }
         .hero-logo-sub{
           font-size: 0.50rem;
@@ -2400,7 +2444,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           text-transform: uppercase;
           color: rgba(15,23,42,0.32);
           line-height: 1;
-          margin-top: 1px;
+          margin-top: 4px;
+          display: block;
         }
         /* ── Title with brand-red accent ── */
         .hero-title{
@@ -3285,6 +3330,20 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
 
     with st.container(border=True):
         _W_PATH = "M241.763 12.967C231.238 15.523 204.444 32.744 189.131 53.148C173.817 73.557 164.889 91.103 138.42 109.275C138.42 109.275 125.677 118.88 116.428 118.867C107.161 118.848 102.295 107.564 105.529 100.772C105.529 100.772 107.486 93.98 111.626 86.945C115.765 79.929 125.741 66.651 121.551 63.888C121.551 63.888 120.956 60.49 108.003 75.483C95.05 90.472 64.116 121.73 35.415 136.069C33.645 136.952 31.98 137.679 30.416 138.26C23.125 140.963 18.011 140.51 14.549 138.26C6.709 133.169 7.317 118.871 10.222 111.201C14.7 99.395 32.552 67.817 71.782 35.928C71.782 35.928 81.534 29.396 78.09 23.573C74.645 17.737 60.8 23.528 60.8 23.528C60.8 23.528 32.552 38.16 17.563 54.736C11.836 61.075 6.668 62.786 3.443 60.878C-0.66 58.454 -1.611 50.18 3.443 38.146C4.815 34.88 6.631 31.335 8.946 27.553V27.566C8.946 27.566 25.146 8.013 58.751 1.866C66.101 0.516 74.28 -0.188 83.309 0.095C83.309 0.095 87.736 0.095 92.337 1.866C95.818 3.201 99.395 5.552 101.229 9.682C105.478 19.256 96.326 28.184 96.326 28.184C96.326 28.184 47.266 74.998 32.73 106.979C32.73 106.979 29.853 114.306 36.142 111.64C42.431 108.969 79.105 88.871 108.438 59.232C108.438 59.232 122.15 43.594 131.079 50.61C140.002 57.631 125.338 76.773 125.338 76.773C125.338 76.773 108.762 95.274 117.366 103.571C125.969 111.85 149.447 84.119 176.612 33.714C187.219 14.069 199.747 5.278 211.086 1.866C221.583 -1.295 231.06 0.155 237.057 1.866C241.205 3.05 243.689 4.363 243.689 4.363C243.689 4.363 252.292 10.428 241.763 12.967Z"
+        # SVG wordmark: geometric split-color WECARE
+        # "WEC" in brand red, "ARE" in near-black, rendered as SVG text
+        # Using system geometric sans (Impact/Arial Black fallback ensures bold weight)
+        _wordmark_svg = (
+            "<svg class='hero-logo-wordmark' viewBox='0 0 148 28' fill='none' "
+            "xmlns='http://www.w3.org/2000/svg' height='28'>"
+            "<text x='0' y='22' "
+            "font-family=\"'Arial Black','Helvetica Neue',Arial,sans-serif\" "
+            "font-size='26' font-weight='900' letter-spacing='3' fill='#D10025'>WEC</text>"
+            "<text x='78' y='22' "
+            "font-family=\"'Arial Black','Helvetica Neue',Arial,sans-serif\" "
+            "font-size='26' font-weight='900' letter-spacing='3' fill='#0f172a'>ARE</text>"
+            "</svg>"
+        )
         _logo_html = (
             "<div class='hero-logo'>"
             f"<svg class='hero-logo-w-svg' viewBox='0 0 247 141' fill='none' xmlns='http://www.w3.org/2000/svg'>"
@@ -3292,12 +3351,31 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             "</svg>"
             "<div class='hero-logo-divider'></div>"
             "<div class='hero-logo-text'>"
-            "<span class='hero-logo-name'>WECARE</span>"
-            "<span class='hero-logo-rule'></span>"
+            f"{_wordmark_svg}"
             "<span class='hero-logo-sub'>PROBIOTICS &nbsp;&middot;&nbsp; SCIENCE &nbsp;&middot;&nbsp; SOLUTIONS</span>"
             "</div>"
             "</div>"
         )
+
+        # Custom nav bar HTML — series pills + lang toggle
+        _cur_series = st.session_state.get("wec_series", _SERIES_OPTIONS[0])
+        _cur_lang = ui_lang
+        _series_pills = ""
+        for _s in _SERIES_OPTIONS:
+            _active = " active" if _s == _cur_series else ""
+            _series_pills += f"<span class='hero-nav-pill{_active}'>{html.escape(_s)}</span>"
+        _lang_cn = " active" if _cur_lang == "CN" else ""
+        _lang_en = " active" if _cur_lang == "EN" else ""
+        _nav_html = (
+            "<div class='hero-nav-bar'>"
+            f"<div class='hero-nav-pills'>{_series_pills}</div>"
+            "<div class='hero-nav-lang'>"
+            f"<span class='hero-nav-lang-btn{_lang_cn}'>CN</span>"
+            f"<span class='hero-nav-lang-btn{_lang_en}'>EN</span>"
+            "</div>"
+            "</div>"
+        )
+
         st.markdown(
             f"<div class='hero-wrap'>"
             "<div class='hero-content'>"
@@ -3308,9 +3386,11 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             "</div>"
             "</div>"
             f"{visual_html}"
-            "</div>",
+            "</div>"
+            f"{_nav_html}",
             unsafe_allow_html=True,
         )
+        # Anchor + hidden Streamlit controls (drive actual state)
         st.markdown("<div class='hero-nav-anchor'></div>", unsafe_allow_html=True)
         nav_left, nav_right = st.columns([8.5, 1.5])
         with nav_left:
