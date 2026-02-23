@@ -2185,31 +2185,46 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           color: rgba(15,23,42,0.84);
         }
 
-        /* Segmented control (pills) */
+        /* ── Segmented controls: dark-track tech style ── */
         [data-testid="stSegmentedControl"]{
-          background: rgba(255,255,255,0.72);
-          border: 1px solid rgba(15,23,42,0.12);
-          border-radius: 999px;
-          padding: 4px;
+          background: rgba(15,23,42,0.06);
+          border: 1px solid rgba(15,23,42,0.10);
+          border-radius: 8px;
+          padding: 3px;
+          gap: 2px;
           backdrop-filter: none;
         }
         [data-testid="stSegmentedControl"] button{
-          border-radius: 999px !important;
-          padding: 7px 12px !important;
-          min-height: 36px !important;
-          font-weight: 750 !important;
+          border-radius: 6px !important;
+          padding: 7px 16px !important;
+          min-height: 34px !important;
+          font-size: 0.78rem !important;
+          font-weight: 700 !important;
+          letter-spacing: 0.04em !important;
           border: 0 !important;
           background: transparent !important;
-          color: var(--muted) !important;
+          color: rgba(15,23,42,0.46) !important;
           box-shadow: none !important;
-          transition: all .15s ease;
+          transition: color .15s ease, background .15s ease;
         }
         [data-testid="stSegmentedControl"] button[aria-selected="true"],
         [data-testid="stSegmentedControl"] button[aria-pressed="true"]{
-          background: rgba(var(--accent1-rgb),0.14) !important;
-          border: 1px solid rgba(var(--accent1-rgb),0.22) !important;
+          background: #fff !important;
+          border: 1px solid rgba(15,23,42,0.10) !important;
           color: var(--text) !important;
-          box-shadow: 0 8px 18px rgba(2,6,23,0.10) !important;
+          box-shadow: 0 1px 6px rgba(2,6,23,0.10), 0 0 0 1px rgba(15,23,42,0.06) !important;
+        }
+        /* Hero nav row: series selector gets brand-red active */
+        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] [data-testid="stSegmentedControl"]{
+          background: rgba(15,23,42,0.055);
+          border-color: rgba(15,23,42,0.09);
+        }
+        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] [data-testid="stSegmentedControl"] button[aria-selected="true"],
+        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] [data-testid="stSegmentedControl"] button[aria-pressed="true"]{
+          background: var(--brand) !important;
+          border-color: transparent !important;
+          color: #fff !important;
+          box-shadow: 0 2px 10px rgba(209,0,37,0.28) !important;
         }
 
         /* Download button */
@@ -2340,7 +2355,6 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           width: 52px;
           height: auto;
           flex: 0 0 auto;
-          /* Subtle drop shadow for depth */
           filter: drop-shadow(0 2px 8px rgba(209,0,37,0.22));
         }
         /* Thin vertical hairline divider */
@@ -2355,24 +2369,38 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         .hero-logo-text{
           display: flex;
           flex-direction: column;
-          gap: 5px;
+          gap: 6px;
           line-height: 1;
         }
+        /* WEC in brand red, ARE in dark — split-color kinetic wordmark */
         .hero-logo-name{
-          font-size: 0.95rem;
-          font-weight: 800;
-          letter-spacing: 0.22em;
+          font-size: 1.0rem;
+          font-weight: 900;
+          letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: var(--text);
           line-height: 1;
+          /* gradient: brand red → near-black, left to right */
+          background: linear-gradient(90deg, var(--brand) 0%, var(--brand) 38%, #0f172a 38%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        /* Thin red rule under wordmark — kinetic underline */
+        .hero-logo-rule{
+          display: block;
+          width: 100%;
+          height: 1.5px;
+          background: linear-gradient(90deg, var(--brand) 0%, rgba(209,0,37,0.0) 100%);
+          border-radius: 999px;
         }
         .hero-logo-sub{
-          font-size: 0.52rem;
-          font-weight: 500;
-          letter-spacing: 0.30em;
+          font-size: 0.50rem;
+          font-weight: 600;
+          letter-spacing: 0.32em;
           text-transform: uppercase;
-          color: rgba(15,23,42,0.34);
+          color: rgba(15,23,42,0.32);
           line-height: 1;
+          margin-top: 1px;
         }
         /* ── Title with brand-red accent ── */
         .hero-title{
@@ -3265,6 +3293,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             "<div class='hero-logo-divider'></div>"
             "<div class='hero-logo-text'>"
             "<span class='hero-logo-name'>WECARE</span>"
+            "<span class='hero-logo-rule'></span>"
             "<span class='hero-logo-sub'>PROBIOTICS &nbsp;&middot;&nbsp; SCIENCE &nbsp;&middot;&nbsp; SOLUTIONS</span>"
             "</div>"
             "</div>"
