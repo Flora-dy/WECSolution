@@ -2219,80 +2219,190 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         }
         [data-testid="stDownloadButton"] button p{ color: #fff; font-weight: 600; }
 
-        /* ── Hero: full-bleed card ── */
+        /* ── Hero: split layout (text + visual) ── */
         .hero-wrap{
           position: relative;
-          border-radius: 20px;
-          overflow: hidden;
-          min-height: 220px;
-          display: flex;
+          border-radius: 22px;
+          min-height: 236px;
+          display: grid;
+          grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+          gap: 18px;
           align-items: stretch;
+          padding: 18px;
+          background:
+            radial-gradient(760px 360px at 16% 10%, rgba(var(--accent1-rgb),0.07), transparent 62%),
+            linear-gradient(145deg, rgba(255,255,255,0.88), rgba(255,255,255,0.78));
         }
-        /* Background photo layer */
-        .hero-bg{
-          position: absolute;
-          inset: 0;
-          background-size: cover;
-          background-position: center right;
-          background-repeat: no-repeat;
-          z-index: 0;
-        }
-        /* Left-to-right white fade so text is always legible */
-        .hero-bg::after{
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            to right,
-            rgba(255,255,255,1.00)  0%,
-            rgba(255,255,255,0.97) 28%,
-            rgba(255,255,255,0.72) 52%,
-            rgba(255,255,255,0.10) 78%,
-            rgba(255,255,255,0.00) 100%
-          );
-        }
-        /* Content layer sits above photo */
         .hero-content{
           position: relative;
           z-index: 1;
-          padding: 24px 28px 22px 28px;
-          flex: 1;
+          padding: 6px 6px 2px 8px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          max-width: 580px;
+          min-width: 0;
         }
-        /* ── Typographic logo lockup ── */
-        .hero-logo{
+        .hero-visual{
+          position: relative;
+          border-radius: 18px;
+          overflow: hidden;
+          border: 1px solid rgba(15,23,42,0.10);
+          box-shadow: 0 18px 44px rgba(2,6,23,0.15);
+          min-height: 210px;
+          background:
+            radial-gradient(130% 100% at 0% 0%, rgba(255,255,255,0.34), transparent 60%),
+            linear-gradient(135deg, rgba(15,23,42,0.12), rgba(15,23,42,0.04));
+        }
+        .hero-photo{
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: 36% 40%;
+          transform: scale(1.12);
+          filter: saturate(0.92) contrast(1.04) brightness(0.98);
+          display: block;
+        }
+        .hero-visual::before{
+          content: "";
+          position: absolute;
+          inset: 0;
+          background:
+            linear-gradient(110deg, rgba(255,255,255,0.48) 0%, rgba(255,255,255,0.12) 44%, rgba(255,255,255,0.02) 74%),
+            radial-gradient(130% 120% at 112% 12%, rgba(var(--brand-rgb),0.16), transparent 58%);
+          pointer-events: none;
+          z-index: 1;
+        }
+        .hero-visual::after{
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(120% 120% at 100% 100%, rgba(2,6,23,0.22), transparent 60%);
+          pointer-events: none;
+          z-index: 1;
+        }
+        /* Large artistic W overlay on photo */
+        .hero-visual-wm{
+          position: absolute;
+          right: -6%;
+          bottom: -8%;
+          width: 72%;
+          height: auto;
+          opacity: 0.22;
+          mix-blend-mode: soft-light;
+          filter: drop-shadow(0 0 0 transparent);
+          pointer-events: none;
+          z-index: 2;
+        }
+        /* Brand-red bottom accent bar on visual */
+        .hero-visual::before{
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: var(--brand);
+          z-index: 4;
+          pointer-events: none;
+        }
+        .hero-nav-anchor{
+          height: 0;
+          margin-top: 2px;
+        }
+        .hero-nav-anchor + div[data-testid="stHorizontalBlock"]{
+          align-items: center !important;
+          gap: 0.75rem !important;
+        }
+        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:first-child [data-testid="stSegmentedControl"]{
+          max-width: 760px;
+        }
+        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:last-child{
           display: flex;
-          align-items: baseline;
-          gap: 0;
-          margin-bottom: 18px;
+          justify-content: flex-end;
+        }
+        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:last-child [data-testid="stSegmentedControl"]{
+          width: 164px !important;
+          margin-left: auto;
+        }
+        .hero-visual-meta{
+          position: absolute;
+          left: 12px;
+          bottom: 12px;
+          display: inline-flex;
+          gap: 8px;
+          align-items: center;
+          z-index: 3;
+        }
+        .hero-visual-chip{
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 5px 10px;
+          border-radius: 999px;
+          font-size: 0.68rem;
+          font-weight: 760;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          color: rgba(15,23,42,0.90);
+          background: rgba(255,255,255,0.80);
+          border: 1px solid rgba(255,255,255,0.70);
+          box-shadow: 0 8px 22px rgba(2,6,23,0.10);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+        }
+        /* ── Creative logo lockup ── */
+        .hero-logo{
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 16px;
           line-height: 1;
         }
-        .hero-logo-w{
-          font-size: 2.6rem;
-          font-weight: 900;
-          letter-spacing: -0.04em;
-          color: var(--brand);
+        /* The W mark: brand SVG in a clean pill */
+        .hero-logo-icon{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 44px;
+          height: 44px;
+          border-radius: 12px;
+          background: var(--brand);
+          box-shadow: 0 6px 20px rgba(209,0,37,0.32), inset 0 1px 0 rgba(255,255,255,0.18);
+          flex: 0 0 auto;
+        }
+        .hero-logo-icon svg{
+          width: 26px;
+          height: 15px;
+          display: block;
+        }
+        /* Wordmark: stacked two-line */
+        .hero-logo-text{
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
           line-height: 1;
         }
-        .hero-logo-ecare{
-          font-size: 2.6rem;
+        .hero-logo-name{
+          font-size: 1.15rem;
           font-weight: 900;
-          letter-spacing: -0.04em;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
           color: var(--text);
           line-height: 1;
         }
+        .hero-logo-name em{
+          font-style: normal;
+          color: var(--brand);
+        }
         .hero-logo-sub{
-          display: block;
-          font-size: 0.60rem;
-          font-weight: 700;
-          letter-spacing: 0.22em;
+          font-size: 0.58rem;
+          font-weight: 600;
+          letter-spacing: 0.20em;
           text-transform: uppercase;
-          color: rgba(15,23,42,0.42);
-          margin-top: 3px;
-          padding-left: 2px;
+          color: rgba(15,23,42,0.38);
+          line-height: 1;
         }
         /* ── Title with brand-red accent ── */
         .hero-title{
@@ -2324,59 +2434,43 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           border-left: 3px solid var(--brand) !important;
           border-radius: 20px !important;
           overflow: hidden !important;
+        }
+        /* Keep inner padding so nav controls stay inside card */
+        [data-testid="stVerticalBlockBorderWrapper"]:first-of-type > div > div[data-testid="stVerticalBlock"] > div:first-child{
           padding: 0 !important;
         }
-        [data-testid="stVerticalBlockBorderWrapper"]:first-of-type > div{
-          padding: 0 !important;
-        }
-        /* Legacy hero-art classes: hidden (replaced by hero-wrap/hero-bg) */
+        /* Legacy hero-art classes: hidden */
         .hero-art{ display: none; }
         .hero-art-photo{ display: none; }
         .hero-art-wm{ display: none; }
-        .hero-art-meta{
-          position: absolute;
-          left: 14px;
-          bottom: 12px;
-          display: inline-flex;
-          gap: 8px;
-          align-items: center;
-          z-index: 2;
-        }
-        .hero-art-chip{
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          padding: 5px 10px;
-          border-radius: 999px;
-          font-size: 0.70rem;
-          font-weight: 780;
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
-          color: rgba(15,23,42,0.88);
-          background: rgba(255,255,255,0.78);
-          border: 1px solid rgba(255,255,255,0.68);
-          box-shadow: 0 8px 24px rgba(2,6,23,0.10);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-        }
         @media (max-width: 720px){
-          .hero-art{
-            min-height: 170px;
+          .hero-wrap{
+            grid-template-columns: 1fr;
+            min-height: 0;
+            padding: 14px;
+            gap: 12px;
           }
-          .hero-art-wm{
-            width: 290px;
-            right: -34px;
-            top: -26px;
-            opacity: 0.18;
+          .hero-visual{
+            min-height: 178px;
           }
-          .hero-art-meta{
+          .hero-visual-wm{
+            width: 236px;
+            right: -24px;
+            top: -18px;
+            opacity: 0.16;
+          }
+          .hero-visual-meta{
             left: 10px;
             bottom: 10px;
             gap: 6px;
           }
-          .hero-art-chip{
+          .hero-visual-chip{
             font-size: 0.62rem;
             padding: 4px 8px;
+          }
+          .hero-nav-anchor + div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:last-child [data-testid="stSegmentedControl"]{
+            width: 100% !important;
+            max-width: none;
           }
         }
         .hero-mark{
@@ -3051,8 +3145,6 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
 
           .hero-title{ font-size: 1.55rem; }
           .hero-desc{ font-size: 0.95rem; }
-          .hero-brand-logo{ height: 24px; }
-          .hero-brand-badge{ font-size: 0.65rem; padding: 3px 8px 3px 5px; }
 
           .spec-grid{ grid-template-columns: 1fr; }
           .tile-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -3131,9 +3223,13 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             wm_cache_buster = None
         logo_mask_src = load_image_data_uri(str(LOGO_ICON_PATH), wm_cache_buster)
 
-    # Load hero.jpg as full-bleed background
+    # Load hero visual (multi-source fallback for local/cloud consistency)
     hero_art_src = ""
-    for candidate in [HERO_ART_PATH, resource_path("docs/assets/hero.png")]:
+    for candidate in [
+        HERO_ART_PATH,
+        resource_path("Final/示范.png"),
+        resource_path("docs/assets/hero.png"),
+    ]:
         if candidate.exists():
             try:
                 _cb = candidate.stat().st_mtime
@@ -3158,55 +3254,87 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         "</div>"
     )
 
-    bg_style = f"background-image:url('{html.escape(hero_art_src, quote=True)}');" if hero_art_src else ""
+    visual_html = "<div class='hero-visual'></div>"
+    if hero_art_src:
+        safe_art_src = html.escape(hero_art_src, quote=True)
+        wm_html = ""
+        if logo_mask_src:
+            safe_wm_src = html.escape(logo_mask_src, quote=True)
+            wm_html = f"<img class='hero-visual-wm' src='{safe_wm_src}' alt='' />"
+        chips_html = (
+            "<div class='hero-visual-meta'>"
+            "<span class='hero-visual-chip'>Science-led</span>"
+            "<span class='hero-visual-chip'>Global Delivery</span>"
+            "</div>"
+            if ui_lang == "EN"
+            else
+            "<div class='hero-visual-meta'>"
+            "<span class='hero-visual-chip'>科学驱动</span>"
+            "<span class='hero-visual-chip'>全球交付</span>"
+            "</div>"
+        )
+        visual_html = (
+            "<div class='hero-visual'>"
+            f"<img class='hero-photo' src='{safe_art_src}' alt='' />"
+            f"{wm_html}{chips_html}"
+            "</div>"
+        )
 
     if "wec_series" not in st.session_state:
         st.session_state["wec_series"] = _SERIES_OPTIONS[0]
     if st.session_state.get("wec_series") not in _SERIES_OPTIONS:
         st.session_state["wec_series"] = _SERIES_OPTIONS[0]
 
-    # Lang toggle sits outside the hero card, top-right
-    _lang_col, _toggle_col = st.columns([11, 1])
-    with _toggle_col:
-        st.segmented_control(
-            "语言",
-            ["CN", "EN"],
-            key="ui_lang",
-            label_visibility="collapsed",
-            width="content",
-        )
-
     with st.container(border=True):
+        _W_PATH = "M241.763 12.967C231.238 15.523 204.444 32.744 189.131 53.148C173.817 73.557 164.889 91.103 138.42 109.275C138.42 109.275 125.677 118.88 116.428 118.867C107.161 118.848 102.295 107.564 105.529 100.772C105.529 100.772 107.486 93.98 111.626 86.945C115.765 79.929 125.741 66.651 121.551 63.888C121.551 63.888 120.956 60.49 108.003 75.483C95.05 90.472 64.116 121.73 35.415 136.069C33.645 136.952 31.98 137.679 30.416 138.26C23.125 140.963 18.011 140.51 14.549 138.26C6.709 133.169 7.317 118.871 10.222 111.201C14.7 99.395 32.552 67.817 71.782 35.928C71.782 35.928 81.534 29.396 78.09 23.573C74.645 17.737 60.8 23.528 60.8 23.528C60.8 23.528 32.552 38.16 17.563 54.736C11.836 61.075 6.668 62.786 3.443 60.878C-0.66 58.454 -1.611 50.18 3.443 38.146C4.815 34.88 6.631 31.335 8.946 27.553V27.566C8.946 27.566 25.146 8.013 58.751 1.866C66.101 0.516 74.28 -0.188 83.309 0.095C83.309 0.095 87.736 0.095 92.337 1.866C95.818 3.201 99.395 5.552 101.229 9.682C105.478 19.256 96.326 28.184 96.326 28.184C96.326 28.184 47.266 74.998 32.73 106.979C32.73 106.979 29.853 114.306 36.142 111.64C42.431 108.969 79.105 88.871 108.438 59.232C108.438 59.232 122.15 43.594 131.079 50.61C140.002 57.631 125.338 76.773 125.338 76.773C125.338 76.773 108.762 95.274 117.366 103.571C125.969 111.85 149.447 84.119 176.612 33.714C187.219 14.069 199.747 5.278 211.086 1.866C221.583 -1.295 231.06 0.155 237.057 1.866C241.205 3.05 243.689 4.363 243.689 4.363C243.689 4.363 252.292 10.428 241.763 12.967Z"
+        _logo_icon = (
+            "<div class='hero-logo-icon'>"
+            f"<svg viewBox='0 0 247 141' fill='none' xmlns='http://www.w3.org/2000/svg'>"
+            f"<path d='{_W_PATH}' fill='white'/>"
+            "</svg>"
+            "</div>"
+        )
+        _logo_html = (
+            "<div class='hero-logo'>"
+            f"{_logo_icon}"
+            "<div class='hero-logo-text'>"
+            "<span class='hero-logo-name'><em>W</em>ECARE</span>"
+            "<span class='hero-logo-sub'>Probiotics &nbsp;&middot;&nbsp; Science &nbsp;&middot;&nbsp; Solutions</span>"
+            "</div>"
+            "</div>"
+        )
         st.markdown(
             f"<div class='hero-wrap'>"
-            f"<div class='hero-bg' style='{bg_style}'></div>"
             "<div class='hero-content'>"
-            # Logo lockup
-            "<div>"
-            "<div class='hero-logo'>"
-            "<span class='hero-logo-w'>W</span>"
-            "<span class='hero-logo-ecare'>ECARE</span>"
-            "</div>"
-            "<span class='hero-logo-sub'>Probiotics &middot; Science &middot; Solutions</span>"
-            "</div>"
-            # Title + desc
+            f"{_logo_html}"
             "<div class='hero-head'>"
             f"<div class='hero-title'>{html.escape(title)}</div>"
             f"{desc_html}"
             "</div>"
             "</div>"
+            f"{visual_html}"
             "</div>",
             unsafe_allow_html=True,
         )
-
-        label = "Wec 系列" if ui_lang == "CN" else "Wec Series"
-        st.segmented_control(
-            label,
-            _SERIES_OPTIONS,
-            key="wec_series",
-            label_visibility="collapsed",
-            width="content",
-        )
+        st.markdown("<div class='hero-nav-anchor'></div>", unsafe_allow_html=True)
+        nav_left, nav_right = st.columns([8.5, 1.5])
+        with nav_left:
+            label = "Wec 系列" if ui_lang == "CN" else "Wec Series"
+            st.segmented_control(
+                label,
+                _SERIES_OPTIONS,
+                key="wec_series",
+                label_visibility="collapsed",
+                width="stretch",
+            )
+        with nav_right:
+            st.segmented_control(
+                "语言",
+                ["CN", "EN"],
+                key="ui_lang",
+                label_visibility="collapsed",
+                width="stretch",
+            )
 
 
 def _png_bytes_to_data_uri(png_bytes: bytes) -> str:
