@@ -2294,81 +2294,77 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           border-radius: 18px !important;
         }
 
-        /* Hero right image (background) */
+        /* Hero right visual: logo1.png pill layout, blends into card background */
         .hero-art{
           width: 100%;
-          min-height: 184px;
+          min-height: 212px;
           height: 100%;
-          border-radius: 16px;
-          overflow: hidden;
-          border: 1px solid rgba(15,23,42,0.08);
-          box-shadow: 0 20px 64px rgba(2,6,23,0.14);
+          border-radius: 0;
+          overflow: visible;
+          border: none;
+          box-shadow: none;
           position: relative;
-          background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.38));
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
+          background: transparent;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .hero-art-photo{
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
           display: block;
-          transform: scale(1.02);
-          filter: saturate(0.92) contrast(1.04) brightness(0.98);
-        }
-        .hero-art::before{
-          content:"";
-          position:absolute;
-          inset:0;
-          background:
-            radial-gradient(700px 420px at 78% 18%, rgba(var(--accent2-rgb),0.16), transparent 60%),
-            radial-gradient(760px 520px at 88% 88%, rgba(var(--accent1-rgb),0.14), transparent 60%);
-          mix-blend-mode: soft-light;
-          opacity: 0.92;
-          pointer-events:none;
-        }
-        .hero-art-wm{
-          position: absolute;
-          right: -14px;
-          bottom: -60px;
-          width: 360px;
+          width: 100%;
           height: auto;
-          opacity: 0.18;
-          mix-blend-mode: multiply;
-          filter: drop-shadow(0 18px 55px rgba(209,0,37,0.18));
-          -webkit-mask-image: radial-gradient(circle at 72% 78%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 58%, rgba(0,0,0,0) 100%);
-          mask-image: radial-gradient(circle at 72% 78%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 58%, rgba(0,0,0,0) 100%);
-          pointer-events: none;
+          max-height: 260px;
+          object-fit: contain;
+          object-position: center center;
+          filter: drop-shadow(0 8px 24px rgba(2,6,23,0.10));
         }
-        .hero-art::after{
-          content:"";
-          position:absolute;
-          inset:0;
-          background: linear-gradient(90deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.30) 38%, rgba(255,255,255,0) 66%);
-          pointer-events:none;
-        }
-        /* Brand-red bottom strip on hero image */
-        .hero-art-brand-strip{
+        .hero-art::before{ display: none; }
+        .hero-art-wm{ display: none; }
+        .hero-art::after{ display: none; }
+        .hero-art-meta{
           position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          height: 3px;
-          background: var(--brand);
-          pointer-events: none;
+          left: 14px;
+          bottom: 12px;
+          display: inline-flex;
+          gap: 8px;
+          align-items: center;
           z-index: 2;
+        }
+        .hero-art-chip{
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 5px 10px;
+          border-radius: 999px;
+          font-size: 0.70rem;
+          font-weight: 780;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          color: rgba(15,23,42,0.88);
+          background: rgba(255,255,255,0.78);
+          border: 1px solid rgba(255,255,255,0.68);
+          box-shadow: 0 8px 24px rgba(2,6,23,0.10);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
         }
         @media (max-width: 720px){
           .hero-art{
-            min-height: 160px;
+            min-height: 170px;
           }
           .hero-art-wm{
-            width: 320px;
-            right: -12px;
-            bottom: -56px;
-            opacity: 0.24;
+            width: 290px;
+            right: -34px;
+            top: -26px;
+            opacity: 0.18;
+          }
+          .hero-art-meta{
+            left: 10px;
+            bottom: 10px;
+            gap: 6px;
+          }
+          .hero-art-chip{
+            font-size: 0.62rem;
+            padding: 4px 8px;
           }
         }
         .hero-mark{
@@ -3136,6 +3132,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
     with st.container(border=True):
         hero_art_src = ""
         hero_art_candidates = [
+            resource_path("Final/logo 1.png"),
             HERO_ART_PATH,
             resource_path("docs/assets/hero.png"),
         ]
@@ -3149,25 +3146,16 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
                 if hero_art_src:
                     break
 
-        cols = st.columns([6, 4, 1])
+        cols = st.columns([6, 5, 1])
         with cols[0]:
             title = "人类健康与营养解决方案" if ui_lang == "CN" else "Human Health & Nutrition Solutions"
-            badge_label = "微康益生菌" if ui_lang == "CN" else "WECARE-PROBIOTICS"
-
-            # Brand bar: company logo + divider + red badge
+            # Brand bar: company logo only (logo already contains the company name)
             brand_bar_parts = []
             if company_logo_src:
                 safe_cl_src = html.escape(company_logo_src, quote=True)
                 brand_bar_parts.append(
                     f"<img class='hero-brand-logo' src='{safe_cl_src}' alt='WECARE-PROBIOTICS' />"
                 )
-                brand_bar_parts.append("<div class='hero-brand-divider'></div>")
-            brand_bar_parts.append(
-                "<span class='hero-brand-badge'>"
-                "<span class='hero-brand-badge-dot'></span>"
-                f"{html.escape(badge_label)}"
-                "</span>"
-            )
             brand_bar_html = "<div class='hero-brand-bar'>" + "".join(brand_bar_parts) + "</div>"
 
             desc_html = ""
@@ -3215,16 +3203,27 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
                 if logo_mask_src:
                     safe_wm_src = html.escape(logo_mask_src, quote=True)
                     wm_img = f"<img class='hero-art-wm' src='{safe_wm_src}' alt='' />"
+                art_meta = (
+                    "<div class='hero-art-meta'>"
+                    "<span class='hero-art-chip'>Science-led</span>"
+                    "<span class='hero-art-chip'>Global Delivery</span>"
+                    "</div>"
+                    if ui_lang == "EN"
+                    else
+                    "<div class='hero-art-meta'>"
+                    "<span class='hero-art-chip'>科学驱动</span>"
+                    "<span class='hero-art-chip'>全球交付</span>"
+                    "</div>"
+                )
                 st.markdown(
                     f"<div class='hero-art' aria-hidden='true'>"
                     f"<img class='hero-art-photo' src='{safe_art_src}' alt='' />"
                     f"{wm_img}"
-                    "<div class='hero-art-brand-strip'></div>"
                     "</div>",
                     unsafe_allow_html=True,
                 )
             else:
-                st.markdown("<div style='height:184px'></div>", unsafe_allow_html=True)
+                st.markdown("<div style='height:212px'></div>", unsafe_allow_html=True)
         with cols[2]:
             st.segmented_control(
                 "语言",
