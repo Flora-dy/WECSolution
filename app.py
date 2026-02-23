@@ -2251,7 +2251,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
           gap: 14px;
           align-items: stretch;
-          padding: 14px 16px 14px 4px;
+          padding: 14px 16px 14px 10px;
           background:
             radial-gradient(760px 360px at 16% 10%, rgba(var(--accent1-rgb),0.07), transparent 62%),
             linear-gradient(145deg, rgba(255,255,255,0.88), rgba(255,255,255,0.78));
@@ -2260,7 +2260,6 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           position: relative;
           z-index: 1;
           padding: 2px 4px 2px 0;
-          margin-left: -8px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -2299,9 +2298,9 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         .hero-logo{
           display: inline-flex;
           align-items: center;
-          gap: 0;
+          gap: 10px;
           margin-bottom: 14px;
-          margin-left: -10px;
+          margin-left: 0;
           line-height: 1;
         }
         /* The W SVG path rendered large, no container */
@@ -2318,7 +2317,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           height: 32px;
           background: rgba(15,23,42,0.14);
           flex: 0 0 auto;
-          margin: 0 10px;
+          margin: 0;
         }
         /* Wordmark: stacked two-line */
         .hero-logo-text{
@@ -2387,12 +2386,6 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             min-height: 0;
             padding: 14px;
             gap: 12px;
-          }
-          .hero-content{
-            margin-left: 0;
-          }
-          .hero-logo{
-            margin-left: 0;
           }
           .hero-visual{
             min-height: 164px;
