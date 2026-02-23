@@ -2242,71 +2242,45 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           justify-content: space-between;
           min-width: 0;
         }
+        /* ── Right visual panel: 5-factory infographic ── */
         .hero-visual{
           position: relative;
           border-radius: 18px;
           overflow: hidden;
-          border: 1px solid rgba(15,23,42,0.10);
-          box-shadow: 0 18px 44px rgba(2,6,23,0.15);
+          border: none;
+          box-shadow: none;
           min-height: 210px;
-          background:
-            radial-gradient(130% 100% at 0% 0%, rgba(255,255,255,0.34), transparent 60%),
-            linear-gradient(135deg, rgba(15,23,42,0.12), rgba(15,23,42,0.04));
+          background: transparent;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
+        /* The 5-factory image: multiply knocks out white bg */
         .hero-photo{
-          position: absolute;
-          inset: 0;
+          display: block;
           width: 100%;
           height: 100%;
-          object-fit: cover;
-          object-position: 36% 40%;
-          transform: scale(1.12);
-          filter: saturate(0.92) contrast(1.04) brightness(0.98);
-          display: block;
+          object-fit: contain;
+          object-position: center center;
+          mix-blend-mode: multiply;
+          filter: contrast(1.06) saturate(1.08);
         }
+        /* Left-edge fade so image melts into card bg */
         .hero-visual::before{
           content: "";
           position: absolute;
           inset: 0;
-          background:
-            linear-gradient(110deg, rgba(255,255,255,0.48) 0%, rgba(255,255,255,0.12) 44%, rgba(255,255,255,0.02) 74%),
-            radial-gradient(130% 120% at 112% 12%, rgba(var(--brand-rgb),0.16), transparent 58%);
+          background: linear-gradient(
+            to right,
+            rgba(255,255,255,0.92) 0%,
+            rgba(255,255,255,0.30) 18%,
+            rgba(255,255,255,0.00) 38%
+          );
           pointer-events: none;
           z-index: 1;
         }
-        .hero-visual::after{
-          content: "";
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(120% 120% at 100% 100%, rgba(2,6,23,0.22), transparent 60%);
-          pointer-events: none;
-          z-index: 1;
-        }
-        /* Large artistic W overlay on photo */
-        .hero-visual-wm{
-          position: absolute;
-          right: -6%;
-          bottom: -8%;
-          width: 72%;
-          height: auto;
-          opacity: 0.22;
-          mix-blend-mode: soft-light;
-          filter: drop-shadow(0 0 0 transparent);
-          pointer-events: none;
-          z-index: 2;
-        }
-        /* Brand-red bottom accent bar on visual */
-        .hero-visual::before{
-          content: "";
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          height: 3px;
-          background: var(--brand);
-          z-index: 4;
-          pointer-events: none;
-        }
+        .hero-visual::after{ display: none; }
+        .hero-visual-wm{ display: none; }
         .hero-nav-anchor{
           height: 0;
           margin-top: 2px;
@@ -2352,56 +2326,59 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
         }
-        /* ── Creative logo lockup ── */
+        /* ── Logo lockup: brand circle mark + European wordmark ── */
         .hero-logo{
           display: inline-flex;
           align-items: center;
-          gap: 10px;
-          margin-bottom: 16px;
+          gap: 14px;
+          margin-bottom: 20px;
           line-height: 1;
         }
-        /* The W mark: brand SVG in a clean pill */
+        /* Actual brand circle: red disc with cursive W */
         .hero-logo-icon{
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 44px;
-          height: 44px;
-          border-radius: 12px;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
           background: var(--brand);
-          box-shadow: 0 6px 20px rgba(209,0,37,0.32), inset 0 1px 0 rgba(255,255,255,0.18);
+          box-shadow: 0 4px 18px rgba(209,0,37,0.30);
           flex: 0 0 auto;
         }
         .hero-logo-icon svg{
-          width: 26px;
-          height: 15px;
+          width: 28px;
+          height: 16px;
           display: block;
+        }
+        /* Thin vertical hairline divider */
+        .hero-logo-divider{
+          width: 1px;
+          height: 36px;
+          background: rgba(15,23,42,0.15);
+          flex: 0 0 auto;
         }
         /* Wordmark: stacked two-line */
         .hero-logo-text{
           display: flex;
           flex-direction: column;
-          gap: 2px;
+          gap: 4px;
           line-height: 1;
         }
         .hero-logo-name{
-          font-size: 1.15rem;
-          font-weight: 900;
-          letter-spacing: 0.12em;
+          font-size: 1.05rem;
+          font-weight: 800;
+          letter-spacing: 0.18em;
           text-transform: uppercase;
           color: var(--text);
           line-height: 1;
         }
-        .hero-logo-name em{
-          font-style: normal;
-          color: var(--brand);
-        }
         .hero-logo-sub{
-          font-size: 0.58rem;
-          font-weight: 600;
-          letter-spacing: 0.20em;
+          font-size: 0.55rem;
+          font-weight: 500;
+          letter-spacing: 0.28em;
           text-transform: uppercase;
-          color: rgba(15,23,42,0.38);
+          color: rgba(15,23,42,0.36);
           line-height: 1;
         }
         /* ── Title with brand-red accent ── */
@@ -3223,11 +3200,11 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             wm_cache_buster = None
         logo_mask_src = load_image_data_uri(str(LOGO_ICON_PATH), wm_cache_buster)
 
-    # Load hero visual (multi-source fallback for local/cloud consistency)
+    # Load hero visual: 5-factory infographic (logo 1.png) preferred
     hero_art_src = ""
     for candidate in [
+        resource_path("Final/logo 1.png"),
         HERO_ART_PATH,
-        resource_path("Final/示范.png"),
         resource_path("docs/assets/hero.png"),
     ]:
         if candidate.exists():
@@ -3297,9 +3274,10 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         _logo_html = (
             "<div class='hero-logo'>"
             f"{_logo_icon}"
+            "<div class='hero-logo-divider'></div>"
             "<div class='hero-logo-text'>"
-            "<span class='hero-logo-name'><em>W</em>ECARE</span>"
-            "<span class='hero-logo-sub'>Probiotics &nbsp;&middot;&nbsp; Science &nbsp;&middot;&nbsp; Solutions</span>"
+            "<span class='hero-logo-name'>WECARE</span>"
+            "<span class='hero-logo-sub'>PROBIOTICS &nbsp;&middot;&nbsp; SCIENCE &nbsp;&middot;&nbsp; SOLUTIONS</span>"
             "</div>"
             "</div>"
         )
