@@ -2379,6 +2379,41 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           color: rgba(15,23,42,0.92);
           font-weight: 900;
         }
+        .core-func-title{
+          margin-top: 10px;
+          margin-bottom: 3px;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 5px 12px;
+          border-radius: 999px;
+          border: 1px solid rgba(var(--accent1-rgb),0.24);
+          background: linear-gradient(
+            90deg,
+            rgba(var(--accent1-rgb),0.09),
+            rgba(var(--accent2-rgb),0.09)
+          );
+          color: var(--text);
+          font-weight: 900;
+          letter-spacing: 0.01em;
+        }
+        .core-func-dot{
+          width: 8px;
+          height: 8px;
+          border-radius: 999px;
+          background: linear-gradient(90deg, var(--accent1), var(--accent2));
+          box-shadow: 0 0 0 3px rgba(var(--accent2-rgb),0.16);
+        }
+        .core-func-list{
+          margin: 2px 0 0 0 !important;
+          padding-left: 1.2rem;
+          line-height: 1.52;
+        }
+        .core-func-list li{
+          margin: 0.22rem 0;
+          color: var(--text);
+          font-weight: 620;
+        }
 
         .hero-badge{
           display: inline-flex;
@@ -4140,10 +4175,17 @@ def main() -> None:
 
         highlights = [str(x).strip() for x in overview_block.get("highlights", []) if str(x).strip()]  # type: ignore[arg-type]
         if highlights:
-            st.markdown(f"**{t('核心功能', 'Core Functions')}**")
             st.markdown(
-                "\n".join(f"- {_italicize_microbe_tokens_markdown(x)}" for x in highlights[:4])
+                "<div class='core-func-title'>"
+                "<span class='core-func-dot'></span>"
+                f"<span>{html.escape(t('核心功能', 'Core Functions'))}</span>"
+                "</div>",
+                unsafe_allow_html=True,
             )
+            items_html = "".join(
+                f"<li>{_italicize_microbe_tokens_html(x)}</li>" for x in highlights[:4]
+            )
+            st.markdown(f"<ul class='core-func-list'>{items_html}</ul>", unsafe_allow_html=True)
 
     trial_lines = [str(x).strip() for x in overview_block.get("trials", []) if str(x).strip()]  # type: ignore[arg-type]
     trial_entries = _parse_trial_entries(trial_lines)
