@@ -2186,50 +2186,53 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           color: rgba(15,23,42,0.84);
         }
 
-        /* ── Segmented controls: complete restyle ── */
-        /* Track */
-        [data-testid="stSegmentedControl"],
-        [data-testid="stSegmentedControl"] > div{
-          background: rgba(15,23,42,0.05) !important;
-          border: 1px solid rgba(15,23,42,0.10) !important;
-          border-radius: 8px !important;
-          padding: 3px !important;
-          box-shadow: none !important;
+        /* Hero top controls: same-page segmented controls (no jump links) */
+        .hero-seg-row{
+          margin-top: 16px;
         }
-        /* All buttons: inactive state */
-        [data-testid="stSegmentedControl"] button,
-        [data-testid="stSegmentedControl"] button > div,
-        [data-testid="stSegmentedControl"] button p{
-          border-radius: 6px !important;
-          font-size: 0.78rem !important;
-          font-weight: 700 !important;
-          letter-spacing: 0.04em !important;
+        [data-testid="stSegmentedControl"]{
+          background: rgba(255,255,255,0.82) !important;
+          border: 1px solid rgba(15,23,42,0.12) !important;
+          border-radius: 999px !important;
+          padding: 4px !important;
+          box-shadow: 0 8px 20px rgba(15,23,42,0.06) !important;
+        }
+        [data-testid="stSegmentedControl"] button{
+          min-height: 37px !important;
+          border-radius: 999px !important;
+          border: 1px solid transparent !important;
+          font-size: 0.88rem !important;
+          font-weight: 780 !important;
+          letter-spacing: 0.01em !important;
+          color: rgba(15,23,42,0.66) !important;
           background: transparent !important;
-          color: rgba(15,23,42,0.45) !important;
           box-shadow: none !important;
-          border: none !important;
+          transition: all .18s ease;
         }
-        /* Active button — Streamlit uses aria-checked on some versions */
+        [data-testid="stSegmentedControl"] button:hover{
+          background: rgba(var(--accent1-rgb),0.10) !important;
+          color: rgba(15,23,42,0.92) !important;
+        }
         [data-testid="stSegmentedControl"] button[aria-selected="true"],
         [data-testid="stSegmentedControl"] button[aria-pressed="true"],
         [data-testid="stSegmentedControl"] button[aria-checked="true"]{
-          background: #1e293b !important;
-          border-radius: 6px !important;
-          border: none !important;
-          box-shadow: 0 2px 8px rgba(15,23,42,0.20) !important;
+          background: linear-gradient(135deg, rgba(var(--accent1-rgb),0.94), rgba(var(--accent2-rgb),0.90)) !important;
+          border-color: rgba(var(--accent1-rgb),0.55) !important;
+          color: #fff !important;
+          box-shadow: 0 10px 24px rgba(var(--accent1-rgb),0.22) !important;
         }
-        [data-testid="stSegmentedControl"] button[aria-selected="true"] p,
-        [data-testid="stSegmentedControl"] button[aria-pressed="true"] p,
-        [data-testid="stSegmentedControl"] button[aria-checked="true"] p,
-        [data-testid="stSegmentedControl"] button[aria-selected="true"] div,
-        [data-testid="stSegmentedControl"] button[aria-pressed="true"] div,
-        [data-testid="stSegmentedControl"] button[aria-checked="true"] div{
-          color: #f1f5f9 !important;
-          background: transparent !important;
-        }
-        /* Hero nav row alignment */
-        .hero-nav-anchor + div[data-testid="stHorizontalBlock"]{
+        .hero-seg-row + div[data-testid="stHorizontalBlock"]{
           align-items: center !important;
+          gap: 0.9rem !important;
+        }
+        .hero-seg-row + div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:last-child{
+          display: flex;
+          justify-content: flex-end;
+          min-width: 164px;
+        }
+        .hero-seg-row + div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:last-child [data-testid="stSegmentedControl"]{
+          width: 164px !important;
+          margin-left: auto;
         }
 
         /* Download button */
@@ -2243,12 +2246,12 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         .hero-wrap{
           position: relative;
           border-radius: 22px;
-          min-height: 236px;
+          min-height: 0;
           display: grid;
-          grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
-          gap: 18px;
+          grid-template-columns: 1fr;
+          gap: 0;
           align-items: stretch;
-          padding: 18px;
+          padding: 16px 18px 16px 12px;
           background:
             radial-gradient(760px 360px at 16% 10%, rgba(var(--accent1-rgb),0.07), transparent 62%),
             linear-gradient(145deg, rgba(255,255,255,0.88), rgba(255,255,255,0.78));
@@ -2256,7 +2259,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         .hero-content{
           position: relative;
           z-index: 1;
-          padding: 6px 6px 2px 8px;
+          padding: 4px 6px 2px 2px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -2264,94 +2267,26 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         }
         /* ── Right visual panel: 5-factory infographic ── */
         .hero-visual{
-          position: relative;
-          border-radius: 18px;
-          overflow: hidden;
-          border: none;
-          box-shadow: none;
-          min-height: 210px;
-          background: transparent;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          display: none;
         }
-        /* The 5-factory image: multiply knocks out white bg */
         .hero-photo{
-          display: block;
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-          object-position: center center;
-          mix-blend-mode: multiply;
-          filter: contrast(1.06) saturate(1.08);
+          display: none;
         }
-        /* Left-edge fade so image melts into card bg */
-        .hero-visual::before{
-          content: "";
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            to right,
-            rgba(255,255,255,0.92) 0%,
-            rgba(255,255,255,0.30) 18%,
-            rgba(255,255,255,0.00) 38%
-          );
-          pointer-events: none;
-          z-index: 1;
-        }
-        .hero-visual::after{ display: none; }
-        .hero-visual-wm{ display: none; }
-        .hero-nav-anchor{
-          height: 0;
-          margin-top: 2px;
-        }
-        .hero-nav-anchor + div[data-testid="stHorizontalBlock"]{
-          align-items: center !important;
-          gap: 0.75rem !important;
-        }
-        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:first-child [data-testid="stSegmentedControl"]{
-          max-width: 760px;
-        }
-        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:last-child{
-          display: flex;
-          justify-content: flex-end;
-        }
-        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:last-child [data-testid="stSegmentedControl"]{
-          width: 164px !important;
-          margin-left: auto;
+        .hero-visual-wm{
+          display: none;
         }
         .hero-visual-meta{
-          position: absolute;
-          left: 12px;
-          bottom: 12px;
-          display: inline-flex;
-          gap: 8px;
-          align-items: center;
-          z-index: 3;
+          display: none;
         }
         .hero-visual-chip{
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          padding: 5px 10px;
-          border-radius: 999px;
-          font-size: 0.68rem;
-          font-weight: 760;
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
-          color: rgba(15,23,42,0.90);
-          background: rgba(255,255,255,0.80);
-          border: 1px solid rgba(255,255,255,0.70);
-          box-shadow: 0 8px 22px rgba(2,6,23,0.10);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
+          display: none;
         }
         /* ── Logo lockup: free-standing W monogram + wordmark ── */
         .hero-logo{
           display: inline-flex;
           align-items: center;
           gap: 0;
-          margin-bottom: 22px;
+          margin-bottom: 14px;
           line-height: 1;
         }
         /* The W SVG path rendered large, no container */
@@ -2368,13 +2303,13 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           height: 32px;
           background: rgba(15,23,42,0.14);
           flex: 0 0 auto;
-          margin: 0 16px;
+          margin: 0 12px;
         }
         /* Wordmark: stacked two-line */
         .hero-logo-text{
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 4px;
           line-height: 1;
         }
         /* Wordmark SVG */
@@ -2389,7 +2324,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           text-transform: uppercase;
           color: rgba(15,23,42,0.32);
           line-height: 1;
-          margin-top: 4px;
+          margin-top: 2px;
           display: block;
         }
         /* ── Title with brand-red accent ── */
@@ -2433,32 +2368,9 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         .hero-art-wm{ display: none; }
         @media (max-width: 720px){
           .hero-wrap{
-            grid-template-columns: 1fr;
             min-height: 0;
             padding: 14px;
             gap: 12px;
-          }
-          .hero-visual{
-            min-height: 178px;
-          }
-          .hero-visual-wm{
-            width: 236px;
-            right: -24px;
-            top: -18px;
-            opacity: 0.16;
-          }
-          .hero-visual-meta{
-            left: 10px;
-            bottom: 10px;
-            gap: 6px;
-          }
-          .hero-visual-chip{
-            font-size: 0.62rem;
-            padding: 4px 8px;
-          }
-          .hero-nav-anchor + div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:last-child [data-testid="stSegmentedControl"]{
-            width: 100% !important;
-            max-width: none;
           }
         }
         .hero-mark{
@@ -3211,9 +3123,10 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             wm_cache_buster = None
         logo_mask_src = load_image_data_uri(str(LOGO_ICON_PATH), wm_cache_buster)
 
-    # Load hero visual: 5-factory infographic (logo 1.png) preferred
+    # Load hero visual: prefer latest design mock first
     hero_art_src = ""
     for candidate in [
+        resource_path("Final/示范.png"),
         resource_path("Final/logo 1.png"),
         HERO_ART_PATH,
         resource_path("docs/assets/hero.png"),
@@ -3310,8 +3223,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             "</div>",
             unsafe_allow_html=True,
         )
-        st.markdown("<div class='hero-nav-anchor'></div>", unsafe_allow_html=True)
-        nav_left, nav_right = st.columns([8.5, 1.5])
+        st.markdown("<div class='hero-seg-row'></div>", unsafe_allow_html=True)
+        nav_left, nav_right = st.columns([8.2, 1.8])
         with nav_left:
             label = "Wec 系列" if ui_lang == "CN" else "Wec Series"
             st.segmented_control(
