@@ -2219,61 +2219,87 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         }
         [data-testid="stDownloadButton"] button p{ color: #fff; font-weight: 600; }
 
-        /* ── Brand header bar ── */
-        .hero-brand-bar{
+        /* ── Hero: full-bleed card ── */
+        .hero-wrap{
+          position: relative;
+          border-radius: 20px;
+          overflow: hidden;
+          min-height: 220px;
           display: flex;
-          align-items: center;
-          gap: 12px;
-          margin-bottom: 12px;
+          align-items: stretch;
         }
-        .hero-brand-wmark{
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          flex: 0 0 auto;
-          text-decoration: none;
+        /* Background photo layer */
+        .hero-bg{
+          position: absolute;
+          inset: 0;
+          background-size: cover;
+          background-position: center right;
+          background-repeat: no-repeat;
+          z-index: 0;
         }
-        .hero-brand-wmark-icon{
-          width: 36px;
-          height: 36px;
-          border-radius: 10px;
-          background: var(--brand);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 4px 14px rgba(209,0,37,0.28);
-          flex: 0 0 auto;
+        /* Left-to-right white fade so text is always legible */
+        .hero-bg::after{
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to right,
+            rgba(255,255,255,1.00)  0%,
+            rgba(255,255,255,0.97) 28%,
+            rgba(255,255,255,0.72) 52%,
+            rgba(255,255,255,0.10) 78%,
+            rgba(255,255,255,0.00) 100%
+          );
         }
-        .hero-brand-wmark-icon svg{
-          width: 22px;
-          height: 13px;
-          display: block;
-        }
-        .hero-brand-wmark-text{
+        /* Content layer sits above photo */
+        .hero-content{
+          position: relative;
+          z-index: 1;
+          padding: 24px 28px 22px 28px;
+          flex: 1;
           display: flex;
           flex-direction: column;
-          gap: 1px;
+          justify-content: space-between;
+          max-width: 580px;
+        }
+        /* ── Typographic logo lockup ── */
+        .hero-logo{
+          display: flex;
+          align-items: baseline;
+          gap: 0;
+          margin-bottom: 18px;
           line-height: 1;
         }
-        .hero-brand-wmark-cn{
-          font-size: 0.95rem;
-          font-weight: 800;
-          letter-spacing: 0.04em;
-          color: var(--text);
+        .hero-logo-w{
+          font-size: 2.6rem;
+          font-weight: 900;
+          letter-spacing: -0.04em;
+          color: var(--brand);
+          line-height: 1;
         }
-        .hero-brand-wmark-en{
-          font-size: 0.62rem;
-          font-weight: 600;
-          letter-spacing: 0.10em;
+        .hero-logo-ecare{
+          font-size: 2.6rem;
+          font-weight: 900;
+          letter-spacing: -0.04em;
+          color: var(--text);
+          line-height: 1;
+        }
+        .hero-logo-sub{
+          display: block;
+          font-size: 0.60rem;
+          font-weight: 700;
+          letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: var(--muted);
+          color: rgba(15,23,42,0.42);
+          margin-top: 3px;
+          padding-left: 2px;
         }
         /* ── Title with brand-red accent ── */
         .hero-title{
-          font-size: 1.85rem;
+          font-size: 1.72rem;
           font-weight: 800;
           letter-spacing: -0.02em;
-          line-height: 1.15;
+          line-height: 1.18;
           margin: 0;
           position: relative;
           padding-left: 14px;
@@ -2282,54 +2308,31 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           content: "";
           position: absolute;
           left: 0;
-          top: 0.1em;
-          bottom: 0.1em;
-          width: 4px;
+          top: 0.12em;
+          bottom: 0.12em;
+          width: 3px;
           border-radius: 999px;
           background: var(--brand);
         }
         .hero-head{
-          display:flex;
-          align-items:flex-start;
-          gap: 14px;
-          position: relative;
-          z-index: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
         }
         /* ── Hero card: brand-red left accent strip ── */
         [data-testid="stVerticalBlockBorderWrapper"]:first-of-type{
           border-left: 3px solid var(--brand) !important;
-          border-radius: 18px !important;
+          border-radius: 20px !important;
+          overflow: hidden !important;
+          padding: 0 !important;
         }
-
-        /* Hero right visual: logo1.png with white-bg knockout */
-        .hero-art{
-          width: 100%;
-          min-height: 220px;
-          height: 100%;
-          border-radius: 0;
-          overflow: visible;
-          border: none;
-          box-shadow: none;
-          position: relative;
-          background: transparent;
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          padding-right: 8px;
+        [data-testid="stVerticalBlockBorderWrapper"]:first-of-type > div{
+          padding: 0 !important;
         }
-        .hero-art-photo{
-          display: block;
-          width: 100%;
-          height: auto;
-          max-height: 280px;
-          object-fit: contain;
-          object-position: right center;
-          mix-blend-mode: multiply;
-          filter: contrast(1.04) saturate(1.05);
-        }
-        .hero-art::before{ display: none; }
+        /* Legacy hero-art classes: hidden (replaced by hero-wrap/hero-bg) */
+        .hero-art{ display: none; }
+        .hero-art-photo{ display: none; }
         .hero-art-wm{ display: none; }
-        .hero-art::after{ display: none; }
         .hero-art-meta{
           position: absolute;
           left: 14px;
@@ -3128,128 +3131,82 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             wm_cache_buster = None
         logo_mask_src = load_image_data_uri(str(LOGO_ICON_PATH), wm_cache_buster)
 
-    # Load company logo (公司 logo.png) for brand bar
-    company_logo_path = resource_path("Final/公司 logo.png")
-    company_logo_src = ""
-    if company_logo_path.exists():
-        try:
-            cl_cache_buster = company_logo_path.stat().st_mtime
-        except Exception:
-            cl_cache_buster = None
-        company_logo_src = load_image_data_uri(str(company_logo_path), cl_cache_buster)
+    # Load hero.jpg as full-bleed background
+    hero_art_src = ""
+    for candidate in [HERO_ART_PATH, resource_path("docs/assets/hero.png")]:
+        if candidate.exists():
+            try:
+                _cb = candidate.stat().st_mtime
+            except Exception:
+                _cb = None
+            hero_art_src = load_image_data_uri(str(candidate), _cb)
+            if hero_art_src:
+                break
+
+    title = "人类健康与营养解决方案" if ui_lang == "CN" else "Human Health & Nutrition Solutions"
+    desc_html = (
+        "<div class='hero-desc'>"
+        "<div><strong>Tailored for Global Brands</strong></div>"
+        "<div>Built on scientific rigor, consumer insights, and global expertise.</div>"
+        "<div style='margin-top:8px'>From proprietary probiotic strains to advanced formulations and end-to-end delivery.</div>"
+        "</div>"
+    ) if ui_lang == "EN" else (
+        "<div class='hero-desc'>"
+        "<div><strong>服务全球品牌</strong></div>"
+        "<div>以科学为基础，以洞察为导向，以专业能力贯穿全流程</div>"
+        "<div style='margin-top:8px'>从自有益生菌菌株到配方开发与商业化落地</div>"
+        "</div>"
+    )
+
+    bg_style = f"background-image:url('{html.escape(hero_art_src, quote=True)}');" if hero_art_src else ""
+
+    if "wec_series" not in st.session_state:
+        st.session_state["wec_series"] = _SERIES_OPTIONS[0]
+    if st.session_state.get("wec_series") not in _SERIES_OPTIONS:
+        st.session_state["wec_series"] = _SERIES_OPTIONS[0]
+
+    # Lang toggle sits outside the hero card, top-right
+    _lang_col, _toggle_col = st.columns([11, 1])
+    with _toggle_col:
+        st.segmented_control(
+            "语言",
+            ["CN", "EN"],
+            key="ui_lang",
+            label_visibility="collapsed",
+            width="content",
+        )
 
     with st.container(border=True):
-        hero_art_src = ""
-        hero_art_candidates = [
-            resource_path("Final/logo 1.png"),
-            HERO_ART_PATH,
-            resource_path("docs/assets/hero.png"),
-        ]
-        for candidate in hero_art_candidates:
-            if candidate.exists():
-                try:
-                    hero_art_cache_buster = candidate.stat().st_mtime
-                except Exception:
-                    hero_art_cache_buster = None
-                hero_art_src = load_image_data_uri(str(candidate), hero_art_cache_buster)
-                if hero_art_src:
-                    break
+        st.markdown(
+            f"<div class='hero-wrap'>"
+            f"<div class='hero-bg' style='{bg_style}'></div>"
+            "<div class='hero-content'>"
+            # Logo lockup
+            "<div>"
+            "<div class='hero-logo'>"
+            "<span class='hero-logo-w'>W</span>"
+            "<span class='hero-logo-ecare'>ECARE</span>"
+            "</div>"
+            "<span class='hero-logo-sub'>Probiotics &middot; Science &middot; Solutions</span>"
+            "</div>"
+            # Title + desc
+            "<div class='hero-head'>"
+            f"<div class='hero-title'>{html.escape(title)}</div>"
+            f"{desc_html}"
+            "</div>"
+            "</div>"
+            "</div>",
+            unsafe_allow_html=True,
+        )
 
-        cols = st.columns([6, 5, 1])
-        with cols[0]:
-            title = "人类健康与营养解决方案" if ui_lang == "CN" else "Human Health & Nutrition Solutions"
-            # Brand bar: inline SVG W-mark icon + wordmark (no external PNG dependency)
-            _W_PATH = "M241.763 12.967C231.238 15.523 204.444 32.744 189.131 53.148C173.817 73.557 164.889 91.103 138.42 109.275C138.42 109.275 125.677 118.88 116.428 118.867C107.161 118.848 102.295 107.564 105.529 100.772C105.529 100.772 107.486 93.98 111.626 86.945C115.765 79.929 125.741 66.651 121.551 63.888C121.551 63.888 120.956 60.49 108.003 75.483C95.05 90.472 64.116 121.73 35.415 136.069C33.645 136.952 31.98 137.679 30.416 138.26C23.125 140.963 18.011 140.51 14.549 138.26C6.709 133.169 7.317 118.871 10.222 111.201C14.7 99.395 32.552 67.817 71.782 35.928C71.782 35.928 81.534 29.396 78.09 23.573C74.645 17.737 60.8 23.528 60.8 23.528C60.8 23.528 32.552 38.16 17.563 54.736C11.836 61.075 6.668 62.786 3.443 60.878C-0.66 58.454 -1.611 50.18 3.443 38.146C4.815 34.88 6.631 31.335 8.946 27.553V27.566C8.946 27.566 25.146 8.013 58.751 1.866C66.101 0.516 74.28 -0.188 83.309 0.095C83.309 0.095 87.736 0.095 92.337 1.866C95.818 3.201 99.395 5.552 101.229 9.682C105.478 19.256 96.326 28.184 96.326 28.184C96.326 28.184 47.266 74.998 32.73 106.979C32.73 106.979 29.853 114.306 36.142 111.64C42.431 108.969 79.105 88.871 108.438 59.232C108.438 59.232 122.15 43.594 131.079 50.61C140.002 57.631 125.338 76.773 125.338 76.773C125.338 76.773 108.762 95.274 117.366 103.571C125.969 111.85 149.447 84.119 176.612 33.714C187.219 14.069 199.747 5.278 211.086 1.866C221.583 -1.295 231.06 0.155 237.057 1.866C241.205 3.05 243.689 4.363 243.689 4.363C243.689 4.363 252.292 10.428 241.763 12.967Z"
-            brand_bar_html = (
-                "<div class='hero-brand-bar'>"
-                "<div class='hero-brand-wmark'>"
-                "<div class='hero-brand-wmark-icon'>"
-                f"<svg viewBox='0 0 247 141' fill='none' xmlns='http://www.w3.org/2000/svg'>"
-                f"<path d='{_W_PATH}' fill='white'/>"
-                "</svg>"
-                "</div>"
-                "<div class='hero-brand-wmark-text'>"
-                "<span class='hero-brand-wmark-cn'>\u5fae\u5eb7\u76ca\u751f\u83cc</span>"
-                "<span class='hero-brand-wmark-en'>WECARE-PROBIOTICS</span>"
-                "</div>"
-                "</div>"
-                "</div>"
-            )
-
-            desc_html = ""
-            if ui_lang == "EN":
-                desc_html = (
-                    "<div class='hero-desc'>"
-                    "<div><strong>Tailored for Global Brands</strong></div>"
-                    "<div>Built on scientific rigor, consumer insights, and global expertise.</div>"
-                    "<div style='margin-top:10px'>From proprietary probiotic strains to advanced formulations and end-to-end delivery.</div>"
-                    "</div>"
-                )
-            else:
-                desc_html = (
-                    "<div class='hero-desc'>"
-                    "<div><strong>服务全球品牌</strong></div>"
-                    "<div>以科学为基础，以洞察为导向，以专业能力贯穿全流程</div>"
-                    "<div style='margin-top:10px'>从自有益生菌菌株到配方开发与商业化落地</div>"
-                    "</div>"
-                )
-            st.markdown(
-                f"{brand_bar_html}"
-                "<div class='hero-head'><div>"
-                f"<div class='hero-title'>{html.escape(title)}</div>{desc_html}"
-                "</div></div>",
-                unsafe_allow_html=True,
-            )
-
-            if "wec_series" not in st.session_state:
-                st.session_state["wec_series"] = _SERIES_OPTIONS[0]
-            if st.session_state.get("wec_series") not in _SERIES_OPTIONS:
-                st.session_state["wec_series"] = _SERIES_OPTIONS[0]
-
-            label = "Wec 系列" if ui_lang == "CN" else "Wec Series"
-            st.segmented_control(
-                label,
-                _SERIES_OPTIONS,
-                key="wec_series",
-                label_visibility="collapsed",
-                width="content",
-            )
-        with cols[1]:
-            if hero_art_src:
-                safe_art_src = html.escape(hero_art_src, quote=True)
-                wm_img = ""
-                if logo_mask_src:
-                    safe_wm_src = html.escape(logo_mask_src, quote=True)
-                    wm_img = f"<img class='hero-art-wm' src='{safe_wm_src}' alt='' />"
-                art_meta = (
-                    "<div class='hero-art-meta'>"
-                    "<span class='hero-art-chip'>Science-led</span>"
-                    "<span class='hero-art-chip'>Global Delivery</span>"
-                    "</div>"
-                    if ui_lang == "EN"
-                    else
-                    "<div class='hero-art-meta'>"
-                    "<span class='hero-art-chip'>科学驱动</span>"
-                    "<span class='hero-art-chip'>全球交付</span>"
-                    "</div>"
-                )
-                st.markdown(
-                    f"<div class='hero-art' aria-hidden='true'>"
-                    f"<img class='hero-art-photo' src='{safe_art_src}' alt='' />"
-                    f"{wm_img}"
-                    "</div>",
-                    unsafe_allow_html=True,
-                )
-            else:
-                st.markdown("<div style='height:212px'></div>", unsafe_allow_html=True)
-        with cols[2]:
-            st.segmented_control(
-                "语言",
-                ["CN", "EN"],
-                key="ui_lang",
-                label_visibility="collapsed",
-                width="content",
-            )
+        label = "Wec 系列" if ui_lang == "CN" else "Wec Series"
+        st.segmented_control(
+            label,
+            _SERIES_OPTIONS,
+            key="wec_series",
+            label_visibility="collapsed",
+            width="content",
+        )
 
 
 def _png_bytes_to_data_uri(png_bytes: bytes) -> str:
