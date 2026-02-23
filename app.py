@@ -2213,79 +2213,17 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           color: #0f172a !important;
           box-shadow: 0 1px 6px rgba(2,6,23,0.12) !important;
         }
-        /* Hide Streamlit nav row — replaced by custom .hero-nav-bar */
+        /* Hero nav row alignment */
         .hero-nav-anchor + div[data-testid="stHorizontalBlock"]{
-          visibility: hidden;
-          height: 0 !important;
-          overflow: hidden !important;
-          margin: 0 !important;
-          padding: 0 !important;
-          min-height: 0 !important;
+          align-items: center !important;
         }
-        /* ── Custom premium nav bar ── */
-        .hero-nav-bar{
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-          padding: 10px 8px 4px 8px;
-        }
-        .hero-nav-pills{
-          display: inline-flex;
-          align-items: center;
-          gap: 3px;
-          background: rgba(15,23,42,0.055);
-          border: 1px solid rgba(15,23,42,0.09);
-          border-radius: 10px;
-          padding: 4px;
-        }
-        .hero-nav-pill{
-          display: inline-flex;
-          align-items: center;
-          padding: 7px 18px;
-          border-radius: 7px;
-          font-size: 0.76rem;
-          font-weight: 700;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-          color: rgba(15,23,42,0.45);
-          cursor: default;
-          white-space: nowrap;
-          border: 1px solid transparent;
-          transition: all .15s;
-        }
-        .hero-nav-pill.active{
-          background: #D10025;
-          color: #fff;
-          border-color: transparent;
-          box-shadow: 0 2px 12px rgba(209,0,37,0.30);
-        }
-        .hero-nav-lang{
-          display: inline-flex;
-          align-items: center;
-          gap: 2px;
-          background: rgba(15,23,42,0.055);
-          border: 1px solid rgba(15,23,42,0.09);
-          border-radius: 8px;
-          padding: 4px;
-        }
-        .hero-nav-lang-btn{
-          display: inline-flex;
-          align-items: center;
-          padding: 6px 14px;
-          border-radius: 5px;
-          font-size: 0.72rem;
-          font-weight: 800;
-          letter-spacing: 0.10em;
-          color: rgba(15,23,42,0.40);
-          cursor: default;
-          border: 1px solid transparent;
-        }
-        .hero-nav-lang-btn.active{
-          background: #fff;
-          color: #0f172a;
-          border-color: rgba(15,23,42,0.10);
-          box-shadow: 0 1px 4px rgba(2,6,23,0.10);
+        /* Series selector: refined indigo-slate active */
+        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] [data-testid="stSegmentedControl"] button[aria-selected="true"],
+        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] [data-testid="stSegmentedControl"] button[aria-pressed="true"]{
+          background: #1e293b !important;
+          border-color: transparent !important;
+          color: #f1f5f9 !important;
+          box-shadow: 0 2px 10px rgba(15,23,42,0.22) !important;
         }
 
         /* Download button */
@@ -3353,25 +3291,6 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             "</div>"
         )
 
-        # Custom nav bar HTML — series pills + lang toggle
-        _cur_series = st.session_state.get("wec_series", _SERIES_OPTIONS[0])
-        _cur_lang = ui_lang
-        _series_pills = ""
-        for _s in _SERIES_OPTIONS:
-            _active = " active" if _s == _cur_series else ""
-            _series_pills += f"<span class='hero-nav-pill{_active}'>{html.escape(_s)}</span>"
-        _lang_cn = " active" if _cur_lang == "CN" else ""
-        _lang_en = " active" if _cur_lang == "EN" else ""
-        _nav_html = (
-            "<div class='hero-nav-bar'>"
-            f"<div class='hero-nav-pills'>{_series_pills}</div>"
-            "<div class='hero-nav-lang'>"
-            f"<span class='hero-nav-lang-btn{_lang_cn}'>CN</span>"
-            f"<span class='hero-nav-lang-btn{_lang_en}'>EN</span>"
-            "</div>"
-            "</div>"
-        )
-
         st.markdown(
             f"<div class='hero-wrap'>"
             "<div class='hero-content'>"
@@ -3382,11 +3301,9 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             "</div>"
             "</div>"
             f"{visual_html}"
-            "</div>"
-            f"{_nav_html}",
+            "</div>",
             unsafe_allow_html=True,
         )
-        # Anchor + hidden Streamlit controls (drive actual state)
         st.markdown("<div class='hero-nav-anchor'></div>", unsafe_allow_html=True)
         nav_left, nav_right = st.columns([8.5, 1.5])
         with nav_left:
