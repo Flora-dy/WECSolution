@@ -2186,44 +2186,50 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           color: rgba(15,23,42,0.84);
         }
 
-        /* ── Segmented controls: base style ── */
-        [data-testid="stSegmentedControl"]{
-          background: rgba(15,23,42,0.05);
-          border: 1px solid rgba(15,23,42,0.10);
-          border-radius: 8px;
-          padding: 3px;
-          backdrop-filter: none;
+        /* ── Segmented controls: complete restyle ── */
+        /* Track */
+        [data-testid="stSegmentedControl"],
+        [data-testid="stSegmentedControl"] > div{
+          background: rgba(15,23,42,0.05) !important;
+          border: 1px solid rgba(15,23,42,0.10) !important;
+          border-radius: 8px !important;
+          padding: 3px !important;
+          box-shadow: none !important;
         }
-        [data-testid="stSegmentedControl"] button{
+        /* All buttons: inactive state */
+        [data-testid="stSegmentedControl"] button,
+        [data-testid="stSegmentedControl"] button > div,
+        [data-testid="stSegmentedControl"] button p{
           border-radius: 6px !important;
-          padding: 7px 16px !important;
-          min-height: 34px !important;
           font-size: 0.78rem !important;
           font-weight: 700 !important;
           letter-spacing: 0.04em !important;
-          border: 0 !important;
           background: transparent !important;
           color: rgba(15,23,42,0.45) !important;
           box-shadow: none !important;
+          border: none !important;
         }
+        /* Active button — Streamlit uses aria-checked on some versions */
         [data-testid="stSegmentedControl"] button[aria-selected="true"],
-        [data-testid="stSegmentedControl"] button[aria-pressed="true"]{
-          background: #fff !important;
-          border: 1px solid rgba(15,23,42,0.10) !important;
-          color: #0f172a !important;
-          box-shadow: 0 1px 6px rgba(2,6,23,0.12) !important;
+        [data-testid="stSegmentedControl"] button[aria-pressed="true"],
+        [data-testid="stSegmentedControl"] button[aria-checked="true"]{
+          background: #1e293b !important;
+          border-radius: 6px !important;
+          border: none !important;
+          box-shadow: 0 2px 8px rgba(15,23,42,0.20) !important;
+        }
+        [data-testid="stSegmentedControl"] button[aria-selected="true"] p,
+        [data-testid="stSegmentedControl"] button[aria-pressed="true"] p,
+        [data-testid="stSegmentedControl"] button[aria-checked="true"] p,
+        [data-testid="stSegmentedControl"] button[aria-selected="true"] div,
+        [data-testid="stSegmentedControl"] button[aria-pressed="true"] div,
+        [data-testid="stSegmentedControl"] button[aria-checked="true"] div{
+          color: #f1f5f9 !important;
+          background: transparent !important;
         }
         /* Hero nav row alignment */
         .hero-nav-anchor + div[data-testid="stHorizontalBlock"]{
           align-items: center !important;
-        }
-        /* Series selector: refined indigo-slate active */
-        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] [data-testid="stSegmentedControl"] button[aria-selected="true"],
-        .hero-nav-anchor + div[data-testid="stHorizontalBlock"] [data-testid="stSegmentedControl"] button[aria-pressed="true"]{
-          background: #1e293b !important;
-          border-color: transparent !important;
-          color: #f1f5f9 !important;
-          box-shadow: 0 2px 10px rgba(15,23,42,0.22) !important;
         }
 
         /* Download button */
