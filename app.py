@@ -449,6 +449,78 @@ def _format_clinical_regs_markdown(text: str) -> str:
     return "\n".join(lines)
 
 
+def _parse_clinical_regs_entries(text: str) -> List[Tuple[str, List[str]]]:
+    """Parse scenario-level clinical regs text into [(label, [ids...])]."""
+    if not text:
+        return []
+
+    groups: List[Dict[str, List[str]]] = []
+    segments = [s.strip() for s in _CLINICAL_SEGMENT_SPLIT_RE.split(text) if s.strip()]
+    for seg in segments:
+        seg = seg.replace("：", ":").strip()
+        if ":" in seg:
+            label, rest = seg.split(":", 1)
+            current_label = label.strip()
+            current_ids: List[str] = []
+            for token in _split_clinical_tokens(rest.strip()):
+                token = token.replace("：", ":").strip()
+                if ":" in token:
+                    next_label, next_rest = token.split(":", 1)
+                    next_label = next_label.strip()
+                    if next_label:
+                        if current_ids:
+                            groups.append({"label": current_label, "ids": current_ids})
+                        current_label = next_label
+                        current_ids = []
+                        next_rest = next_rest.strip()
+                        if next_rest:
+                            ids = re.findall(r"(NCT\d+|ChiCTR\d+)", next_rest, flags=re.IGNORECASE)
+                            current_ids.extend(ids if ids else [next_rest])
+                        continue
+                if token:
+                    ids = re.findall(r"(NCT\d+|ChiCTR\d+)", token, flags=re.IGNORECASE)
+                    if ids:
+                        current_ids.extend(ids)
+                    else:
+                        current_ids.append(token)
+            if current_ids:
+                groups.append({"label": current_label, "ids": current_ids})
+            continue
+
+        tokens = _split_clinical_tokens(seg)
+        if not tokens:
+            continue
+        parsed_ids: List[str] = []
+        for token in tokens:
+            ids = re.findall(r"(NCT\d+|ChiCTR\d+)", token, flags=re.IGNORECASE)
+            if ids:
+                parsed_ids.extend(ids)
+            else:
+                parsed_ids.append(token)
+        if groups:
+            groups[-1]["ids"].extend(parsed_ids)
+        else:
+            groups.append({"label": "", "ids": parsed_ids})
+
+    out: List[Tuple[str, List[str]]] = []
+    for g in groups:
+        label = (g.get("label") or "").strip()
+        uniq_ids: List[str] = []
+        seen: set[str] = set()
+        for one in g.get("ids", []):
+            rid = str(one or "").strip()
+            if not rid:
+                continue
+            rid = re.sub(r"[,;；，]+$", "", rid)
+            if rid in seen:
+                continue
+            seen.add(rid)
+            uniq_ids.append(rid)
+        if uniq_ids:
+            out.append((label, uniq_ids))
+    return out
+
+
 @st.cache_data
 def load_solution_design(
     excel_path: str,
@@ -4016,6 +4088,14 @@ def main() -> None:
     except Exception:
         formula_scenarios = {}
 
+    # Load scenario-level metadata from the design sheet as a reliable fallback.
+    try:
+        _design_mapping, design_meta, _design_main_order, design_sub_order = load_solution_design(
+            str(excel_path), cache_buster
+        )
+    except Exception:
+        _design_mapping, design_meta, _design_main_order, design_sub_order = {}, {}, [], {}
+
     if formula_scenarios:
         ordered_main = [
             _FORMULA_SLIDE_TO_DIRECTION[s]
@@ -4026,11 +4106,8 @@ def main() -> None:
         if not available_main:
             available_main = sorted([k for k, v in formula_scenarios.items() if v])
     else:
-        mapping, _meta, main_order, sub_order = load_solution_design(
-            str(excel_path), cache_buster
-        )
-        available_main = [m for m in main_order if m in mapping]
-        formula_scenarios = {k: sub_order.get(k, []) for k in available_main}
+        available_main = [m for m in _design_main_order if m in _design_mapping]
+        formula_scenarios = {k: design_sub_order.get(k, []) for k in available_main}
 
     if not available_main:
         st.error("未能读取到功能方向数据，请检查 Excel 或 Formula&Solution 文件。")
@@ -4330,6 +4407,23 @@ def main() -> None:
 
     trial_lines = [str(x).strip() for x in overview_block.get("trials", []) if str(x).strip()]  # type: ignore[arg-type]
     trial_entries = _parse_trial_entries(trial_lines)
+    if not trial_entries and isinstance(ppt_solution, dict):
+        fallback_trial_lines: List[str] = []
+        for key in ("overview_lines", "evidence_lines"):
+            for raw in list(ppt_solution.get(key, [])):  # type: ignore[arg-type]
+                line = str(raw).strip()
+                if line and _is_ppt_trial_line(line):
+                    fallback_trial_lines.append(line)
+        if fallback_trial_lines:
+            trial_entries = _parse_trial_entries(fallback_trial_lines)
+
+    if not trial_entries:
+        regs_text = str(
+            ((design_meta.get(cat, {}) or {}).get(sub, {}) or {}).get("clinical_regs", "")
+        ).strip()
+        if regs_text:
+            trial_entries = _parse_clinical_regs_entries(regs_text)
+
     if trial_entries:
         clinical_data_path = resolve_clinical_data_path()
         article_links: Dict[str, str] = {}
