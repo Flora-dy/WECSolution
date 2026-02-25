@@ -1216,6 +1216,28 @@ _PPT_STRAIN_HINTS = (
     "Lactiplantibacillus",
 )
 
+_PPT_EXCIPIENT_HINTS = (
+    "核心辅料",
+    "其他辅料",
+    "辅料",
+    "excipients",
+    "xcipients",
+    "inulin",
+    "acacia gum",
+    "gum arabic",
+    "resistant dextrin",
+    "fructo-oligosaccharides",
+    "potato starch",
+    "starch",
+    "dextrin",
+    "酵母",
+    "菊粉",
+    "阿拉伯胶",
+    "抗性糊精",
+    "低聚果糖",
+    "淀粉",
+)
+
 
 def _contains_ppt_strain_code(line: str) -> bool:
     s = (line or "").strip()
@@ -1239,6 +1261,37 @@ def _is_ppt_strain_line(line: str) -> bool:
             s,
         )
     )
+
+
+def _is_ppt_excipients_labeled_line(line: str) -> bool:
+    s = (line or "").strip()
+    if not s:
+        return False
+    if re.match(r"^(核心辅料|其他辅料|辅料)\s*[:：]", s):
+        return True
+    if re.match(
+        r"^(Key\s+Excipients?|Other\s+(?:Excipients?|Xcipients?)|Excipients?)\s*[:：]",
+        s,
+        flags=re.I,
+    ):
+        return True
+    return False
+
+
+def _is_ppt_excipients_continuation_line(line: str) -> bool:
+    s = (line or "").strip()
+    if not s:
+        return False
+    if _is_ppt_trial_line(s):
+        return False
+    if _is_ppt_strain_line(s):
+        return False
+    if re.search(r"\b\d+\s*菌株\b", s) or re.search(r"\b\d+\s*Strains?\b", s, flags=re.I):
+        return False
+    low = s.lower()
+    if any(h in low for h in _PPT_EXCIPIENT_HINTS):
+        return True
+    return False
 
 
 def _is_ppt_trial_line(line: str) -> bool:
@@ -1296,21 +1349,20 @@ def _parse_ppt_overview(lines: List[str]) -> Dict[str, object]:
     excipients: List[str] = []
     trials: List[str] = []
     highlights: List[str] = []
+    in_excipients_block = False
 
     for line in content_lines:
         if not line or line in meta_lines or line == "Solution" or line == title:
             continue
 
-        if re.match(r"^(核心辅料|其他辅料|辅料)\s*[:：]", line):
+        if _is_ppt_excipients_labeled_line(line):
+            excipients.append(line)
+            in_excipients_block = True
+            continue
+        if in_excipients_block and _is_ppt_excipients_continuation_line(line):
             excipients.append(line)
             continue
-        if re.match(
-            r"^(Key\s+Excipients?|Other\s+(?:Excipients?|Xcipients?)|Excipients?)\s*[:：]",
-            line,
-            flags=re.I,
-        ):
-            excipients.append(line)
-            continue
+        in_excipients_block = False
 
         if (
             re.search(r"\b\d+\s*菌株\b", line)
