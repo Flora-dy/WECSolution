@@ -1705,13 +1705,15 @@ def _is_filler_excipient(name: str, lang: str) -> bool:
         fillers = {
             "gum arabic",
             "arabic gum",
+            "maltodextrin",
+            "malto dextrin",
             "potato starch",
             "starch",
             "silicon dioxide",
             "magnesium stearate",
         }
         return key in fillers
-    fillers_cn = ("阿拉伯胶", "马铃薯淀粉", "二氧化硅", "硬脂酸镁", "淀粉")
+    fillers_cn = ("阿拉伯胶", "马铃薯淀粉", "二氧化硅", "硬脂酸镁", "淀粉", "麦芽糊精")
     return any(f in s for f in fillers_cn)
 
 
