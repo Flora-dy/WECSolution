@@ -1199,8 +1199,9 @@ def build_scenario_to_solution_title(
 
 
 _PPT_STRAIN_HINTS = (
-    "杆菌",
+    "乳杆菌",
     "双歧杆菌",
+    "芽孢杆菌",
     "魏茨曼",
     "阿克曼",
     "片球菌",
@@ -1214,6 +1215,30 @@ _PPT_STRAIN_HINTS = (
     "Limosilactobacillus",
     "Lactiplantibacillus",
 )
+
+
+def _contains_ppt_strain_code(line: str) -> bool:
+    s = (line or "").strip()
+    if not s:
+        return False
+    if re.search(r"\b(NCT\d+|ChiCTR\d+)\b", s, flags=re.I):
+        return False
+    return bool(re.search(r"(?<![A-Za-z])[A-Za-z]{1,6}\d{2,3}(?![A-Za-z])", s))
+
+
+def _is_ppt_strain_line(line: str) -> bool:
+    s = (line or "").strip()
+    if not _contains_ppt_strain_code(s):
+        return False
+    if any(hint in s for hint in _PPT_STRAIN_HINTS):
+        return True
+    # Compact blend formats: LRa05+LCr86+LR08 / LRa05,LCr86,LR08
+    return bool(
+        re.search(
+            r"(?:[A-Za-z]{1,6}\d{2,3}\s*[+＋/／,，;；]){1,}[A-Za-z]{1,6}\d{2,3}",
+            s,
+        )
+    )
 
 
 def _is_ppt_trial_line(line: str) -> bool:
@@ -1279,7 +1304,11 @@ def _parse_ppt_overview(lines: List[str]) -> Dict[str, object]:
         if re.match(r"^(核心辅料|其他辅料|辅料)\s*[:：]", line):
             excipients.append(line)
             continue
-        if re.match(r"^(Key Excipients|Other Excipients|Excipients)\s*[:：]", line, flags=re.I):
+        if re.match(
+            r"^(Key\s+Excipients?|Other\s+(?:Excipients?|Xcipients?)|Excipients?)\s*[:：]",
+            line,
+            flags=re.I,
+        ):
             excipients.append(line)
             continue
 
@@ -1296,7 +1325,7 @@ def _parse_ppt_overview(lines: List[str]) -> Dict[str, object]:
             trials.append(line)
             continue
 
-        if any(hint in line for hint in _PPT_STRAIN_HINTS):
+        if _is_ppt_strain_line(line):
             strains.append(line)
             continue
 
@@ -4155,9 +4184,10 @@ def main() -> None:
         alias_map = {}
 
     # EN deck may have extra intro/summary pages; build bridge from CN solution order
-    # (01-43) to EN start slides.
+    # (01-43) to EN PPT start slides.
     en_slide_by_cn: Dict[int, int] = {}
     en_title_by_cn: Dict[int, str] = {}
+    en_pdf_page_by_cn: Dict[int, int] = {}
     cn_ordered: List[Tuple[int, str]] = sorted(
         [
             (int(v.get("slide_no", 0)), str(k))
@@ -4166,24 +4196,24 @@ def main() -> None:
         ],
         key=lambda x: x[0],
     )
-    en_starts: List[Tuple[int, str]] = []
+    en_ppt_starts: List[Tuple[int, str]] = []
     if ui_lang == "EN" and solutions_pptx_en and solutions_pptx_en.exists():
         try:
             en_cache_buster = solutions_pptx_en.stat().st_mtime
         except Exception:
             en_cache_buster = None
         try:
-            en_starts = load_ppt_solution_start_slides(
+            en_ppt_starts = load_ppt_solution_start_slides(
                 str(solutions_pptx_en), (en_cache_buster, "starts-20260222")
             )
-            for (cn_slide_no, _cn_title), (en_slide_no, en_title) in zip(cn_ordered, en_starts):
+            for (cn_slide_no, _cn_title), (en_slide_no, en_title) in zip(cn_ordered, en_ppt_starts):
                 en_slide_by_cn[cn_slide_no] = en_slide_no
                 if en_title:
                     en_title_by_cn[cn_slide_no] = str(en_title).strip()
         except Exception:
             en_slide_by_cn = {}
             en_title_by_cn = {}
-            en_starts = []
+            en_ppt_starts = []
 
     scenario_bridge: Dict[Tuple[str, str], Dict[str, object]] = {}
 
@@ -4208,19 +4238,11 @@ def main() -> None:
             pdf_titles_en = {}
             pdf_starts_en = []
 
-    # EN authoritative order: always use EN PDF starts when available.
-    # This guarantees top content and Full Solution follow the same file order.
-    if ui_lang == "EN" and pdf_starts_en:
-        en_starts = list(pdf_starts_en)
-
-    # Build CN->EN bridge from the final EN ordered starts (PDF-first, PPT fallback).
-    if ui_lang == "EN" and en_starts and cn_ordered:
-        en_slide_by_cn = {}
-        en_title_by_cn = {}
-        for (cn_slide_no, _cn_title), (en_slide_no, en_title) in zip(cn_ordered, en_starts):
-            en_slide_by_cn[cn_slide_no] = en_slide_no
-            if en_title:
-                en_title_by_cn[cn_slide_no] = str(en_title).strip()
+    # Build CN->EN PDF page bridge separately; do not mix PDF page numbers into PPT slide mapping.
+    if ui_lang == "EN" and pdf_starts_en and cn_ordered:
+        en_pdf_page_by_cn = {}
+        for (cn_slide_no, _cn_title), (en_pdf_page, _en_title) in zip(cn_ordered, pdf_starts_en):
+            en_pdf_page_by_cn[cn_slide_no] = en_pdf_page
 
     # Canonical bridge keyed by (category_cn, scenario_cn), using Formula order as 01-43.
     ordered_cat_list = [d for _, d in sorted(_FORMULA_SLIDE_TO_DIRECTION.items())]
@@ -4253,11 +4275,11 @@ def main() -> None:
                 row["cn_slide_no"] = cn_slide_no
                 row["cn_title"] = cn_title
 
-        # EN uses strict ordered mapping by scenario sequence, aligned to EN PDF/PPT starts.
-        if idx - 1 < len(en_starts):
-            es_no, es_title = en_starts[idx - 1]
-            row["en_slide_no"] = es_no
-            row["en_title"] = str(es_title or "").strip()
+        # EN PPT slide mapping for top textual blocks.
+        if idx - 1 < len(en_ppt_starts):
+            en_slide_no, en_title = en_ppt_starts[idx - 1]
+            row["en_slide_no"] = en_slide_no
+            row["en_title"] = str(en_title or "").strip()
         else:
             cn_slide_no = int(row.get("cn_slide_no", 0) or 0)
             if cn_slide_no:
@@ -4265,6 +4287,19 @@ def main() -> None:
                 if en_slide_no:
                     row["en_slide_no"] = en_slide_no
                     row["en_title"] = str(en_title_by_cn.get(cn_slide_no, "") or "").strip()
+
+        # EN PDF page mapping for Full Solution preview/download.
+        if idx - 1 < len(pdf_starts_en):
+            en_pdf_page, en_pdf_title = pdf_starts_en[idx - 1]
+            row["en_pdf_page"] = en_pdf_page
+            if not str(row.get("en_title", "") or "").strip() and en_pdf_title:
+                row["en_title"] = str(en_pdf_title).strip()
+        else:
+            cn_slide_no = int(row.get("cn_slide_no", 0) or 0)
+            if cn_slide_no:
+                en_pdf_page = en_pdf_page_by_cn.get(cn_slide_no, 0)
+                if en_pdf_page:
+                    row["en_pdf_page"] = en_pdf_page
 
         scenario_bridge[(cat_name, scen_name)] = row
 
@@ -4300,8 +4335,9 @@ def main() -> None:
                         if not en_title and cn_slide_no:
                             en_title = en_title_by_cn.get(cn_slide_no, "").strip()
                         if not en_title and cn_slide_no and pdf_titles_en:
-                            en_slide_no = en_slide_by_cn.get(cn_slide_no, cn_slide_no)
-                            en_title = str(pdf_titles_en.get(en_slide_no, "")).strip()
+                            en_pdf_page_no = en_pdf_page_by_cn.get(cn_slide_no, 0)
+                            if en_pdf_page_no:
+                                en_title = str(pdf_titles_en.get(en_pdf_page_no, "")).strip()
                         if not en_title:
                             en_title = mk
                         scenario_title_en[scen] = en_title
@@ -4342,6 +4378,7 @@ def main() -> None:
     ppt_solution = solutions_deck.get(match_key)
     selected_cn_slide_no = int(selected_bridge.get("cn_slide_no", 0) or 0)
     selected_en_slide_no = int(selected_bridge.get("en_slide_no", 0) or 0)
+    selected_en_pdf_page = int(selected_bridge.get("en_pdf_page", 0) or 0)
     selected_seq_no = int(selected_bridge.get("seq", 0) or 0)
     if not selected_cn_slide_no and ppt_solution:
         selected_cn_slide_no = int(ppt_solution.get("slide_no", 0))  # type: ignore[arg-type]
@@ -4607,11 +4644,16 @@ def main() -> None:
                     cn_slide_no = selected_cn_slide_no or (
                         int(ppt_solution.get("slide_no", 0)) if ppt_solution else 0  # type: ignore[arg-type]
                     )
-                    render_slide_no = selected_en_slide_no
+                    render_slide_no = selected_en_pdf_page
                     if not render_slide_no and selected_seq_no and len(pdf_starts_en) >= selected_seq_no:
                         render_slide_no = int(pdf_starts_en[selected_seq_no - 1][0])
                     if not render_slide_no and cn_slide_no:
-                        render_slide_no = en_slide_by_cn.get(cn_slide_no, cn_slide_no)
+                        render_slide_no = en_pdf_page_by_cn.get(cn_slide_no, 0)
+                    if not render_slide_no:
+                        # Fallback for exceptional cases where EN PDF starts are unavailable.
+                        render_slide_no = selected_en_slide_no or (
+                            en_slide_by_cn.get(cn_slide_no, cn_slide_no) if cn_slide_no else 0
+                        )
                     if not render_slide_no:
                         st.warning(
                             "No matching English solution page was found for this scenario in the PDF."
