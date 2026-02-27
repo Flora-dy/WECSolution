@@ -4550,24 +4550,27 @@ def main() -> None:
                         cn_slide_no = selected_cn_slide_no or int(ppt_solution.get("slide_no", 1))  # type: ignore[arg-type]
                         render_slide_no = cn_slide_no
 
-                    view_state_key = "full_solution_view_icon"
-                    if str(st.session_state.get(view_state_key, "")).strip() not in {"←", "⧉", "→"}:
-                        st.session_state[view_state_key] = "←" if is_mobile else "⧉"
+                    page_state_key = "full_solution_page_side"
+                    if str(st.session_state.get(page_state_key, "")).strip() not in {"left", "right"}:
+                        st.session_state[page_state_key] = "left"
+                    mode_state_key = "full_solution_view_mode"
+                    if str(st.session_state.get(mode_state_key, "")).strip() not in {"single", "dual"}:
+                        st.session_state[mode_state_key] = "single" if is_mobile else "dual"
 
                     render_scale = 1.4 if is_mobile else 2.0
                     tool1, tool2, tool3 = st.columns([4, 1, 2])
                     with tool1:
-                        current_icon = str(st.session_state.get(view_state_key, "←" if is_mobile else "⧉"))
-                        view_icon = st.segmented_control(
-                            t("预览页", "View"),
-                            ["←", "⧉", "→"],
-                            default=current_icon,
-                            key="full_solution_view_seg",
+                        mode_options = [t("单页", "Single"), t("双页", "Dual")]
+                        default_mode = mode_options[1] if st.session_state.get(mode_state_key) == "dual" else mode_options[0]
+                        mode_selected = st.segmented_control(
+                            t("查看模式", "View mode"),
+                            mode_options,
+                            default=default_mode,
+                            key="full_solution_mode_seg",
                             label_visibility="collapsed",
                             width="content",
                         )
-                        if str(view_icon or "").strip() in {"←", "⧉", "→"}:
-                            st.session_state[view_state_key] = str(view_icon)
+                        st.session_state[mode_state_key] = "dual" if mode_selected == mode_options[1] else "single"
                     with tool2:
                         with st.popover(t("显示设置", "View settings"), icon=":material/tune:"):
                             render_scale = st.slider(
@@ -4611,12 +4614,40 @@ def main() -> None:
                         else:
                             st.caption(t("（PDF 生成失败：请确认已安装 `pypdf`）", "(PDF build failed: please ensure `pypdf` is installed.)"))
 
-                    icon = str(st.session_state.get(view_state_key, "←" if is_mobile else "⧉"))
-                    vm = "双页对照" if icon == "⧉" else ("第二页" if icon == "→" else "第一页")
+                    st.caption(
+                        t(
+                            "点击两侧小箭头翻页；单页/双页可在上方切换。",
+                            "Tap cute side arrows to flip pages; switch Single/Dual mode above.",
+                        )
+                    )
+                    nav_l, preview_col, nav_r = st.columns([1.05, 7.9, 1.05], gap="small")
+                    with nav_l:
+                        left_clicked = st.button(
+                            t("🫧 ◀", "🫧 ◀"),
+                            key=f"fullsol_prev_{selected_seq_no}_{ui_lang}",
+                            use_container_width=True,
+                        )
+                        st.caption(t("上一页", "Prev"))
+                    with nav_r:
+                        right_clicked = st.button(
+                            t("▶ 🫧", "▶ 🫧"),
+                            key=f"fullsol_next_{selected_seq_no}_{ui_lang}",
+                            use_container_width=True,
+                        )
+                        st.caption(t("下一页", "Next"))
+
+                    current_side = str(st.session_state.get(page_state_key, "left"))
+                    if left_clicked:
+                        current_side = "left"
+                    elif right_clicked:
+                        current_side = "right"
+                    st.session_state[page_state_key] = current_side
+
+                    mode = str(st.session_state.get(mode_state_key, "single" if is_mobile else "dual"))
                     pages_to_render: Tuple[int, ...]
-                    if vm == "双页对照":
+                    if mode == "dual":
                         pages_to_render = (page1, page2)
-                    elif vm == "第二页":
+                    elif current_side == "right":
                         pages_to_render = (page2,)
                     else:
                         pages_to_render = (page1,)
@@ -4641,47 +4672,13 @@ def main() -> None:
                             )
                         )
                     else:
-                        st.caption(
-                            t(
-                                "点击左右侧箭头切换第一页/第二页；网络较慢时建议先看单页。",
-                                "Use side arrows for page 1/page 2; on slower networks, start with single-page view.",
-                            )
-                        )
-                        nav_l, preview_col, nav_r = st.columns([1.0, 8.0, 1.0], gap="small")
-                        with nav_l:
-                            left_clicked = st.button(
-                                "⬅",
-                                key=f"fullsol_prev_{selected_seq_no}_{ui_lang}",
-                                use_container_width=True,
-                            )
-                            st.caption(t("上一页", "Prev"))
-                        with nav_r:
-                            right_clicked = st.button(
-                                "➡",
-                                key=f"fullsol_next_{selected_seq_no}_{ui_lang}",
-                                use_container_width=True,
-                            )
-                            st.caption(t("下一页", "Next"))
-
-                        if left_clicked:
-                            st.session_state[view_state_key] = "←"
-                        elif right_clicked:
-                            st.session_state[view_state_key] = "→"
-
-                        icon = str(st.session_state.get(view_state_key, "←" if is_mobile else "⧉"))
-                        vm = "双页对照" if icon == "⧉" else ("第二页" if icon == "→" else "第一页")
-
                         with preview_col:
-                            if vm == "双页对照":
+                            if mode == "dual":
                                 c1, c2 = st.columns(2, gap="large")
                                 with c1:
                                     _render_pdf_page_card(page_images[0])
                                 with c2:
                                     _render_pdf_page_card(page_images[1] if len(page_images) > 1 else page_images[0])
-                            elif vm == "第二页":
-                                _render_pdf_page_card(
-                                    page_images[1] if len(page_images) > 1 else page_images[0],
-                                )
                             else:
                                 _render_pdf_page_card(page_images[0])
         return True
