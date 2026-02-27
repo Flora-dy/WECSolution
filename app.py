@@ -2029,7 +2029,7 @@ def build_solution_pdf_bytes(
 @st.cache_data
 def render_pdf_pages_png(
     pdf_path: str,
-    pages: Tuple[int, int],
+    pages: Tuple[int, ...],
     scale: float = 2.0,
     _cache_buster: float | None = None,
 ) -> List[bytes]:
@@ -3268,6 +3268,12 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           }
           .ip-k{ white-space: normal; }
           .chip{ white-space: normal; }
+          [data-testid="stButton"] > button{
+            min-height: 44px;
+            font-size: 1rem;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+          }
         }
         </style>
         """,
@@ -3493,6 +3499,28 @@ def _clear_query_param(key: str) -> None:
         st.experimental_set_query_params(**qp)
     except Exception:
         pass
+
+
+def _is_mobile_client() -> bool:
+    """Best-effort mobile detection for rendering/perf tuning."""
+    q = _get_query_param_first("mobile").strip().lower()
+    if q in {"1", "true", "yes"}:
+        return True
+    if q in {"0", "false", "no"}:
+        return False
+
+    ua = ""
+    try:
+        ctx = getattr(st, "context", None)
+        headers = getattr(ctx, "headers", None) if ctx is not None else None
+        if headers:
+            ua = str(headers.get("user-agent", ""))
+    except Exception:
+        ua = ""
+
+    if not ua:
+        return False
+    return bool(re.search(r"iphone|ipad|android|mobile", ua, flags=re.I))
 
 
 def _stat_cache_buster(path: Path) -> int | None:
@@ -4107,6 +4135,7 @@ def main() -> None:
     if str(st.session_state.get("ui_lang", "EN")).strip().upper() not in {"CN", "EN"}:
         st.session_state["ui_lang"] = "EN"
     ui_lang = str(st.session_state.get("ui_lang", "EN")).strip().upper() or "EN"
+    is_mobile = _is_mobile_client()
 
     # Wec 系列入口（WecLac / WecPro® Formula / WecPro® Solution）
     series_from_url = _get_query_param_first("series").strip()
@@ -4523,12 +4552,12 @@ def main() -> None:
 
                     view_state_key = "full_solution_view_icon"
                     if str(st.session_state.get(view_state_key, "")).strip() not in {"←", "⧉", "→"}:
-                        st.session_state[view_state_key] = "⧉"
+                        st.session_state[view_state_key] = "←" if is_mobile else "⧉"
 
-                    render_scale = 2.0
+                    render_scale = 1.4 if is_mobile else 2.0
                     tool1, tool2, tool3 = st.columns([4, 1, 2])
                     with tool1:
-                        current_icon = str(st.session_state.get(view_state_key, "⧉"))
+                        current_icon = str(st.session_state.get(view_state_key, "←" if is_mobile else "⧉"))
                         view_icon = st.segmented_control(
                             t("预览页", "View"),
                             ["←", "⧉", "→"],
@@ -4544,8 +4573,8 @@ def main() -> None:
                             render_scale = st.slider(
                                 t("清晰度", "Quality"),
                                 min_value=1.0,
-                                max_value=3.0,
-                                value=2.0,
+                                max_value=2.2 if is_mobile else 3.0,
+                                value=1.4 if is_mobile else 2.0,
                                 step=0.5,
                             )
 
@@ -4582,10 +4611,20 @@ def main() -> None:
                         else:
                             st.caption(t("（PDF 生成失败：请确认已安装 `pypdf`）", "(PDF build failed: please ensure `pypdf` is installed.)"))
 
+                    icon = str(st.session_state.get(view_state_key, "←" if is_mobile else "⧉"))
+                    vm = "双页对照" if icon == "⧉" else ("第二页" if icon == "→" else "第一页")
+                    pages_to_render: Tuple[int, ...]
+                    if vm == "双页对照":
+                        pages_to_render = (page1, page2)
+                    elif vm == "第二页":
+                        pages_to_render = (page2,)
+                    else:
+                        pages_to_render = (page1,)
+
                     with st.spinner(t("正在加载页面...", "Loading pages...")):
                         page_images = render_pdf_pages_png(
                             str(pdf_path),
-                            (page1, page2),
+                            pages_to_render,
                             render_scale,
                             pdf_cache_buster,
                         )
@@ -4604,8 +4643,8 @@ def main() -> None:
                     else:
                         st.caption(
                             t(
-                                "点击左右侧箭头切换第一页/第二页；中间图标可切换双页视图。",
-                                "Use side arrows for page 1/page 2; use the center icon for dual-page view.",
+                                "点击左右侧箭头切换第一页/第二页；网络较慢时建议先看单页。",
+                                "Use side arrows for page 1/page 2; on slower networks, start with single-page view.",
                             )
                         )
                         nav_l, preview_col, nav_r = st.columns([1.0, 8.0, 1.0], gap="small")
@@ -4629,7 +4668,7 @@ def main() -> None:
                         elif right_clicked:
                             st.session_state[view_state_key] = "→"
 
-                        icon = str(st.session_state.get(view_state_key, "⧉"))
+                        icon = str(st.session_state.get(view_state_key, "←" if is_mobile else "⧉"))
                         vm = "双页对照" if icon == "⧉" else ("第二页" if icon == "→" else "第一页")
 
                         with preview_col:
