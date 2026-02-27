@@ -4461,41 +4461,6 @@ def main() -> None:
     overview_name = str(overview_info.get("name", "")).strip()
     overview_formula = str(overview_info.get("core_formula", "")).strip()
 
-    with st.container(border=True):
-        st.subheader(t("核心配方", "Core Formula"))
-        display_name = _ensure_wecpro_registered(overview_name)
-        formula_html = _colorize_solution_formula_html(overview_formula, ui_lang)
-        if overview_name and overview_formula:
-            sep = "：" if ui_lang == "CN" else ":"
-            st.markdown(
-                "<div class='core-formula-line'>"
-                f"<span class='core-formula-name'>{html.escape(display_name)}</span>"
-                f"<span class='core-formula-sep'>{html.escape(sep)} </span>"
-                f"{formula_html}"
-                "</div>",
-                unsafe_allow_html=True,
-            )
-        elif overview_formula:
-            st.markdown(f"<div class='core-formula-line'>{formula_html}</div>", unsafe_allow_html=True)
-        elif overview_name:
-            st.markdown(f"**{display_name}**")
-        else:
-            st.caption(t("（该功能方向暂无‘Sheet2’信息记录）", "(No record found for this health area.)"))
-
-        highlights = [str(x).strip() for x in overview_block.get("highlights", []) if str(x).strip()]  # type: ignore[arg-type]
-        if highlights:
-            st.markdown(
-                "<div class='core-func-title'>"
-                "<span class='core-func-dot'></span>"
-                f"<span>{html.escape(t('核心功能', 'Core Functions'))}</span>"
-                "</div>",
-                unsafe_allow_html=True,
-            )
-            items_html = "".join(
-                f"<li>{_italicize_microbe_tokens_html(x)}</li>" for x in highlights[:4]
-            )
-            st.markdown(f"<ul class='core-func-list'>{items_html}</ul>", unsafe_allow_html=True)
-
     trial_lines = [str(x).strip() for x in overview_block.get("trials", []) if str(x).strip()]  # type: ignore[arg-type]
     trial_entries = _parse_trial_entries(trial_lines)
     if not trial_entries and isinstance(ppt_solution, dict):
@@ -4805,6 +4770,41 @@ def main() -> None:
                     )
                 elif page_images:
                     _render_pdf_page_card(page_images[0])
+
+    with st.container(border=True):
+        st.subheader(t("核心配方", "Core Formula"))
+        display_name = _ensure_wecpro_registered(overview_name)
+        formula_html = _colorize_solution_formula_html(overview_formula, ui_lang)
+        if overview_name and overview_formula:
+            sep = "：" if ui_lang == "CN" else ":"
+            st.markdown(
+                "<div class='core-formula-line'>"
+                f"<span class='core-formula-name'>{html.escape(display_name)}</span>"
+                f"<span class='core-formula-sep'>{html.escape(sep)} </span>"
+                f"{formula_html}"
+                "</div>",
+                unsafe_allow_html=True,
+            )
+        elif overview_formula:
+            st.markdown(f"<div class='core-formula-line'>{formula_html}</div>", unsafe_allow_html=True)
+        elif overview_name:
+            st.markdown(f"**{display_name}**")
+        else:
+            st.caption(t("（该功能方向暂无‘Sheet2’信息记录）", "(No record found for this health area.)"))
+
+        highlights = [str(x).strip() for x in overview_block.get("highlights", []) if str(x).strip()]  # type: ignore[arg-type]
+        if highlights:
+            st.markdown(
+                "<div class='core-func-title'>"
+                "<span class='core-func-dot'></span>"
+                f"<span>{html.escape(t('核心功能', 'Core Functions'))}</span>"
+                "</div>",
+                unsafe_allow_html=True,
+            )
+            items_html = "".join(
+                f"<li>{_italicize_microbe_tokens_html(x)}</li>" for x in highlights[:4]
+            )
+            st.markdown(f"<ul class='core-func-list'>{items_html}</ul>", unsafe_allow_html=True)
 
     # 客户展示版：不展示“配方设计池 / 说明书 / 临床注册号”等内部信息
 
