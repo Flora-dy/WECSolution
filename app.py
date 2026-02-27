@@ -3414,7 +3414,7 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         with nav_right:
             st.segmented_control(
                 "语言",
-                ["CN", "EN"],
+                ["EN", "CN"],
                 key="ui_lang",
                 label_visibility="collapsed",
                 width="stretch",
@@ -4100,13 +4100,13 @@ def main() -> None:
         _clear_query_param("clear_cache")
         st.rerun()
 
-    # UI 语言：CN / EN（可通过 ?lang=EN 直达）
+    # UI 语言：EN / CN（可通过 ?lang=CN 直达中文）
     lang_from_url = _get_query_param_first("lang").strip().upper()
     if "ui_lang" not in st.session_state:
-        st.session_state["ui_lang"] = "EN" if lang_from_url == "EN" else "CN"
-    if str(st.session_state.get("ui_lang", "CN")).strip().upper() not in {"CN", "EN"}:
-        st.session_state["ui_lang"] = "CN"
-    ui_lang = str(st.session_state.get("ui_lang", "CN")).strip().upper() or "CN"
+        st.session_state["ui_lang"] = "CN" if lang_from_url == "CN" else "EN"
+    if str(st.session_state.get("ui_lang", "EN")).strip().upper() not in {"CN", "EN"}:
+        st.session_state["ui_lang"] = "EN"
+    ui_lang = str(st.session_state.get("ui_lang", "EN")).strip().upper() or "EN"
 
     # Wec 系列入口（WecLac / WecPro® Formula / WecPro® Solution）
     series_from_url = _get_query_param_first("series").strip()
@@ -4615,6 +4615,41 @@ def main() -> None:
     if not _render_full_solution_section():
         return
 
+    with st.container(border=True):
+        st.subheader(t("核心配方", "Core Formula"))
+        display_name = _ensure_wecpro_registered(overview_name)
+        formula_html = _colorize_solution_formula_html(overview_formula, ui_lang)
+        if overview_name and overview_formula:
+            sep = "：" if ui_lang == "CN" else ":"
+            st.markdown(
+                "<div class='core-formula-line'>"
+                f"<span class='core-formula-name'>{html.escape(display_name)}</span>"
+                f"<span class='core-formula-sep'>{html.escape(sep)} </span>"
+                f"{formula_html}"
+                "</div>",
+                unsafe_allow_html=True,
+            )
+        elif overview_formula:
+            st.markdown(f"<div class='core-formula-line'>{formula_html}</div>", unsafe_allow_html=True)
+        elif overview_name:
+            st.markdown(f"**{display_name}**")
+        else:
+            st.caption(t("（该功能方向暂无‘Sheet2’信息记录）", "(No record found for this health area.)"))
+
+        highlights = [str(x).strip() for x in overview_block.get("highlights", []) if str(x).strip()]  # type: ignore[arg-type]
+        if highlights:
+            st.markdown(
+                "<div class='core-func-title'>"
+                "<span class='core-func-dot'></span>"
+                f"<span>{html.escape(t('核心功能', 'Core Functions'))}</span>"
+                "</div>",
+                unsafe_allow_html=True,
+            )
+            items_html = "".join(
+                f"<li>{_italicize_microbe_tokens_html(x)}</li>" for x in highlights[:4]
+            )
+            st.markdown(f"<ul class='core-func-list'>{items_html}</ul>", unsafe_allow_html=True)
+
     trial_lines = [str(x).strip() for x in overview_block.get("trials", []) if str(x).strip()]  # type: ignore[arg-type]
     trial_entries = _parse_trial_entries(trial_lines)
     if not trial_entries and isinstance(ppt_solution, dict):
@@ -4776,41 +4811,6 @@ def main() -> None:
                     "The actual formulation can be customized according to customer requirements.",
                 )
             )
-
-    with st.container(border=True):
-        st.subheader(t("核心配方", "Core Formula"))
-        display_name = _ensure_wecpro_registered(overview_name)
-        formula_html = _colorize_solution_formula_html(overview_formula, ui_lang)
-        if overview_name and overview_formula:
-            sep = "：" if ui_lang == "CN" else ":"
-            st.markdown(
-                "<div class='core-formula-line'>"
-                f"<span class='core-formula-name'>{html.escape(display_name)}</span>"
-                f"<span class='core-formula-sep'>{html.escape(sep)} </span>"
-                f"{formula_html}"
-                "</div>",
-                unsafe_allow_html=True,
-            )
-        elif overview_formula:
-            st.markdown(f"<div class='core-formula-line'>{formula_html}</div>", unsafe_allow_html=True)
-        elif overview_name:
-            st.markdown(f"**{display_name}**")
-        else:
-            st.caption(t("（该功能方向暂无‘Sheet2’信息记录）", "(No record found for this health area.)"))
-
-        highlights = [str(x).strip() for x in overview_block.get("highlights", []) if str(x).strip()]  # type: ignore[arg-type]
-        if highlights:
-            st.markdown(
-                "<div class='core-func-title'>"
-                "<span class='core-func-dot'></span>"
-                f"<span>{html.escape(t('核心功能', 'Core Functions'))}</span>"
-                "</div>",
-                unsafe_allow_html=True,
-            )
-            items_html = "".join(
-                f"<li>{_italicize_microbe_tokens_html(x)}</li>" for x in highlights[:4]
-            )
-            st.markdown(f"<ul class='core-func-list'>{items_html}</ul>", unsafe_allow_html=True)
 
     # 客户展示版：不展示“配方设计池 / 说明书 / 临床注册号”等内部信息
 
