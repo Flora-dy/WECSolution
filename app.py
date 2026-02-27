@@ -4521,16 +4521,24 @@ def main() -> None:
                         cn_slide_no = selected_cn_slide_no or int(ppt_solution.get("slide_no", 1))  # type: ignore[arg-type]
                         render_slide_no = cn_slide_no
 
+                    view_state_key = "full_solution_view_icon"
+                    if str(st.session_state.get(view_state_key, "")).strip() not in {"←", "⧉", "→"}:
+                        st.session_state[view_state_key] = "⧉"
+
                     render_scale = 2.0
                     tool1, tool2, tool3 = st.columns([4, 1, 2])
                     with tool1:
+                        current_icon = str(st.session_state.get(view_state_key, "⧉"))
                         view_icon = st.segmented_control(
                             t("预览页", "View"),
                             ["←", "⧉", "→"],
-                            default="⧉",
+                            default=current_icon,
+                            key="full_solution_view_seg",
                             label_visibility="collapsed",
                             width="content",
                         )
+                        if str(view_icon or "").strip() in {"←", "⧉", "→"}:
+                            st.session_state[view_state_key] = str(view_icon)
                     with tool2:
                         with st.popover(t("显示设置", "View settings"), icon=":material/tune:"):
                             render_scale = st.slider(
@@ -4594,21 +4602,49 @@ def main() -> None:
                             )
                         )
                     else:
-                        icon = str(view_icon or "⧉")
+                        st.caption(
+                            t(
+                                "点击左右侧箭头切换第一页/第二页；中间图标可切换双页视图。",
+                                "Use side arrows for page 1/page 2; use the center icon for dual-page view.",
+                            )
+                        )
+                        nav_l, preview_col, nav_r = st.columns([1.0, 8.0, 1.0], gap="small")
+                        with nav_l:
+                            left_clicked = st.button(
+                                "⬅",
+                                key=f"fullsol_prev_{selected_seq_no}_{ui_lang}",
+                                use_container_width=True,
+                            )
+                            st.caption(t("上一页", "Prev"))
+                        with nav_r:
+                            right_clicked = st.button(
+                                "➡",
+                                key=f"fullsol_next_{selected_seq_no}_{ui_lang}",
+                                use_container_width=True,
+                            )
+                            st.caption(t("下一页", "Next"))
+
+                        if left_clicked:
+                            st.session_state[view_state_key] = "←"
+                        elif right_clicked:
+                            st.session_state[view_state_key] = "→"
+
+                        icon = str(st.session_state.get(view_state_key, "⧉"))
                         vm = "双页对照" if icon == "⧉" else ("第二页" if icon == "→" else "第一页")
 
-                    if page_images and vm == "双页对照":
-                        c1, c2 = st.columns(2, gap="large")
-                        with c1:
-                            _render_pdf_page_card(page_images[0])
-                        with c2:
-                            _render_pdf_page_card(page_images[1] if len(page_images) > 1 else page_images[0])
-                    elif page_images and vm == "第二页":
-                        _render_pdf_page_card(
-                            page_images[1] if len(page_images) > 1 else page_images[0],
-                        )
-                    elif page_images:
-                        _render_pdf_page_card(page_images[0])
+                        with preview_col:
+                            if vm == "双页对照":
+                                c1, c2 = st.columns(2, gap="large")
+                                with c1:
+                                    _render_pdf_page_card(page_images[0])
+                                with c2:
+                                    _render_pdf_page_card(page_images[1] if len(page_images) > 1 else page_images[0])
+                            elif vm == "第二页":
+                                _render_pdf_page_card(
+                                    page_images[1] if len(page_images) > 1 else page_images[0],
+                                )
+                            else:
+                                _render_pdf_page_card(page_images[0])
         return True
 
     # 顺序调整：Full Solution 前移到“临床研究”和“规格”之前
