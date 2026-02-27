@@ -3200,6 +3200,29 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           height:auto;
           background: #fff;
         }
+        .st-key-fullsol_prev button,
+        .st-key-fullsol_next button{
+          width: 52px;
+          height: 52px;
+          border-radius: 999px !important;
+          border: 1px solid rgba(var(--accent1-rgb), 0.35) !important;
+          background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,251,255,0.92)) !important;
+          box-shadow: 0 8px 20px rgba(2,6,23,0.10);
+          color: var(--text) !important;
+          font-size: 1.35rem !important;
+          font-weight: 900 !important;
+          padding: 0 !important;
+        }
+        .st-key-fullsol_prev button:hover,
+        .st-key-fullsol_next button:hover{
+          transform: translateY(-1px);
+          box-shadow: 0 12px 24px rgba(2,6,23,0.14);
+        }
+        .st-key-fullsol_prev button p,
+        .st-key-fullsol_next button p{
+          margin: 0 !important;
+          line-height: 1 !important;
+        }
 
         /* Mobile / small screens */
         @media (max-width: 860px){
@@ -3273,6 +3296,12 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             font-size: 1rem;
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
+          }
+          .st-key-fullsol_prev button,
+          .st-key-fullsol_next button{
+            width: 48px;
+            height: 48px;
+            min-height: 48px;
           }
         }
         </style>
@@ -4617,24 +4646,22 @@ def main() -> None:
                     st.caption(
                         t(
                             "点击两侧小箭头翻页；单页/双页可在上方切换。",
-                            "Tap cute side arrows to flip pages; switch Single/Dual mode above.",
+                            "Tap side arrows to flip pages; switch Single/Dual mode above.",
                         )
                     )
                     nav_l, preview_col, nav_r = st.columns([1.05, 7.9, 1.05], gap="small")
                     with nav_l:
                         left_clicked = st.button(
-                            t("🫧 ◀", "🫧 ◀"),
-                            key=f"fullsol_prev_{selected_seq_no}_{ui_lang}",
+                            t("‹", "‹"),
+                            key="fullsol_prev",
                             use_container_width=True,
                         )
-                        st.caption(t("上一页", "Prev"))
                     with nav_r:
                         right_clicked = st.button(
-                            t("▶ 🫧", "▶ 🫧"),
-                            key=f"fullsol_next_{selected_seq_no}_{ui_lang}",
+                            t("›", "›"),
+                            key="fullsol_next",
                             use_container_width=True,
                         )
-                        st.caption(t("下一页", "Next"))
 
                     current_side = str(st.session_state.get(page_state_key, "left"))
                     if left_clicked:
