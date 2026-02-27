@@ -4461,6 +4461,160 @@ def main() -> None:
     overview_name = str(overview_info.get("name", "")).strip()
     overview_formula = str(overview_info.get("core_formula", "")).strip()
 
+    def _render_full_solution_section() -> bool:
+        with st.container(border=True):
+            st.markdown(f"### {t('完整解决方案', 'Full Solution')}")
+            if ui_lang != "EN" and (not solutions_pptx_cn or not solutions_pptx_cn.exists()):
+                st.info(
+                    t(
+                        "未找到解决方案 PPT：\n"
+                        "- 请将 PPT 放到 `Design/Final/`\n"
+                        "- 或设置环境变量 `DESIGN_SOLUTIONS_PPTX` 指向 PPT 路径",
+                        "Solutions PPT not found:\n"
+                        "- Put the PPTX into `Design/Final/`\n"
+                        "- Or set env var `DESIGN_SOLUTIONS_PPTX` to a local path",
+                    )
+                )
+            elif ui_lang != "EN" and not ppt_solution:
+                st.warning(
+                    t(
+                        "该应用场景未匹配到 PPT 解决方案内容（请确认名称一致或更新映射）。",
+                        "No matching solution found in the PPT deck (please verify names or update the mapping).",
+                    )
+                )
+            else:
+                pdf_path = resolve_solutions_pdf_path(ui_lang)
+                if not pdf_path:
+                    st.caption(
+                        t(
+                            "未找到解决方案 PDF（可将 PDF 放到 `Design/Final/`，或设置环境变量 `DESIGN_SOLUTIONS_PDF` 指向 PDF 路径）。",
+                            "Solutions PDF not found (put it into `Design/Final/`, or set env var `DESIGN_SOLUTIONS_PDF` / `DESIGN_SOLUTIONS_PDF_EN`).",
+                        )
+                    )
+                else:
+                    try:
+                        pdf_stat = pdf_path.stat()
+                        pdf_cache_buster = pdf_stat.st_mtime
+                    except Exception:
+                        pdf_cache_buster = None
+
+                    if ui_lang == "EN":
+                        cn_slide_no = selected_cn_slide_no or (
+                            int(ppt_solution.get("slide_no", 0)) if ppt_solution else 0  # type: ignore[arg-type]
+                        )
+                        render_slide_no = selected_en_pdf_page
+                        if not render_slide_no and selected_seq_no and len(pdf_starts_en) >= selected_seq_no:
+                            render_slide_no = int(pdf_starts_en[selected_seq_no - 1][0])
+                        if not render_slide_no and cn_slide_no:
+                            render_slide_no = en_pdf_page_by_cn.get(cn_slide_no, 0)
+                        if not render_slide_no:
+                            # Fallback for exceptional cases where EN PDF starts are unavailable.
+                            render_slide_no = selected_en_slide_no or (
+                                en_slide_by_cn.get(cn_slide_no, cn_slide_no) if cn_slide_no else 0
+                            )
+                        if not render_slide_no:
+                            st.warning(
+                                "No matching English solution page was found for this scenario in the PDF."
+                            )
+                            return False
+                    else:
+                        cn_slide_no = selected_cn_slide_no or int(ppt_solution.get("slide_no", 1))  # type: ignore[arg-type]
+                        render_slide_no = cn_slide_no
+
+                    render_scale = 2.0
+                    tool1, tool2, tool3 = st.columns([4, 1, 2])
+                    with tool1:
+                        view_icon = st.segmented_control(
+                            t("预览页", "View"),
+                            ["←", "⧉", "→"],
+                            default="⧉",
+                            label_visibility="collapsed",
+                            width="content",
+                        )
+                    with tool2:
+                        with st.popover(t("显示设置", "View settings"), icon=":material/tune:"):
+                            render_scale = st.slider(
+                                t("清晰度", "Quality"),
+                                min_value=1.0,
+                                max_value=3.0,
+                                value=2.0,
+                                step=0.5,
+                            )
+
+                    page1 = max(1, render_slide_no)
+                    page2 = max(1, render_slide_no + 1)
+
+                    # 下载：始终提供当前 2 页的 PDF
+                    solution_title = str(match_key or sub)
+                    if ui_lang == "EN":
+                        solution_title = (
+                            scenario_title_en.get(sub, "").strip()
+                            or str(overview_block.get("title", "")).strip()
+                            or solution_title
+                        )
+                    safe_title = _safe_filename_component(solution_title)
+                    solution_index = selected_seq_no or max(1, (cn_slide_no + 1) // 2)
+                    solution_filename = f"{solution_index:02d}-{safe_title}.pdf"
+                    solution_pdf_bytes = build_solution_pdf_bytes(
+                        str(pdf_path),
+                        page1,
+                        page2,
+                        pdf_cache_buster,
+                    )
+                    with tool3:
+                        if solution_pdf_bytes:
+                            st.download_button(
+                                t("下载 2 页 PDF", "Download 2-page PDF"),
+                                data=solution_pdf_bytes,
+                                file_name=solution_filename,
+                                mime="application/pdf",
+                                type="primary",
+                                use_container_width=True,
+                            )
+                        else:
+                            st.caption(t("（PDF 生成失败：请确认已安装 `pypdf`）", "(PDF build failed: please ensure `pypdf` is installed.)"))
+
+                    with st.spinner(t("正在加载页面...", "Loading pages...")):
+                        page_images = render_pdf_pages_png(
+                            str(pdf_path),
+                            (page1, page2),
+                            render_scale,
+                            pdf_cache_buster,
+                        )
+
+                    if not page_images:
+                        st.warning(
+                            t(
+                                "页面渲染失败：\n"
+                                "- 请确认已安装依赖 `pymupdf`（重新运行 `run_app.command` 会自动安装）\n"
+                                "- 或检查 PDF 文件是否完整/可打开",
+                                "Render failed:\n"
+                                "- Ensure `pymupdf` is installed (re-run `run_app.command` to auto-install)\n"
+                                "- Or verify the PDF file is valid and can be opened",
+                            )
+                        )
+                    else:
+                        icon = str(view_icon or "⧉")
+                        vm = "双页对照" if icon == "⧉" else ("第二页" if icon == "→" else "第一页")
+
+                    if page_images and vm == "双页对照":
+                        c1, c2 = st.columns(2, gap="large")
+                        with c1:
+                            _render_pdf_page_card(page_images[0])
+                        with c2:
+                            _render_pdf_page_card(page_images[1] if len(page_images) > 1 else page_images[0])
+                    elif page_images and vm == "第二页":
+                        _render_pdf_page_card(
+                            page_images[1] if len(page_images) > 1 else page_images[0],
+                        )
+                    elif page_images:
+                        _render_pdf_page_card(page_images[0])
+        return True
+
+    # 顺序调整：Full Solution 前移到“临床研究”和“规格”之前
+    if not _render_full_solution_section():
+        return
+
     trial_lines = [str(x).strip() for x in overview_block.get("trials", []) if str(x).strip()]  # type: ignore[arg-type]
     trial_entries = _parse_trial_entries(trial_lines)
     if not trial_entries and isinstance(ppt_solution, dict):
@@ -4622,154 +4776,6 @@ def main() -> None:
                     "The actual formulation can be customized according to customer requirements.",
                 )
             )
-
-    with st.container(border=True):
-        st.markdown(f"### {t('完整解决方案', 'Full Solution')}")
-        if ui_lang != "EN" and (not solutions_pptx_cn or not solutions_pptx_cn.exists()):
-            st.info(
-                t(
-                    "未找到解决方案 PPT：\n"
-                    "- 请将 PPT 放到 `Design/Final/`\n"
-                    "- 或设置环境变量 `DESIGN_SOLUTIONS_PPTX` 指向 PPT 路径",
-                    "Solutions PPT not found:\n"
-                    "- Put the PPTX into `Design/Final/`\n"
-                    "- Or set env var `DESIGN_SOLUTIONS_PPTX` to a local path",
-                )
-            )
-        elif ui_lang != "EN" and not ppt_solution:
-            st.warning(
-                t(
-                    "该应用场景未匹配到 PPT 解决方案内容（请确认名称一致或更新映射）。",
-                    "No matching solution found in the PPT deck (please verify names or update the mapping).",
-                )
-            )
-        else:
-            pdf_path = resolve_solutions_pdf_path(ui_lang)
-            if not pdf_path:
-                st.caption(
-                    t(
-                        "未找到解决方案 PDF（可将 PDF 放到 `Design/Final/`，或设置环境变量 `DESIGN_SOLUTIONS_PDF` 指向 PDF 路径）。",
-                        "Solutions PDF not found (put it into `Design/Final/`, or set env var `DESIGN_SOLUTIONS_PDF` / `DESIGN_SOLUTIONS_PDF_EN`).",
-                    )
-                )
-            else:
-                try:
-                    pdf_stat = pdf_path.stat()
-                    pdf_cache_buster = pdf_stat.st_mtime
-                except Exception:
-                    pdf_cache_buster = None
-
-                if ui_lang == "EN":
-                    cn_slide_no = selected_cn_slide_no or (
-                        int(ppt_solution.get("slide_no", 0)) if ppt_solution else 0  # type: ignore[arg-type]
-                    )
-                    render_slide_no = selected_en_pdf_page
-                    if not render_slide_no and selected_seq_no and len(pdf_starts_en) >= selected_seq_no:
-                        render_slide_no = int(pdf_starts_en[selected_seq_no - 1][0])
-                    if not render_slide_no and cn_slide_no:
-                        render_slide_no = en_pdf_page_by_cn.get(cn_slide_no, 0)
-                    if not render_slide_no:
-                        # Fallback for exceptional cases where EN PDF starts are unavailable.
-                        render_slide_no = selected_en_slide_no or (
-                            en_slide_by_cn.get(cn_slide_no, cn_slide_no) if cn_slide_no else 0
-                        )
-                    if not render_slide_no:
-                        st.warning(
-                            "No matching English solution page was found for this scenario in the PDF."
-                        )
-                        return
-                else:
-                    cn_slide_no = selected_cn_slide_no or int(ppt_solution.get("slide_no", 1))  # type: ignore[arg-type]
-                    render_slide_no = cn_slide_no
-
-                render_scale = 2.0
-                tool1, tool2, tool3 = st.columns([4, 1, 2])
-                with tool1:
-                    view_icon = st.segmented_control(
-                        t("预览页", "View"),
-                        ["←", "⧉", "→"],
-                        default="⧉",
-                        label_visibility="collapsed",
-                        width="content",
-                    )
-                with tool2:
-                    with st.popover(t("显示设置", "View settings"), icon=":material/tune:"):
-                        render_scale = st.slider(
-                            t("清晰度", "Quality"),
-                            min_value=1.0,
-                            max_value=3.0,
-                            value=2.0,
-                            step=0.5,
-                        )
-
-                page1 = max(1, render_slide_no)
-                page2 = max(1, render_slide_no + 1)
-
-                # 下载：始终提供当前 2 页的 PDF
-                solution_title = str(match_key or sub)
-                if ui_lang == "EN":
-                    solution_title = (
-                        scenario_title_en.get(sub, "").strip()
-                        or str(overview_block.get("title", "")).strip()
-                        or solution_title
-                    )
-                safe_title = _safe_filename_component(solution_title)
-                solution_index = selected_seq_no or max(1, (cn_slide_no + 1) // 2)
-                solution_filename = f"{solution_index:02d}-{safe_title}.pdf"
-                solution_pdf_bytes = build_solution_pdf_bytes(
-                    str(pdf_path),
-                    page1,
-                    page2,
-                    pdf_cache_buster,
-                )
-                with tool3:
-                    if solution_pdf_bytes:
-                        st.download_button(
-                            t("下载 2 页 PDF", "Download 2-page PDF"),
-                            data=solution_pdf_bytes,
-                            file_name=solution_filename,
-                            mime="application/pdf",
-                            type="primary",
-                            use_container_width=True,
-                        )
-                    else:
-                        st.caption(t("（PDF 生成失败：请确认已安装 `pypdf`）", "(PDF build failed: please ensure `pypdf` is installed.)"))
-
-                with st.spinner(t("正在加载页面...", "Loading pages...")):
-                    page_images = render_pdf_pages_png(
-                        str(pdf_path),
-                        (page1, page2),
-                        render_scale,
-                        pdf_cache_buster,
-                    )
-
-                if not page_images:
-                    st.warning(
-                        t(
-                            "页面渲染失败：\n"
-                            "- 请确认已安装依赖 `pymupdf`（重新运行 `run_app.command` 会自动安装）\n"
-                            "- 或检查 PDF 文件是否完整/可打开",
-                            "Render failed:\n"
-                            "- Ensure `pymupdf` is installed (re-run `run_app.command` to auto-install)\n"
-                            "- Or verify the PDF file is valid and can be opened",
-                        )
-                    )
-                else:
-                    icon = str(view_icon or "⧉")
-                    vm = "双页对照" if icon == "⧉" else ("第二页" if icon == "→" else "第一页")
-
-                if page_images and vm == "双页对照":
-                    c1, c2 = st.columns(2, gap="large")
-                    with c1:
-                        _render_pdf_page_card(page_images[0])
-                    with c2:
-                        _render_pdf_page_card(page_images[1] if len(page_images) > 1 else page_images[0])
-                elif page_images and vm == "第二页":
-                    _render_pdf_page_card(
-                        page_images[1] if len(page_images) > 1 else page_images[0],
-                    )
-                elif page_images:
-                    _render_pdf_page_card(page_images[0])
 
     with st.container(border=True):
         st.subheader(t("核心配方", "Core Formula"))
