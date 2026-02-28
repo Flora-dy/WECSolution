@@ -4842,22 +4842,24 @@ def main() -> None:
             st.subheader(t("规格", "Specifications"))
             clinical_label = t("临床菌配方", "Clinical Strain Formula")
             excipient_label = t("功能性辅料", "Functional Excipients")
+            dosage_form_label = t("剂型", "Dosage form")
             capsule_label = t("胶囊", "Capsule")
+            granule_label = t("颗粒剂 / 粉剂", "Granules / Powder Formulation")
             sep = "：" if ui_lang == "CN" else ":"
 
             clinical_bases: List[str] = []
-            clinical_doses: List[str] = []
             for spec in capsule_specs:
                 base, dose = _parse_capsule_clinical(spec.get("clinical", ""))
                 if base:
                     clinical_bases.append(base)
-                if dose:
-                    clinical_doses.append(dose)
 
             base_unique = [b for b in dict.fromkeys(clinical_bases) if b]
-            dose_unique = [d for d in dict.fromkeys(clinical_doses) if d]
             if len(base_unique) == 1:
-                st.markdown(f"**{clinical_label}**{sep} `{base_unique[0]}`")
+                clinical_value = base_unique[0]
+            else:
+                clinical_value = " / ".join(base_unique[:2]) if base_unique else ""
+            if clinical_value:
+                st.markdown(f"**{clinical_label}**{sep} `{clinical_value}`")
 
             def _extract_functional_exc_names(raw_text: str) -> List[str]:
                 exc_items_raw = _split_capsule_excipients(str(raw_text or "").strip())
@@ -4875,52 +4877,40 @@ def main() -> None:
                     out.append(name_only)
                 return out
 
-            fallback_240_exc_names: List[str] = []
-            for _spec in capsule_specs[:3]:
-                _label = str(_spec.get("spec", "")).strip()
-                _m = re.search(r"(?i)(?:Capsule|胶囊)\s*(?P<dose>\d+\s*B)\b", _label)
-                _dose_key = _m.group("dose").replace(" ", "").upper() if _m else ""
-                if _dose_key == "240B":
-                    fallback_240_exc_names = _extract_functional_exc_names(str(_spec.get("excipients", "")))
+            # 功能性辅料以 120B 为基准展示；若缺失，则回退到首个可用规格。
+            exc_120_names: List[str] = []
+            for _spec in capsule_specs:
+                _label = str(_spec.get("spec", ""))
+                if re.search(r"(?i)\b120\s*B\b", _label):
+                    exc_120_names = _extract_functional_exc_names(str(_spec.get("excipients", "")))
                     break
 
-            cards: List[str] = []
-            for _i, spec in enumerate(capsule_specs[:3]):
-                spec_label = str(spec.get("spec", "")).strip()
-                dose_key = ""
+            if not exc_120_names:
+                for _spec in capsule_specs:
+                    exc_120_names = _extract_functional_exc_names(str(_spec.get("excipients", "")))
+                    if exc_120_names:
+                        break
 
-                m = re.search(r"(?i)(?:Capsule|胶囊)\s*(?P<dose>\d+\s*B)\b", spec_label)
-                if m:
-                    dose_key = m.group("dose").replace(" ", "").upper()
-                    dose = html.escape(dose_key)
-                    title_html = (
-                        "<div class='spec-title'>"
-                        + f"{html.escape(capsule_label)} "
-                        + f"<span style='color: var(--accent2);'>{dose}</span>"
-                        + "</div>"
-                    )
-                else:
-                    title_html = f"<div class='spec-title'>{html.escape(spec_label)}</div>"
+            exc_text = (
+                ("、".join(exc_120_names) if ui_lang == "CN" else ", ".join(exc_120_names))
+                if exc_120_names
+                else "—"
+            )
+            st.markdown(f"**{excipient_label}**{sep} {exc_text}")
 
-                exc_names = _extract_functional_exc_names(str(spec.get("excipients", "")))
-                # 业务要求：480B 若无可展示功能性辅料，则复用 240B 展示内容。
-                if not exc_names and dose_key == "480B" and fallback_240_exc_names:
-                    exc_names = list(fallback_240_exc_names)
+            dosage_forms = t("胶囊 / 颗粒剂 / 粉剂", "Capsules / Granules / Powder Formulation")
+            st.markdown(f"**{dosage_form_label}**{sep} {dosage_forms}")
 
-                if exc_names:
-                    exc_html = "".join(f"<div>• {html.escape(n)}</div>" for n in exc_names)
-                else:
-                    exc_html = "<div>—</div>"
-
-                body = "<div class='spec-box'>" + title_html
-                body += f"<div class='spec-meta'>{html.escape(excipient_label)}</div>"
-                body += "<div style='font-size:0.92rem; line-height:1.45'>" + exc_html + "</div>"
-                body += "</div>"
-                cards.append(body)
-
-            if cards:
-                grid_html = "<div class='spec-grid'>" + "".join(f"<div>{c}</div>" for c in cards) + "</div>"
-                st.markdown(grid_html, unsafe_allow_html=True)
+            checked = "[☑️]"
+            joiner = "， " if ui_lang == "CN" else ", "
+            capsule_items = joiner.join(
+                [f"{checked} 120B", f"{checked} 240B", f"{checked} 480B"]
+            )
+            granule_items = joiner.join(
+                [f"{checked} 120B", f"{checked} 300B", f"{checked} 1000B"]
+            )
+            st.markdown(f"**{capsule_label}**{sep} {capsule_items}")
+            st.markdown(f"**{granule_label}**{sep} {granule_items}")
 
             st.caption(
                 t(
