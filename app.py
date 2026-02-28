@@ -4952,8 +4952,12 @@ def main() -> None:
             clinical_bases: List[str] = []
             for spec in capsule_specs:
                 base, dose = _parse_capsule_clinical(spec.get("clinical", ""))
-                if base:
-                    clinical_bases.append(base)
+                candidate = base
+                # 某些来源会是“Clinical Strain Formula: LRa05+...”，此时取冒号后正文。
+                if dose and re.search(r"(clinical|临床菌|formula|blend|配方)", base, flags=re.IGNORECASE):
+                    candidate = dose
+                if candidate:
+                    clinical_bases.append(candidate)
 
             base_unique = [b for b in dict.fromkeys(clinical_bases) if b]
             if len(base_unique) == 1:
@@ -4965,11 +4969,27 @@ def main() -> None:
                 clinical_product_name = _ensure_wecpro_registered(
                     re.split(r"[:：]", overview_formula, maxsplit=1)[0].strip()
                 )
-            clinical_display_html = (
+            product_html = (
                 _format_tm_sup_html(clinical_product_name, add_if_missing=True)
                 if clinical_product_name
-                else html.escape(clinical_value)
+                else ""
             )
+            clinical_codes = _extract_strain_codes(clinical_value)
+            core_codes = _extract_strain_codes(overview_formula)
+            extra_codes = [c for c in clinical_codes if c not in set(core_codes)]
+            if product_html:
+                if extra_codes:
+                    clinical_display_html = (
+                        f"{product_html} + <span class='formula-code'>{html.escape('+'.join(extra_codes))}</span>"
+                    )
+                elif clinical_codes:
+                    clinical_display_html = (
+                        f"{product_html} + <span class='formula-code'>{html.escape('+'.join(clinical_codes))}</span>"
+                    )
+                else:
+                    clinical_display_html = product_html
+            else:
+                clinical_display_html = html.escape(clinical_value)
 
             def _extract_functional_exc_names(raw_text: str) -> List[str]:
                 exc_items_raw = _split_capsule_excipients(str(raw_text or "").strip())
