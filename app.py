@@ -2721,6 +2721,80 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           font-size: 0.82rem;
           margin-top: 10px;
         }
+        .spec-list{
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          margin-top: 6px;
+        }
+        .spec-line{
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 8px;
+          line-height: 1.45;
+        }
+        .spec-k{
+          color: var(--text);
+          font-weight: 860;
+          letter-spacing: -0.005em;
+        }
+        .spec-v{
+          color: rgba(15,23,42,0.86);
+          font-weight: 660;
+        }
+        .spec-v-formula{
+          display: inline-flex;
+          align-items: center;
+          padding: 4px 12px;
+          border-radius: 999px;
+          border: 1px solid rgba(var(--accent1-rgb),0.22);
+          background: linear-gradient(
+            90deg,
+            rgba(var(--accent1-rgb),0.10),
+            rgba(var(--accent2-rgb),0.12)
+          );
+          color: var(--text);
+          font-weight: 820;
+          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+          letter-spacing: 0.01em;
+        }
+        .spec-checklist{
+          display: inline-flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .spec-check-item{
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 4px 10px 4px 7px;
+          border-radius: 999px;
+          border: 1px solid rgba(var(--accent2-rgb),0.28);
+          background: linear-gradient(
+            90deg,
+            rgba(var(--accent1-rgb),0.08),
+            rgba(var(--accent2-rgb),0.10)
+          );
+          color: var(--text);
+          font-weight: 760;
+          letter-spacing: 0.005em;
+        }
+        .spec-check-dot{
+          width: 18px;
+          height: 18px;
+          border-radius: 999px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, var(--accent1), var(--accent2));
+          color: #fff;
+          font-size: 0.74rem;
+          font-weight: 920;
+          box-shadow: 0 3px 8px rgba(var(--accent2-rgb),0.26);
+          line-height: 1;
+        }
 
         /* Generic tiles (for WecLac / Formula cards) */
         .tile-wrap{
@@ -4858,8 +4932,6 @@ def main() -> None:
                 clinical_value = base_unique[0]
             else:
                 clinical_value = " / ".join(base_unique[:2]) if base_unique else ""
-            if clinical_value:
-                st.markdown(f"**{clinical_label}**{sep} `{clinical_value}`")
 
             def _extract_functional_exc_names(raw_text: str) -> List[str]:
                 exc_items_raw = _split_capsule_excipients(str(raw_text or "").strip())
@@ -4896,21 +4968,58 @@ def main() -> None:
                 if exc_120_names
                 else "—"
             )
-            st.markdown(f"**{excipient_label}**{sep} {exc_text}")
 
             dosage_forms = t("胶囊 / 颗粒剂 / 粉剂", "Capsules / Granules / Powder Formulation")
-            st.markdown(f"**{dosage_form_label}**{sep} {dosage_forms}")
+            def _check_item_html(dose: str) -> str:
+                return (
+                    "<span class='spec-check-item'>"
+                    "<span class='spec-check-dot'>✓</span>"
+                    f"<span>{html.escape(dose)}</span>"
+                    "</span>"
+                )
 
-            checked = "[☑️]"
-            joiner = "， " if ui_lang == "CN" else ", "
-            capsule_items = joiner.join(
-                [f"{checked} 120B", f"{checked} 240B", f"{checked} 480B"]
+            lines: List[str] = []
+            if clinical_value:
+                lines.append(
+                    "<div class='spec-line'>"
+                    f"<span class='spec-k'>{html.escape(clinical_label)}{html.escape(sep)}</span>"
+                    f"<span class='spec-v-formula'>{html.escape(clinical_value)}</span>"
+                    "</div>"
+                )
+
+            lines.append(
+                "<div class='spec-line'>"
+                f"<span class='spec-k'>{html.escape(excipient_label)}{html.escape(sep)}</span>"
+                f"<span class='spec-v'>{html.escape(exc_text)}</span>"
+                "</div>"
             )
-            granule_items = joiner.join(
-                [f"{checked} 120B", f"{checked} 300B", f"{checked} 1000B"]
+            lines.append(
+                "<div class='spec-line'>"
+                f"<span class='spec-k'>{html.escape(dosage_form_label)}{html.escape(sep)}</span>"
+                f"<span class='spec-v'>{html.escape(dosage_forms)}</span>"
+                "</div>"
             )
-            st.markdown(f"**{capsule_label}**{sep} {capsule_items}")
-            st.markdown(f"**{granule_label}**{sep} {granule_items}")
+
+            capsule_checks = "".join(
+                [_check_item_html("120B"), _check_item_html("240B"), _check_item_html("480B")]
+            )
+            granule_checks = "".join(
+                [_check_item_html("120B"), _check_item_html("300B"), _check_item_html("1000B")]
+            )
+            lines.append(
+                "<div class='spec-line'>"
+                f"<span class='spec-k'>{html.escape(capsule_label)}{html.escape(sep)}</span>"
+                f"<span class='spec-checklist'>{capsule_checks}</span>"
+                "</div>"
+            )
+            lines.append(
+                "<div class='spec-line'>"
+                f"<span class='spec-k'>{html.escape(granule_label)}{html.escape(sep)}</span>"
+                f"<span class='spec-checklist'>{granule_checks}</span>"
+                "</div>"
+            )
+
+            st.markdown("<div class='spec-list'>" + "".join(lines) + "</div>", unsafe_allow_html=True)
 
             st.caption(
                 t(
