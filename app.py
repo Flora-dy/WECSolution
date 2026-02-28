@@ -4859,13 +4859,40 @@ def main() -> None:
             if len(base_unique) == 1:
                 st.markdown(f"**{clinical_label}**{sep} `{base_unique[0]}`")
 
+            def _extract_functional_exc_names(raw_text: str) -> List[str]:
+                exc_items_raw = _split_capsule_excipients(str(raw_text or "").strip())
+                out: List[str] = []
+                seen: set[str] = set()
+                for raw_item in exc_items_raw:
+                    formatted = _strip_mass_units(_format_capsule_excipient_item(raw_item, ui_lang))
+                    name_only = _excipient_name_only(formatted)
+                    if not name_only or _is_filler_excipient(name_only, ui_lang):
+                        continue
+                    key = name_only.lower()
+                    if key in seen:
+                        continue
+                    seen.add(key)
+                    out.append(name_only)
+                return out
+
+            fallback_240_exc_names: List[str] = []
+            for _spec in capsule_specs[:3]:
+                _label = str(_spec.get("spec", "")).strip()
+                _m = re.search(r"(?i)(?:Capsule|胶囊)\s*(?P<dose>\d+\s*B)\b", _label)
+                _dose_key = _m.group("dose").replace(" ", "").upper() if _m else ""
+                if _dose_key == "240B":
+                    fallback_240_exc_names = _extract_functional_exc_names(str(_spec.get("excipients", "")))
+                    break
+
             cards: List[str] = []
             for _i, spec in enumerate(capsule_specs[:3]):
                 spec_label = str(spec.get("spec", "")).strip()
+                dose_key = ""
 
                 m = re.search(r"(?i)(?:Capsule|胶囊)\s*(?P<dose>\d+\s*B)\b", spec_label)
                 if m:
-                    dose = html.escape(m.group("dose").replace(" ", ""))
+                    dose_key = m.group("dose").replace(" ", "").upper()
+                    dose = html.escape(dose_key)
                     title_html = (
                         "<div class='spec-title'>"
                         + f"{html.escape(capsule_label)} "
@@ -4875,19 +4902,10 @@ def main() -> None:
                 else:
                     title_html = f"<div class='spec-title'>{html.escape(spec_label)}</div>"
 
-                exc_items_raw = _split_capsule_excipients(str(spec.get("excipients", "")).strip())
-                exc_names: List[str] = []
-                seen_exc: set[str] = set()
-                for raw_item in exc_items_raw:
-                    formatted = _strip_mass_units(_format_capsule_excipient_item(raw_item, ui_lang))
-                    name_only = _excipient_name_only(formatted)
-                    if not name_only or _is_filler_excipient(name_only, ui_lang):
-                        continue
-                    key = name_only.lower()
-                    if key in seen_exc:
-                        continue
-                    seen_exc.add(key)
-                    exc_names.append(name_only)
+                exc_names = _extract_functional_exc_names(str(spec.get("excipients", "")))
+                # 业务要求：480B 若无可展示功能性辅料，则复用 240B 展示内容。
+                if not exc_names and dose_key == "480B" and fallback_240_exc_names:
+                    exc_names = list(fallback_240_exc_names)
 
                 if exc_names:
                     exc_html = "".join(f"<div>• {html.escape(n)}</div>" for n in exc_names)
