@@ -1705,6 +1705,10 @@ def _is_filler_excipient(name: str, lang: str) -> bool:
         fillers = {
             "gum arabic",
             "arabic gum",
+            "inulin",
+            "fructooligosaccharides",
+            "fructo oligosaccharides",
+            "fos",
             "maltodextrin",
             "malto dextrin",
             "potato starch",
@@ -1713,7 +1717,17 @@ def _is_filler_excipient(name: str, lang: str) -> bool:
             "magnesium stearate",
         }
         return key in fillers
-    fillers_cn = ("阿拉伯胶", "马铃薯淀粉", "二氧化硅", "硬脂酸镁", "淀粉", "麦芽糊精")
+    fillers_cn = (
+        "阿拉伯胶",
+        "马铃薯淀粉",
+        "二氧化硅",
+        "硬脂酸镁",
+        "淀粉",
+        "麦芽糊精",
+        "菊粉",
+        "低聚果糖",
+        "果寡糖",
+    )
     return any(f in s for f in fillers_cn)
 
 
@@ -1816,6 +1830,19 @@ def _ensure_wecpro_registered(text: str) -> str:
     if not s:
         return ""
     return re.sub(r"WecPro(?!®)", "WecPro®", s)
+
+
+def _format_tm_sup_html(text: str, add_if_missing: bool = False) -> str:
+    """将商品名中的 TM/™ 渲染为上标；可选在缺失时补 TM。"""
+    s = (text or "").strip()
+    if not s:
+        return ""
+    escaped = html.escape(s)
+    escaped = re.sub(r"(?i)\bTM\b", "<sup>TM</sup>", escaped)
+    escaped = escaped.replace("™", "<sup>TM</sup>")
+    if add_if_missing and "<sup>TM</sup>" not in escaped:
+        escaped = f"{escaped}<sup>TM</sup>"
+    return escaped
 
 
 def _extract_strain_codes(text: str) -> List[str]:
@@ -4592,6 +4619,7 @@ def main() -> None:
     overview_info = overview.get(cat, {})
     overview_name = str(overview_info.get("name", "")).strip()
     overview_formula = str(overview_info.get("core_formula", "")).strip()
+    overview_display_name = _ensure_wecpro_registered(overview_name)
 
     def _render_full_solution_section() -> bool:
         with st.container(border=True):
@@ -4790,7 +4818,7 @@ def main() -> None:
 
     with st.container(border=True):
         st.subheader(t("核心配方", "Core Formula"))
-        display_name = _ensure_wecpro_registered(overview_name)
+        display_name = overview_display_name
         formula_html = _colorize_solution_formula_html(overview_formula, ui_lang)
         if overview_name and overview_formula:
             sep = "：" if ui_lang == "CN" else ":"
@@ -4932,6 +4960,16 @@ def main() -> None:
                 clinical_value = base_unique[0]
             else:
                 clinical_value = " / ".join(base_unique[:2]) if base_unique else ""
+            clinical_product_name = overview_display_name
+            if not clinical_product_name and overview_formula:
+                clinical_product_name = _ensure_wecpro_registered(
+                    re.split(r"[:：]", overview_formula, maxsplit=1)[0].strip()
+                )
+            clinical_display_html = (
+                _format_tm_sup_html(clinical_product_name, add_if_missing=True)
+                if clinical_product_name
+                else html.escape(clinical_value)
+            )
 
             def _extract_functional_exc_names(raw_text: str) -> List[str]:
                 exc_items_raw = _split_capsule_excipients(str(raw_text or "").strip())
@@ -4979,11 +5017,11 @@ def main() -> None:
                 )
 
             lines: List[str] = []
-            if clinical_value:
+            if clinical_display_html:
                 lines.append(
                     "<div class='spec-line'>"
                     f"<span class='spec-k'>{html.escape(clinical_label)}{html.escape(sep)}</span>"
-                    f"<span class='spec-v-formula'>{html.escape(clinical_value)}</span>"
+                    f"<span class='spec-v-formula'>{clinical_display_html}</span>"
                     "</div>"
                 )
 
