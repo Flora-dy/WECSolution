@@ -1716,7 +1716,16 @@ def _is_filler_excipient(name: str, lang: str) -> bool:
             "silicon dioxide",
             "magnesium stearate",
         }
-        return key in fillers
+        if key in fillers:
+            return True
+        # Handle combined labels like "Fructooligosaccharides (FOS)".
+        if re.search(r"\binulin\b", key):
+            return True
+        if re.search(r"\bfos\b", key):
+            return True
+        if "fructooligosaccharides" in key or "fructo oligosaccharides" in key:
+            return True
+        return False
     fillers_cn = (
         "阿拉伯胶",
         "马铃薯淀粉",
@@ -5026,15 +5035,24 @@ def main() -> None:
                 out: List[str] = []
                 seen: set[str] = set()
                 for raw_item in exc_items_raw:
-                    formatted = _strip_mass_units(_format_capsule_excipient_item(raw_item, ui_lang))
-                    name_only = _excipient_name_only(formatted)
-                    if not name_only or _is_filler_excipient(name_only, ui_lang):
-                        continue
-                    key = name_only.lower()
-                    if key in seen:
-                        continue
-                    seen.add(key)
-                    out.append(name_only)
+                    # Split mixed segments like "FOS / Inulin + Cranberry Powder"
+                    parts = [
+                        p.strip()
+                        for p in re.split(r"(?:/|／|\+|＋|&|\band\b)", raw_item, flags=re.IGNORECASE)
+                        if p and p.strip()
+                    ]
+                    if not parts:
+                        parts = [raw_item]
+                    for part in parts:
+                        formatted = _strip_mass_units(_format_capsule_excipient_item(part, ui_lang))
+                        name_only = _excipient_name_only(formatted)
+                        if not name_only or _is_filler_excipient(name_only, ui_lang):
+                            continue
+                        key = name_only.lower()
+                        if key in seen:
+                            continue
+                        seen.add(key)
+                        out.append(name_only)
                 return out
 
             # 功能性辅料以 120B 为基准展示；若缺失，则回退到首个可用规格。
