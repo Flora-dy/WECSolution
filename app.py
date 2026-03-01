@@ -2643,6 +2643,41 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           background: rgba(255,255,255,0.75);
           font-weight: 600;
         }
+        .filter-title{
+          display:inline-flex;
+          align-items:center;
+          gap: 8px;
+          padding: 6px 12px;
+          border-radius: 999px;
+          border: 1px solid rgba(var(--accent1-rgb),0.30);
+          background:
+            linear-gradient(rgba(255,255,255,0.86), rgba(255,255,255,0.82)) padding-box,
+            linear-gradient(90deg, rgba(var(--accent1-rgb),0.16), rgba(var(--accent2-rgb),0.18)) border-box;
+          font-size: 1.03rem;
+          font-weight: 920;
+          letter-spacing: 0.005em;
+          color: var(--text);
+          margin-bottom: 8px;
+        }
+        .filter-dot{
+          width: 9px;
+          height: 9px;
+          border-radius: 999px;
+          background: linear-gradient(90deg, var(--accent1), var(--accent2));
+          box-shadow: 0 0 0 3px rgba(var(--accent1-rgb),0.14);
+        }
+        div[data-testid="stSelectbox"] [data-baseweb="select"]{
+          border-radius: 14px !important;
+          border: 1px solid rgba(var(--accent1-rgb),0.26) !important;
+          background: rgba(255,255,255,0.90) !important;
+          box-shadow: 0 8px 20px rgba(2,6,23,0.06);
+          min-height: 46px;
+        }
+        div[data-testid="stSelectbox"] [data-baseweb="select"] *{
+          font-size: 0.98rem !important;
+          font-weight: 650 !important;
+          color: var(--text) !important;
+        }
         .core-formula-line{
           font-size: 1.02rem;
           line-height: 1.72;
@@ -3292,7 +3327,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
             linear-gradient(rgba(255,255,255,0.86), rgba(255,255,255,0.82)) padding-box,
             linear-gradient(90deg, rgba(var(--accent1-rgb),0.18), rgba(var(--accent2-rgb),0.20)) border-box;
           color: var(--text);
-          font-weight: 860;
+          font-size: 0.88rem;
+          font-weight: 780;
           letter-spacing: 0.004em;
           white-space: nowrap;
         }
@@ -4629,17 +4665,37 @@ def main() -> None:
     with st.container(border=True):
         col1, col2 = st.columns([2, 3])
         with col1:
+            st.markdown(
+                "<div class='filter-title'>"
+                "<span class='filter-dot'></span>"
+                f"{html.escape(t('功能方向', 'Health Area'))}"
+                "</div>",
+                unsafe_allow_html=True,
+            )
             st.selectbox(
                 t("功能方向", "Health Area"),
                 available_main,
                 key="filter_cat",
                 on_change=reset_sub,
                 format_func=_format_cat,
+                label_visibility="collapsed",
             )
         with col2:
+            st.markdown(
+                "<div class='filter-title'>"
+                "<span class='filter-dot'></span>"
+                f"{html.escape(t('应用场景', 'Supported Application Areas'))}"
+                "</div>",
+                unsafe_allow_html=True,
+            )
             sub_options = formula_scenarios.get(st.session_state["filter_cat"], [])
             if not sub_options:
-                st.selectbox(t("应用场景", "Supported Application Areas"), [""], key="filter_sub")
+                st.selectbox(
+                    t("应用场景", "Supported Application Areas"),
+                    [""],
+                    key="filter_sub",
+                    label_visibility="collapsed",
+                )
             else:
                 if st.session_state.get("filter_sub") not in sub_options:
                     st.session_state["filter_sub"] = sub_options[0]
@@ -4676,6 +4732,7 @@ def main() -> None:
                     sub_options_sorted,
                     key="filter_sub",
                     format_func=_format_sub,
+                    label_visibility="collapsed",
                 )
 
         cat = _clean_ui_key(st.session_state.get("filter_cat", ""))
