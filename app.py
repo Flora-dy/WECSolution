@@ -2646,52 +2646,51 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
         .filter-title{
           display:flex;
           align-items:center;
-          gap: 10px;
-          padding: 10px 14px;
-          border-radius: 14px;
-          border: 1px solid rgba(var(--accent1-rgb),0.24);
-          background:
-            linear-gradient(140deg, rgba(255,255,255,0.96), rgba(255,255,255,0.88)) padding-box,
-            linear-gradient(90deg, rgba(var(--accent1-rgb),0.20), rgba(var(--accent2-rgb),0.18)) border-box;
-          box-shadow:
-            inset 0 1px 0 rgba(255,255,255,0.92),
-            0 8px 18px rgba(2,6,23,0.05);
-          font-size: 1.24rem;
+          gap: 8px;
+          padding: 0 0 0 2px;
+          border: 0;
+          background: transparent;
+          box-shadow: none;
+          font-size: 1.36rem;
           font-weight: 950;
           line-height: 1.14;
           letter-spacing: -0.012em;
           color: var(--text);
-          margin-bottom: 10px;
+          margin: 0 0 10px 0;
+        }
+        .filter-title::before{
+          content: "";
+          width: 4px;
+          height: 1.1em;
+          border-radius: 999px;
+          background: linear-gradient(180deg, var(--accent1), var(--accent2));
+          box-shadow: 0 0 0 3px rgba(var(--accent1-rgb),0.10);
         }
         .filter-dot{
-          width: 11px;
-          height: 11px;
-          border-radius: 999px;
-          background: linear-gradient(90deg, var(--accent1), var(--accent2));
-          box-shadow: 0 0 0 4px rgba(var(--accent1-rgb),0.15);
+          display: none;
         }
         div[data-testid="stSelectbox"] [data-baseweb="select"]{
           border-radius: 16px !important;
-          border: 1px solid rgba(var(--accent1-rgb),0.20) !important;
-          background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(250,252,255,0.92)) !important;
+          border: 1px solid rgba(148,163,184,0.34) !important;
+          background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(252,253,255,0.95)) !important;
           box-shadow:
-            inset 0 1px 0 rgba(255,255,255,0.92),
-            0 9px 18px rgba(2,6,23,0.05) !important;
+            inset 0 1px 0 rgba(255,255,255,0.96),
+            0 5px 12px rgba(2,6,23,0.045) !important;
           min-height: 50px;
           transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
         }
         div[data-testid="stSelectbox"] [data-baseweb="select"]:hover{
           border-color: rgba(var(--accent1-rgb),0.30) !important;
           box-shadow:
-            inset 0 1px 0 rgba(255,255,255,0.94),
-            0 11px 22px rgba(2,6,23,0.07) !important;
+            inset 0 1px 0 rgba(255,255,255,0.97),
+            0 7px 16px rgba(2,6,23,0.06) !important;
         }
         div[data-testid="stSelectbox"] [data-baseweb="select"]:focus-within{
           border-color: rgba(var(--accent1-rgb),0.36) !important;
           box-shadow:
-            0 0 0 3px rgba(var(--accent1-rgb),0.14),
-            inset 0 1px 0 rgba(255,255,255,0.94),
-            0 12px 24px rgba(2,6,23,0.08) !important;
+            0 0 0 2px rgba(var(--accent1-rgb),0.14),
+            inset 0 1px 0 rgba(255,255,255,0.97),
+            0 8px 18px rgba(2,6,23,0.07) !important;
         }
         div[data-testid="stSelectbox"] [data-baseweb="select"] *{
           font-size: 1.00rem !important;
@@ -3491,9 +3490,8 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           .hero-title{ font-size: 1.55rem; }
           .hero-desc{ font-size: 0.95rem; }
           .filter-title{
-            font-size: 1.05rem;
-            padding: 8px 11px;
-            border-radius: 12px;
+            font-size: 1.14rem;
+            padding: 0;
             margin-bottom: 8px;
           }
 
@@ -4693,7 +4691,6 @@ def main() -> None:
         with col1:
             st.markdown(
                 "<div class='filter-title'>"
-                "<span class='filter-dot'></span>"
                 f"{html.escape(t('功能方向', 'Health Area'))}"
                 "</div>",
                 unsafe_allow_html=True,
@@ -4709,7 +4706,6 @@ def main() -> None:
         with col2:
             st.markdown(
                 "<div class='filter-title'>"
-                "<span class='filter-dot'></span>"
                 f"{html.escape(t('应用场景', 'Supported Application Areas'))}"
                 "</div>",
                 unsafe_allow_html=True,
