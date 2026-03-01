@@ -3248,6 +3248,13 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           line-height: 1.2;
           color: var(--text);
         }
+        .f-title-row{
+          display:flex;
+          align-items:center;
+          flex-wrap: wrap;
+          gap: 8px 10px;
+          min-width: 0;
+        }
         .f-map{
           margin-top: 7px;
           display:flex;
@@ -3451,6 +3458,9 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           .f-sub{
             white-space: normal;
             max-width: none;
+          }
+          .f-title-row{
+            align-items: flex-start;
           }
           .v-grid{ grid-template-columns: 1fr; }
 
@@ -4266,9 +4276,8 @@ def _render_wecpro_formula_page() -> None:
             "<div class='f-left'>"
             "<div class='f-dot'></div>"
             "<div style='min-width:0'>"
+            "<div class='f-title-row'>"
             f"<div class='f-title'>{html.escape(direction_label)}</div>"
-            "<div class='f-map'>"
-            f"<span class='f-map-k'>{html.escape(t('对应配方', 'Mapped Core Formula'))}</span>"
             f"<span class='f-map-v'>{formula_names_html if formula_names_html else '—'}</span>"
             "</div>"
             "</div>"
