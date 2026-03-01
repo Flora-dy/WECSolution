@@ -4763,12 +4763,6 @@ def main() -> None:
 
         cat = _clean_ui_key(st.session_state.get("filter_cat", ""))
         sub = str(st.session_state.get("filter_sub", "")).strip() or (sub_options[0] if sub_options else "")
-        cat_label = _CATEGORY_LABELS_EN.get(cat, cat) if ui_lang == "EN" else cat
-        sub_label = scenario_title_en.get(sub, sub) if ui_lang == "EN" else sub
-        st.markdown(
-            f'<div class="pill">{html.escape(cat_label)} · {html.escape(sub_label)}</div>',
-            unsafe_allow_html=True,
-        )
 
     selected_bridge = scenario_bridge.get((cat, sub), {})
     match_key = (
