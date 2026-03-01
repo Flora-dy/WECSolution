@@ -2644,38 +2644,58 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           font-weight: 600;
         }
         .filter-title{
-          display:inline-flex;
+          display:flex;
           align-items:center;
-          gap: 8px;
-          padding: 6px 12px;
-          border-radius: 999px;
-          border: 1px solid rgba(var(--accent1-rgb),0.30);
+          gap: 10px;
+          padding: 10px 14px;
+          border-radius: 14px;
+          border: 1px solid rgba(var(--accent1-rgb),0.24);
           background:
-            linear-gradient(rgba(255,255,255,0.86), rgba(255,255,255,0.82)) padding-box,
-            linear-gradient(90deg, rgba(var(--accent1-rgb),0.16), rgba(var(--accent2-rgb),0.18)) border-box;
-          font-size: 1.03rem;
-          font-weight: 920;
-          letter-spacing: 0.005em;
+            linear-gradient(140deg, rgba(255,255,255,0.96), rgba(255,255,255,0.88)) padding-box,
+            linear-gradient(90deg, rgba(var(--accent1-rgb),0.20), rgba(var(--accent2-rgb),0.18)) border-box;
+          box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.92),
+            0 8px 18px rgba(2,6,23,0.05);
+          font-size: 1.24rem;
+          font-weight: 950;
+          line-height: 1.14;
+          letter-spacing: -0.012em;
           color: var(--text);
-          margin-bottom: 8px;
+          margin-bottom: 10px;
         }
         .filter-dot{
-          width: 9px;
-          height: 9px;
+          width: 11px;
+          height: 11px;
           border-radius: 999px;
           background: linear-gradient(90deg, var(--accent1), var(--accent2));
-          box-shadow: 0 0 0 3px rgba(var(--accent1-rgb),0.14);
+          box-shadow: 0 0 0 4px rgba(var(--accent1-rgb),0.15);
         }
         div[data-testid="stSelectbox"] [data-baseweb="select"]{
-          border-radius: 14px !important;
-          border: 1px solid rgba(var(--accent1-rgb),0.26) !important;
-          background: rgba(255,255,255,0.90) !important;
-          box-shadow: 0 8px 20px rgba(2,6,23,0.06);
-          min-height: 46px;
+          border-radius: 16px !important;
+          border: 1px solid rgba(var(--accent1-rgb),0.20) !important;
+          background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(250,252,255,0.92)) !important;
+          box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.92),
+            0 9px 18px rgba(2,6,23,0.05) !important;
+          min-height: 50px;
+          transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+        }
+        div[data-testid="stSelectbox"] [data-baseweb="select"]:hover{
+          border-color: rgba(var(--accent1-rgb),0.30) !important;
+          box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.94),
+            0 11px 22px rgba(2,6,23,0.07) !important;
+        }
+        div[data-testid="stSelectbox"] [data-baseweb="select"]:focus-within{
+          border-color: rgba(var(--accent1-rgb),0.36) !important;
+          box-shadow:
+            0 0 0 3px rgba(var(--accent1-rgb),0.14),
+            inset 0 1px 0 rgba(255,255,255,0.94),
+            0 12px 24px rgba(2,6,23,0.08) !important;
         }
         div[data-testid="stSelectbox"] [data-baseweb="select"] *{
-          font-size: 0.98rem !important;
-          font-weight: 650 !important;
+          font-size: 1.00rem !important;
+          font-weight: 700 !important;
           color: var(--text) !important;
         }
         .core-formula-line{
@@ -3470,6 +3490,12 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
 
           .hero-title{ font-size: 1.55rem; }
           .hero-desc{ font-size: 0.95rem; }
+          .filter-title{
+            font-size: 1.05rem;
+            padding: 8px 11px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+          }
 
           .spec-grid{ grid-template-columns: 1fr; }
           .tile-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
