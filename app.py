@@ -3248,6 +3248,53 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           line-height: 1.2;
           color: var(--text);
         }
+        .f-map{
+          margin-top: 7px;
+          display:flex;
+          align-items:flex-start;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .f-map-k{
+          display:inline-flex;
+          align-items:center;
+          padding: 2px 8px;
+          border-radius: 999px;
+          font-size: 0.74rem;
+          font-weight: 860;
+          letter-spacing: 0.02em;
+          color: rgba(15,23,42,0.65);
+          background: rgba(255,255,255,0.74);
+          border: 1px solid rgba(15,23,42,0.08);
+        }
+        .f-map-v{
+          display:inline-flex;
+          align-items:center;
+          flex-wrap: wrap;
+          gap: 8px;
+          min-width: 0;
+        }
+        .f-formula-chip{
+          display:inline-flex;
+          align-items:center;
+          justify-content:center;
+          padding: 5px 11px;
+          border-radius: 999px;
+          border: 1px solid rgba(var(--accent1-rgb),0.25);
+          background:
+            linear-gradient(rgba(255,255,255,0.86), rgba(255,255,255,0.82)) padding-box,
+            linear-gradient(90deg, rgba(var(--accent1-rgb),0.18), rgba(var(--accent2-rgb),0.20)) border-box;
+          color: var(--text);
+          font-weight: 860;
+          letter-spacing: 0.004em;
+          white-space: nowrap;
+        }
+        .f-formula-chip sup{
+          margin-left: 1px;
+          font-size: 0.64em;
+          color: var(--accent2);
+          font-weight: 920;
+        }
         .f-sub{
           margin-top: 4px;
           color: var(--muted);
@@ -4149,13 +4196,34 @@ def _render_wecpro_formula_page() -> None:
         row2 = _rgba(a2, 0.16)
 
         variants = _WECPRO_FORMULA_VARIANTS.get(direction, [])
+        formula_names: List[str] = []
         if variants:
-            product_badge = f"<span class='f-badge'>{html.escape('3个配方' if ui_lang=='CN' else '3 Formulas')}</span>"
+            for v in variants:
+                v_product = str((v.get("product", {}) or {}).get(ui_lang, "") or "").strip()
+                if not v_product:
+                    v_product = str((v.get("product", {}) or {}).get("CN", "") or "").strip()
+                v_product = _ensure_wecpro_registered(v_product)
+                if v_product and v_product not in formula_names:
+                    formula_names.append(v_product)
+        if not formula_names and product:
+            p_name = _ensure_wecpro_registered(product)
+            if p_name:
+                formula_names.append(p_name)
+
+        formula_names_html = "".join(
+            f"<span class='f-formula-chip'>{_format_tm_sup_html(name, add_if_missing=True)}</span>"
+            for name in formula_names
+        )
+        formula_count_badge = (
+            f"<span class='f-badge'>{len(formula_names)}{'个配方' if ui_lang == 'CN' else ' Formulas'}</span>"
+            if len(formula_names) > 1
+            else ""
+        )
+        if variants:
             benefit_html = html.escape(
                 "高端款 / 基础款 / 高活性益生菌酸奶款" if ui_lang == "CN" else "Premium / Base / Active Probiotic Yogurt"
             )
         else:
-            product_badge = f"<span class='f-badge'>{html.escape(product)}</span>" if product else ""
             benefit_html = html.escape(benefit_text) if benefit_text else "—"
 
         strains_html = "—"
@@ -4199,10 +4267,14 @@ def _render_wecpro_formula_page() -> None:
             "<div class='f-dot'></div>"
             "<div style='min-width:0'>"
             f"<div class='f-title'>{html.escape(direction_label)}</div>"
+            "<div class='f-map'>"
+            f"<span class='f-map-k'>{html.escape(t('对应配方', 'Mapped Core Formula'))}</span>"
+            f"<span class='f-map-v'>{formula_names_html if formula_names_html else '—'}</span>"
+            "</div>"
             "</div>"
             "</div>"
             "<div class='f-actions'>"
-            f"{product_badge}<span class='f-cta'>{html.escape(t('介绍', 'Details'))}</span>"
+            f"{formula_count_badge}<span class='f-cta'>{html.escape(t('介绍', 'Details'))}</span>"
             "</div>"
             "</div>"
             "</summary>"
