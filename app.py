@@ -4284,11 +4284,6 @@ def _render_wecpro_formula_page() -> None:
             f"<span class='f-formula-chip'>{_format_tm_sup_html(name, add_if_missing=True)}</span>"
             for name in formula_names
         )
-        formula_count_badge = (
-            f"<span class='f-badge'>{len(formula_names)}{'个配方' if ui_lang == 'CN' else ' Formulas'}</span>"
-            if len(formula_names) > 1
-            else ""
-        )
         if variants:
             benefit_html = html.escape(
                 "高端款 / 基础款 / 高活性益生菌酸奶款" if ui_lang == "CN" else "Premium / Base / Active Probiotic Yogurt"
@@ -4343,7 +4338,7 @@ def _render_wecpro_formula_page() -> None:
             "</div>"
             "</div>"
             "<div class='f-actions'>"
-            f"{formula_count_badge}<span class='f-cta'>{html.escape(t('介绍', 'Details'))}</span>"
+            f"<span class='f-cta'>{html.escape(t('介绍', 'Details'))}</span>"
             "</div>"
             "</div>"
             "</summary>"
