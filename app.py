@@ -5176,18 +5176,18 @@ def main() -> None:
 
             clinical_codes = _extract_strain_codes(clinical_value)
             core_codes = _extract_strain_codes(overview_formula)
-            extra_codes = [c for c in clinical_codes if c not in set(core_codes)]
+            # 仅在能识别到 Core Formula 代号时，才追加“额外菌株”。
+            # 否则默认只展示商品名，避免与商品名含义重复。
+            extra_codes: List[str] = []
+            if core_codes:
+                core_set = set(core_codes)
+                extra_codes = [c for c in clinical_codes if c not in core_set]
             extra_codes_html = _codes_with_plus_html(extra_codes)
-            all_codes_html = _codes_with_plus_html(clinical_codes)
             if product_html:
                 product_badge_html = f"<span class='spec-product-name'>{product_html}</span>"
                 if extra_codes:
                     clinical_display_html = (
                         f"{product_badge_html}<span class='spec-plus'>+</span>{extra_codes_html}"
-                    )
-                elif clinical_codes:
-                    clinical_display_html = (
-                        f"{product_badge_html}<span class='spec-plus'>+</span>{all_codes_html}"
                     )
                 else:
                     clinical_display_html = product_badge_html
