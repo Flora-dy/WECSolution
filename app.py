@@ -2670,6 +2670,13 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           display: none;
         }
         div[data-testid="stSelectbox"] [data-baseweb="select"]{
+          border: 0 !important;
+          background: transparent !important;
+          box-shadow: none !important;
+          padding: 0 !important;
+          min-height: 50px;
+        }
+        div[data-testid="stSelectbox"] [data-baseweb="select"] > div{
           border-radius: 16px !important;
           border: 1px solid rgba(148,163,184,0.34) !important;
           background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(252,253,255,0.95)) !important;
@@ -2680,12 +2687,20 @@ def _render_header(series: str = "", category: str = "", badge: str = "") -> Non
           transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
         }
         div[data-testid="stSelectbox"] [data-baseweb="select"]:hover{
+          border-color: transparent !important;
+          box-shadow: none !important;
+        }
+        div[data-testid="stSelectbox"] [data-baseweb="select"]:hover > div{
           border-color: rgba(var(--accent1-rgb),0.30) !important;
           box-shadow:
             inset 0 1px 0 rgba(255,255,255,0.97),
             0 7px 16px rgba(2,6,23,0.06) !important;
         }
         div[data-testid="stSelectbox"] [data-baseweb="select"]:focus-within{
+          border-color: transparent !important;
+          box-shadow: none !important;
+        }
+        div[data-testid="stSelectbox"] [data-baseweb="select"]:focus-within > div{
           border-color: rgba(var(--accent1-rgb),0.36) !important;
           box-shadow:
             0 0 0 2px rgba(var(--accent1-rgb),0.14),
