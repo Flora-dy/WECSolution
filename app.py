@@ -2167,7 +2167,7 @@ _WECPRO_FORMULA_VARIANTS: Dict[str, List[Dict[str, object]]] = {
             "product": {"CN": "WecPro®-DigestBi", "EN": "WecPro®-DigestBi"},
             "benefit": {
                 "CN": "高活性益生菌发酵酸奶，支持肠道蠕动与菌群稳态，改善便秘相关不适，打造日常肠道舒适底盘",
-                "EN": "A high-activity probiotic fermented yogurt concept that supports gut motility and microbiome balance, helping relieve constipation-related discomfort for daily gut comfort.",
+                "EN": "Active Probiotic Yogurt delivers potent probiotics to support gut motility, promote microbiome balance, and help relieve occasional constipation.",
             },
             "core_cn": "动物双歧杆菌乳亚种BLa80、长双歧杆菌长亚种BL21、短双歧杆菌BBr60、青春双歧杆菌BAC30、长双歧杆菌婴儿亚种BI45",
             "codes": ["BLa80", "BL21", "BBr60", "BAC30", "BI45"],
