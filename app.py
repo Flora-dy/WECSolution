@@ -1841,6 +1841,17 @@ def _ensure_wecpro_registered(text: str) -> str:
     return re.sub(r"WecPro(?!®)", "WecPro®", s)
 
 
+def _normalize_solution_product_name(text: str) -> str:
+    """规范化 Solution 页商品名（与 Formula 保持一致）。"""
+    s = _ensure_wecpro_registered(text)
+    if not s:
+        return ""
+    key = re.sub(r"[®™\s]+", "", s).lower()
+    if "wecpro-gutiva" in key:
+        return "WecPro®-GIHealth805"
+    return s
+
+
 def _format_tm_sup_html(text: str, add_if_missing: bool = False) -> str:
     """将商品名中的 TM/™ 渲染为上标；可选在缺失时补 TM。"""
     s = (text or "").strip()
@@ -4827,7 +4838,7 @@ def main() -> None:
     overview_info = overview.get(cat, {})
     overview_name = str(overview_info.get("name", "")).strip()
     overview_formula = str(overview_info.get("core_formula", "")).strip()
-    overview_display_name = _ensure_wecpro_registered(overview_name)
+    overview_display_name = _normalize_solution_product_name(overview_name)
 
     def _render_full_solution_section() -> bool:
         with st.container(border=True):
@@ -5174,7 +5185,7 @@ def main() -> None:
                 clinical_value = " / ".join(base_unique[:2]) if base_unique else ""
             clinical_product_name = overview_display_name
             if not clinical_product_name and overview_formula:
-                clinical_product_name = _ensure_wecpro_registered(
+                clinical_product_name = _normalize_solution_product_name(
                     re.split(r"[:：]", overview_formula, maxsplit=1)[0].strip()
                 )
             product_html = (
