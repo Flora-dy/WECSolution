@@ -2130,6 +2130,23 @@ _CATEGORY_LABELS_EN: Dict[str, str] = {
     "口腔健康": "Dental & Oral Health",
 }
 
+
+def _reorder_categories_for_ui(categories: List[str]) -> List[str]:
+    """UI 展示顺序：胃肠健康、代谢健康优先，其余保持原顺序。"""
+    preferred = ["胃肠健康", "代谢健康"]
+    out: List[str] = []
+    seen: set[str] = set()
+    for name in preferred:
+        if name in categories and name not in seen:
+            out.append(name)
+            seen.add(name)
+    for name in categories:
+        if name not in seen:
+            out.append(name)
+            seen.add(name)
+    return out
+
+
 _WECPRO_FORMULA_BENEFIT_EN: Dict[str, str] = {
     "女性健康": "Supports vaginal microbiome balance, helps address vaginitis-related concerns, and promotes hormonal and metabolic homeostasis for women’s well-being.",
     "情绪健康": "Helps manage stress and mood, improves sleep quality, and supports relief of anxiety and depressive symptoms.",
@@ -4248,7 +4265,7 @@ def _render_wecpro_formula_page() -> None:
         st.warning("未能从 `Formula.pptx` 提取到可展示的信息。")
         return
 
-    order = [d for d in _FORMULA_SLIDE_TO_DIRECTION.values() if d]
+    order = _reorder_categories_for_ui([d for d in _FORMULA_SLIDE_TO_DIRECTION.values() if d])
     direction_to_item: Dict[str, Dict[str, object]] = {}
     for item in items:
         direction = str(item.get("direction", "")).strip()
@@ -4526,6 +4543,8 @@ def main() -> None:
     else:
         available_main = [m for m in _design_main_order if m in _design_mapping]
         formula_scenarios = {k: design_sub_order.get(k, []) for k in available_main}
+
+    available_main = _reorder_categories_for_ui(available_main)
 
     if not available_main:
         st.error("未能读取到功能方向数据，请检查 Excel 或 Formula&Solution 文件。")
