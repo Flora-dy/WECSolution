@@ -2201,7 +2201,7 @@ _WECPRO_FORMULA_VARIANTS: Dict[str, List[Dict[str, object]]] = {
             "codes": ["BLa80", "BL21", "BBr60", "BAC30", "BI45"],
         },
         {
-            "tag": {"CN": "护胃抗幽", "EN": "H. pylori Support"},
+            "tag": {"CN": "护胃抗幽", "EN": "Anti-H. pylori Support"},
             "product": {"CN": "WecPro®-Pyloclear™", "EN": "WecPro®-Pyloclear™"},
             "benefit": {
                 "CN": "专为护胃抗幽设计，有助于抑制幽门螺杆菌，提高根除率，并支持肠道健康与菌群平衡",
@@ -4255,12 +4255,22 @@ def _render_formula_variants_html(direction: str, ui_lang: str) -> str:
         elif ui_lang != "EN" and core_cn:
             core_html = html.escape(core_cn)
 
-        tag_html = f"<span class='v-tag'>{html.escape(tag)}</span>" if tag else ""
+        def _escape_with_italics(value: str) -> str:
+            escaped = html.escape(value or "")
+            # Specific typography: italicize "H. pylori" in EN labels.
+            return escaped.replace("H. pylori", "<i>H. pylori</i>")
+
+        tag_html = (
+            f"<span class='v-tag'>{_escape_with_italics(tag) if ui_lang == 'EN' else html.escape(tag)}</span>"
+            if tag
+            else ""
+        )
+        benefit_html = _escape_with_italics(benefit) if ui_lang == "EN" else (html.escape(benefit) if benefit else "—")
         cards.append(
             "<div class='v-box'>"
             f"<div class='v-title'>{html.escape(product)}{tag_html}</div>"
             f"<div class='v-meta'>{html.escape(t('健康功效', 'Benefits'))}</div>"
-            f"<div class='v-text'>{html.escape(benefit) if benefit else '—'}</div>"
+            f"<div class='v-text'>{benefit_html}</div>"
             f"<div class='v-meta'>{html.escape(t('核心配方', 'Core Formula'))}</div>"
             f"<div class='v-text'>{core_html}</div>"
             "</div>"
@@ -4338,11 +4348,14 @@ def _render_wecpro_formula_page() -> None:
             for name in formula_names
         )
         if variants:
-            benefit_html = html.escape(
+            benefit_raw = (
                 "高端款 / 基础款 / 高活性益生菌酸奶款 / 护胃抗幽"
                 if ui_lang == "CN"
-                else "Premium / Base / Active Probiotic Yogurt / H. pylori Support"
+                else "Premium / Base / Active Probiotic Yogurt / Anti-H. pylori Support"
             )
+            benefit_html = html.escape(benefit_raw)
+            if ui_lang == "EN":
+                benefit_html = benefit_html.replace("H. pylori", "<i>H. pylori</i>")
         else:
             benefit_html = html.escape(benefit_text) if benefit_text else "—"
 
