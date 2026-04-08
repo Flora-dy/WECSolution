@@ -2200,6 +2200,16 @@ _WECPRO_FORMULA_VARIANTS: Dict[str, List[Dict[str, object]]] = {
             "core_cn": "动物双歧杆菌乳亚种BLa80、长双歧杆菌长亚种BL21、短双歧杆菌BBr60、青春双歧杆菌BAC30、长双歧杆菌婴儿亚种BI45",
             "codes": ["BLa80", "BL21", "BBr60", "BAC30", "BI45"],
         },
+        {
+            "tag": {"CN": "护胃抗幽", "EN": "H. pylori Support"},
+            "product": {"CN": "WecPro®-Pyloclear™", "EN": "WecPro®-Pyloclear™"},
+            "benefit": {
+                "CN": "专为护胃抗幽设计，有助于抑制幽门螺杆菌，提高根除率，并支持肠道健康与菌群平衡",
+                "EN": "Designed for gastric protection and H. pylori support; helps inhibit H. pylori, supports higher eradication success, and promotes gut health and microbiome balance.",
+            },
+            "core_cn": "凝结魏茨曼氏菌BC99、鼠李糖乳酪杆菌LRa05",
+            "codes": ["BC99", "LRa05"],
+        },
     ]
 }
 
@@ -4329,7 +4339,9 @@ def _render_wecpro_formula_page() -> None:
         )
         if variants:
             benefit_html = html.escape(
-                "高端款 / 基础款 / 高活性益生菌酸奶款" if ui_lang == "CN" else "Premium / Base / Active Probiotic Yogurt"
+                "高端款 / 基础款 / 高活性益生菌酸奶款 / 护胃抗幽"
+                if ui_lang == "CN"
+                else "Premium / Base / Active Probiotic Yogurt / H. pylori Support"
             )
         else:
             benefit_html = html.escape(benefit_text) if benefit_text else "—"
