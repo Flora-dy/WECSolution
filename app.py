@@ -4258,7 +4258,9 @@ def _render_formula_variants_html(direction: str, ui_lang: str) -> str:
         def _escape_with_italics(value: str) -> str:
             escaped = html.escape(value or "")
             # Specific typography: italicize "H. pylori" in EN labels.
-            return escaped.replace("H. pylori", "<i>H. pylori</i>")
+            out = escaped.replace("H. pylori", "<i>H. pylori</i>")
+            # Ensure a whitespace boundary after closing italics if a word follows (e.g. pylori Support).
+            return re.sub(r"</i>([A-Za-z])", r"</i> \1", out)
 
         tag_html = (
             f"<span class='v-tag'>{_escape_with_italics(tag) if ui_lang == 'EN' else html.escape(tag)}</span>"
