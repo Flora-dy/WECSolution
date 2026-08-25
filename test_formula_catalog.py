@@ -4,6 +4,7 @@ import logging
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parent
@@ -38,6 +39,39 @@ class FormulaCatalogTest(unittest.TestCase):
         products = [variant["product"]["EN"] for variant in item["variants"]]
         self.assertEqual(products, ["WecPro®-GIHealth805"])
         self.assertEqual(item["product"], {"CN": "1个配方", "EN": "1 Formula"})
+
+    def test_single_gastrointestinal_formula_uses_standard_full_width_details(self):
+        item = {
+            "direction": "胃肠健康",
+            "product": "WecPro®-GIHealth805",
+            "benefit": "调节胃肠健康",
+            "strains": ["BLa80", "LRa05"],
+        }
+        rendered_blocks = []
+
+        with (
+            patch.object(app.st, "session_state", {"ui_lang": "EN"}),
+            patch.object(app, "load_wecpro_formula_catalog", return_value=[item]),
+            patch.object(
+                app.st,
+                "markdown",
+                side_effect=lambda body, **_: rendered_blocks.append(body),
+            ),
+        ):
+            app._render_wecpro_formula_page()
+
+        gastrointestinal = next(
+            block for block in rendered_blocks if "Gastrointestinal Health" in block
+        )
+        self.assertIn("<div class='kv-table'>", gastrointestinal)
+        self.assertNotIn("<div class='v-grid'>", gastrointestinal)
+        self.assertIn("Benefits", gastrointestinal)
+        self.assertIn("Core Formula", gastrointestinal)
+        self.assertIn(
+            "Supports gastrointestinal health, helps relieve constipation and diarrhea",
+            gastrointestinal,
+        )
+        self.assertNotIn("Premium / Base / Active Probiotic Yogurt", gastrointestinal)
 
 
 if __name__ == "__main__":

@@ -4301,8 +4301,9 @@ def _render_wecpro_formula_page() -> None:
         row2 = _rgba(a2, 0.16)
 
         variants = _WECPRO_FORMULA_VARIANTS.get(direction, [])
+        single_variant = variants[0] if len(variants) == 1 else None
         formula_names: List[str] = []
-        if variants:
+        if len(variants) > 1:
             for v in variants:
                 v_product = str((v.get("product", {}) or {}).get(ui_lang, "") or "").strip()
                 if not v_product:
@@ -4319,7 +4320,7 @@ def _render_wecpro_formula_page() -> None:
             f"<span class='f-formula-chip'>{_format_tm_sup_html(name, add_if_missing=True)}</span>"
             for name in formula_names
         )
-        if variants:
+        if len(variants) > 1:
             benefit_raw = (
                 "高端款 / 基础款 / 高活性益生菌酸奶款 / 护胃抗幽"
                 if ui_lang == "CN"
@@ -4328,11 +4329,35 @@ def _render_wecpro_formula_page() -> None:
             benefit_html = html.escape(benefit_raw)
             if ui_lang == "EN":
                 benefit_html = benefit_html.replace("H. pylori", "<i>H. pylori</i>")
+        elif single_variant:
+            variant_benefit = str(
+                (single_variant.get("benefit", {}) or {}).get(ui_lang, "") or ""
+            ).strip()
+            benefit_html = html.escape(variant_benefit) if variant_benefit else "—"
         else:
             benefit_html = html.escape(benefit_text) if benefit_text else "—"
 
         strains_html = "—"
-        if strains:
+        if single_variant:
+            if ui_lang == "EN":
+                parts: List[str] = []
+                codes = [
+                    str(code).strip()
+                    for code in (single_variant.get("codes", []) or [])
+                    if str(code).strip()
+                ]
+                for code in codes:
+                    sci = _STRAIN_SCI_NAMES.get(code)
+                    if sci:
+                        parts.append(f"<div>{_format_sci_name_html(sci)} {html.escape(code)}</div>")
+                    else:
+                        parts.append(f"<div>{html.escape(code)}</div>")
+                if parts:
+                    strains_html = "".join(parts)
+            else:
+                core_cn = str(single_variant.get("core_cn", "") or "").strip()
+                strains_html = html.escape(core_cn) if core_cn else "—"
+        elif strains:
             if ui_lang == "EN":
                 parts: List[str] = []
                 for line in strains:
@@ -4351,7 +4376,7 @@ def _render_wecpro_formula_page() -> None:
 
         expand_html = (
             _render_formula_variants_html(direction, ui_lang)
-            if variants
+            if len(variants) > 1
             else (
                 "<div class='kv-table'>"
                 "<div class='kv-grid'>"
