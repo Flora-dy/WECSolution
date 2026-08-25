@@ -557,12 +557,12 @@
           "EN": "Gastrointestinal Health"
         },
         "product": {
-          "CN": "3个配方",
-          "EN": "3 Formulas"
+          "CN": "1个配方",
+          "EN": "1 Formula"
         },
         "benefit": {
-          "CN": "高端款 / 基础款 / 高活性益生菌酸奶款",
-          "EN": "Premium / Base / Active Probiotic Yogurt"
+          "CN": "高端款",
+          "EN": "Premium"
         },
         "core_formula": {
           "CN": "",
@@ -585,42 +585,6 @@
             "core_formula": {
               "CN": "动物双歧杆菌乳亚种BLa80、鼠李糖乳酪杆菌LRa05",
               "EN": "<div><span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span> BLa80</div><div><span class='latin'>Lacticaseibacillus rhamnosus</span> LRa05</div>"
-            }
-          },
-          {
-            "tag": {
-              "CN": "基础款",
-              "EN": "Base"
-            },
-            "product": {
-              "CN": "WecPro®-GUT99",
-              "EN": "WecPro®-GUT99"
-            },
-            "benefit": {
-              "CN": "作为肠道健康基础配方，重建菌群稳态并支持肠道蠕动与屏障功能，帮助维持长期消化舒适与排便规律",
-              "EN": "A foundational gut-health formula to rebuild microbiome homeostasis and support gut motility and barrier function for long-term digestive comfort and regularity."
-            },
-            "core_formula": {
-              "CN": "动物双歧杆菌乳亚种BLa36、乳酸片球菌PA53、植物乳植杆菌Lp18、凝结魏茨曼氏菌BC99",
-              "EN": "<div><span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span> BLa36</div><div><span class='latin'>Pediococcus acidilactici</span> PA53</div><div><span class='latin'>Lactiplantibacillus plantarum</span> Lp18</div><div><span class='latin'>Weizmannia coagulans</span> BC99</div>"
-            }
-          },
-          {
-            "tag": {
-              "CN": "高活性益生菌酸奶款",
-              "EN": "Active Probiotic Yogurt"
-            },
-            "product": {
-              "CN": "WecPro®-DigestBi",
-              "EN": "WecPro®-DigestBi"
-            },
-            "benefit": {
-              "CN": "高活性益生菌发酵酸奶，支持肠道蠕动与菌群稳态，改善便秘相关不适，打造日常肠道舒适底盘",
-              "EN": "A high-activity probiotic fermented yogurt concept that supports gut motility and microbiome balance, helping relieve constipation-related discomfort for daily gut comfort."
-            },
-            "core_formula": {
-              "CN": "动物双歧杆菌乳亚种BLa80、长双歧杆菌长亚种BL21、短双歧杆菌BBr60、青春双歧杆菌BAC30、长双歧杆菌婴儿亚种BI45",
-              "EN": "<div><span class='latin'>Bifidobacterium animalis</span> <span class='latin-noi'>subsp.</span> <span class='latin'>lactis</span> BLa80</div><div><span class='latin'>Bifidobacterium longum</span> <span class='latin-noi'>subsp.</span> <span class='latin'>longum</span> BL21</div><div><span class='latin'>Bifidobacterium breve</span> BBr60</div><div><span class='latin'>Bifidobacterium adolescentis</span> BAC30</div><div><span class='latin'>Bifidobacterium longum</span> <span class='latin-noi'>subsp.</span> <span class='latin'>infantis</span> BI45</div>"
             }
           }
         ]

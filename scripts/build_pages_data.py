@@ -452,8 +452,14 @@ def main() -> int:
                 {
                     "direction": direction,
                     "direction_label": {"CN": direction, "EN": direction_en},
-                    "product": {"CN": "3个配方", "EN": "3 Formulas"},
-                    "benefit": {"CN": "高端款 / 基础款 / 高活性益生菌酸奶款", "EN": "Premium / Base / Active Probiotic Yogurt"},
+                    "product": {
+                        "CN": f"{len(v_out)}个配方",
+                        "EN": f"{len(v_out)} Formula{'s' if len(v_out) != 1 else ''}",
+                    },
+                    "benefit": {
+                        "CN": " / ".join(v["tag"]["CN"] for v in v_out if v["tag"]["CN"]),
+                        "EN": " / ".join(v["tag"]["EN"] for v in v_out if v["tag"]["EN"]),
+                    },
                     "core_formula": {"CN": "", "EN": ""},
                     "variants": v_out,
                 }

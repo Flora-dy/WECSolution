@@ -2180,36 +2180,6 @@ _WECPRO_FORMULA_VARIANTS: Dict[str, List[Dict[str, object]]] = {
             "core_cn": "动物双歧杆菌乳亚种BLa80、鼠李糖乳酪杆菌LRa05",
             "codes": ["BLa80", "LRa05"],
         },
-	        {
-	            "tag": {"CN": "基础款", "EN": "Base"},
-	            "product": {"CN": "WecPro®-GUT99", "EN": "WecPro®-GUT99"},
-	            "benefit": {
-	                "CN": "作为肠道健康基础配方，重建菌群稳态并支持肠道蠕动与屏障功能，帮助维持长期消化舒适与排便规律",
-	                "EN": "A foundational gut-health formula to rebuild microbiome homeostasis and support gut motility and barrier function for long-term digestive comfort and regularity.",
-	            },
-	            "core_cn": "动物双歧杆菌乳亚种BLa36、乳酸片球菌PA53、植物乳植杆菌Lp18、凝结魏茨曼氏菌BC99",
-	            "codes": ["BLa36", "PA53", "Lp18", "BC99"],
-	        },
-        {
-            "tag": {"CN": "高活性益生菌酸奶款", "EN": "Active Probiotic Yogurt"},
-            "product": {"CN": "WecPro®-DigestBi", "EN": "WecPro®-DigestBi"},
-            "benefit": {
-                "CN": "高活性益生菌发酵酸奶，支持肠道蠕动与菌群稳态，改善便秘相关不适，打造日常肠道舒适底盘",
-                "EN": "Active Probiotic Yogurt delivers potent probiotics to support gut motility, promote microbiome balance, and help relieve occasional constipation.",
-            },
-            "core_cn": "动物双歧杆菌乳亚种BLa80、长双歧杆菌长亚种BL21、短双歧杆菌BBr60、青春双歧杆菌BAC30、长双歧杆菌婴儿亚种BI45",
-            "codes": ["BLa80", "BL21", "BBr60", "BAC30", "BI45"],
-        },
-        {
-            "tag": {"CN": "护胃抗幽", "EN": "Anti-H. pylori Support"},
-            "product": {"CN": "WecPro®-Pyloclear™", "EN": "WecPro®-Pyloclear™"},
-            "benefit": {
-                "CN": "专为护胃抗幽设计，有助于抑制幽门螺杆菌，提高根除率，并支持肠道健康与菌群平衡",
-                "EN": "Designed for gastric protection and H. pylori support; helps inhibit H. pylori, supports higher eradication success, and promotes gut health and microbiome balance.",
-            },
-            "core_cn": "凝结魏茨曼氏菌BC99、鼠李糖乳酪杆菌LRa05",
-            "codes": ["BC99", "LRa05"],
-        },
     ]
 }
 
